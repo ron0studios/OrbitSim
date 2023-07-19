@@ -11,10 +11,10 @@ class Body {
     public:
         sf::CircleShape shape;
         float mass, radius;
-        sf::Vector2f acceleration, velocity, position;
+        sf::Vector2<double> acceleration, velocity, position;
 
-        Body(int mass, int radius, sf::Vector2f position, sf::Vector2f velocity = sf::Vector2f(0.0f, 0.0f));
-        void update(); // updates based on acceleration and velocity
+        Body(float mass, float radius, sf::Vector2<double> position, sf::Vector2<double> velocity = sf::Vector2<double>(0.0f, 0.0f));
+        void update(sf::Int64 delta); // updates based on acceleration and velocity
         void draw(sf::RenderWindow& window);
 };
 

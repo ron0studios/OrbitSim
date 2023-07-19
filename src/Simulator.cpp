@@ -3,7 +3,7 @@
 //
 
 #include "Simulator.h"
-//#include <iostream>
+#include <iostream>
 
 Simulator::Simulator() {
 
@@ -14,26 +14,37 @@ void Simulator::addBody(Body body) {
 }
 
 // returns the length of a vector squared
-float squarelen(sf::Vector2f a){
+double squarelen(sf::Vector2<double> a){
+
     return a.x*a.x + a.y*a.y;
 }
 
-void Simulator::update() {
+void Simulator::update(sf::Int64 delta) {
     for(auto & bodyA : bodies) {
-        bodyA.acceleration = sf::Vector2f(0.0f, 0.0f);
+        bodyA.acceleration = sf::Vector2<double>(0.0, 0.0);
         for(auto & bodyB : bodies) {
             if(&bodyA == &bodyB) continue;
-            float magnitude = (bodyA.mass * bodyB.mass)/squarelen(bodyB.position-bodyA.position);
-            sf::Vector2f force = bodyB.position-bodyA.position;
+            double magnitude = (bodyA.mass * bodyB.mass)/( 0.1 * squarelen(bodyB.position-bodyA.position));
+            if(isnan(magnitude) or isinf(magnitude)) magnitude = 3 * pow(10,7); // 10% speed of light
+
+
+            sf::Vector2<double> force = bodyB.position-bodyA.position;
+            //std::cout << "\t" << force.x << " " << force.y << std::endl;
             force.x *= magnitude/ sqrt(squarelen(bodyB.position-bodyA.position));
             force.y *= magnitude/ sqrt(squarelen(bodyB.position-bodyA.position));
 
-            sf::Vector2f accel(force.x/bodyA.mass, force.y/bodyA.mass);
+            if(isnan(force.x)){
+                //std::cout << "HA GOTCHU";
+                int a = 1;
+            }
+
+            sf::Vector2<double> accel(force.x/bodyA.mass, force.y/bodyA.mass);
             bodyA.acceleration += accel;
+
         }
-        //std::cout << bodyA.position.x << " " << bodyA.position.y << std::endl;
+        //std::cout << "\t" << bodyA.acceleration.x << " " << bodyA.acceleration.y << std::endl;
     }
-    for(auto & body : bodies) body.update();
+    for(auto & body : bodies) body.update(delta);
 }
 
 void Simulator::draw(sf::RenderWindow& window) {

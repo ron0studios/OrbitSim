@@ -14,7 +14,7 @@ class Simulator {
         std::vector<Body> bodies;
         Simulator();
         void addBody(Body body);
-        void update();
+        void update(sf::Int64 delta);
         void draw(sf::RenderWindow& window);
 };
 

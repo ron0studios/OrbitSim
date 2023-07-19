@@ -49,12 +49,26 @@ cmake_ninja_workdir = /home/ron0/development/cpp-projects/OrbitSim/cmake-build-d
 
 build cmake_object_order_depends_target_OrbitSim: phony || cmake_object_order_depends_target_sfml-audio cmake_object_order_depends_target_sfml-graphics cmake_object_order_depends_target_sfml-network cmake_object_order_depends_target_sfml-system cmake_object_order_depends_target_sfml-window
 
-build CMakeFiles/OrbitSim.dir/main.cpp.o: CXX_COMPILER__OrbitSim_Debug /home/ron0/development/cpp-projects/OrbitSim/main.cpp || cmake_object_order_depends_target_OrbitSim
-  DEP_FILE = CMakeFiles/OrbitSim.dir/main.cpp.o.d
+build CMakeFiles/OrbitSim.dir/src/main.cpp.o: CXX_COMPILER__OrbitSim_Debug /home/ron0/development/cpp-projects/OrbitSim/src/main.cpp || cmake_object_order_depends_target_OrbitSim
+  DEP_FILE = CMakeFiles/OrbitSim.dir/src/main.cpp.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++20
   INCLUDES = -I/home/ron0/development/cpp-projects/OrbitSim/cmake-build-debug/_deps/sfml-src/include
   OBJECT_DIR = CMakeFiles/OrbitSim.dir
-  OBJECT_FILE_DIR = CMakeFiles/OrbitSim.dir
+  OBJECT_FILE_DIR = CMakeFiles/OrbitSim.dir/src
+
+build CMakeFiles/OrbitSim.dir/src/Body.cpp.o: CXX_COMPILER__OrbitSim_Debug /home/ron0/development/cpp-projects/OrbitSim/src/Body.cpp || cmake_object_order_depends_target_OrbitSim
+  DEP_FILE = CMakeFiles/OrbitSim.dir/src/Body.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
+  INCLUDES = -I/home/ron0/development/cpp-projects/OrbitSim/cmake-build-debug/_deps/sfml-src/include
+  OBJECT_DIR = CMakeFiles/OrbitSim.dir
+  OBJECT_FILE_DIR = CMakeFiles/OrbitSim.dir/src
+
+build CMakeFiles/OrbitSim.dir/src/Simulator.cpp.o: CXX_COMPILER__OrbitSim_Debug /home/ron0/development/cpp-projects/OrbitSim/src/Simulator.cpp || cmake_object_order_depends_target_OrbitSim
+  DEP_FILE = CMakeFiles/OrbitSim.dir/src/Simulator.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
+  INCLUDES = -I/home/ron0/development/cpp-projects/OrbitSim/cmake-build-debug/_deps/sfml-src/include
+  OBJECT_DIR = CMakeFiles/OrbitSim.dir
+  OBJECT_FILE_DIR = CMakeFiles/OrbitSim.dir/src
 
 
 # =============================================================================
@@ -64,7 +78,7 @@ build CMakeFiles/OrbitSim.dir/main.cpp.o: CXX_COMPILER__OrbitSim_Debug /home/ron
 #############################################
 # Link the executable OrbitSim
 
-build OrbitSim: CXX_EXECUTABLE_LINKER__OrbitSim_Debug CMakeFiles/OrbitSim.dir/main.cpp.o | _deps/sfml-build/lib/libsfml-graphics-d.so.2.6.0 _deps/sfml-build/lib/libsfml-audio-d.so.2.6.0 _deps/sfml-build/lib/libsfml-window-d.so.2.6.0 _deps/sfml-build/lib/libsfml-network-d.so.2.6.0 _deps/sfml-build/lib/libsfml-system-d.so.2.6.0 || _deps/sfml-build/lib/libsfml-audio-d.so _deps/sfml-build/lib/libsfml-graphics-d.so _deps/sfml-build/lib/libsfml-network-d.so _deps/sfml-build/lib/libsfml-system-d.so _deps/sfml-build/lib/libsfml-window-d.so _deps/sfml-build/lib/libsfml-graphics-d.so _deps/sfml-build/lib/libsfml-audio-d.so _deps/sfml-build/lib/libsfml-window-d.so _deps/sfml-build/lib/libsfml-network-d.so _deps/sfml-build/lib/libsfml-system-d.so
+build OrbitSim: CXX_EXECUTABLE_LINKER__OrbitSim_Debug CMakeFiles/OrbitSim.dir/src/main.cpp.o CMakeFiles/OrbitSim.dir/src/Body.cpp.o CMakeFiles/OrbitSim.dir/src/Simulator.cpp.o | _deps/sfml-build/lib/libsfml-graphics-d.so.2.6.0 _deps/sfml-build/lib/libsfml-audio-d.so.2.6.0 _deps/sfml-build/lib/libsfml-window-d.so.2.6.0 _deps/sfml-build/lib/libsfml-network-d.so.2.6.0 _deps/sfml-build/lib/libsfml-system-d.so.2.6.0 || _deps/sfml-build/lib/libsfml-audio-d.so _deps/sfml-build/lib/libsfml-graphics-d.so _deps/sfml-build/lib/libsfml-network-d.so _deps/sfml-build/lib/libsfml-system-d.so _deps/sfml-build/lib/libsfml-window-d.so _deps/sfml-build/lib/libsfml-graphics-d.so _deps/sfml-build/lib/libsfml-audio-d.so _deps/sfml-build/lib/libsfml-window-d.so _deps/sfml-build/lib/libsfml-network-d.so _deps/sfml-build/lib/libsfml-system-d.so
   FLAGS = -g
   LINK_LIBRARIES = -Wl,-rpath,/home/ron0/development/cpp-projects/OrbitSim/cmake-build-debug/_deps/sfml-build/lib:  _deps/sfml-build/lib/libsfml-graphics-d.so.2.6.0  _deps/sfml-build/lib/libsfml-audio-d.so.2.6.0  _deps/sfml-build/lib/libsfml-window-d.so.2.6.0  _deps/sfml-build/lib/libsfml-network-d.so.2.6.0  _deps/sfml-build/lib/libsfml-system-d.so.2.6.0
   OBJECT_DIR = CMakeFiles/OrbitSim.dir

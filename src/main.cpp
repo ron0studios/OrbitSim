@@ -5,7 +5,7 @@
 
 int main()
 {
-    //srand(time(0));
+    srand(time(0));
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "OrbitSim");
     window.setFramerateLimit(60); // for physics
     int sizex = 1920*10;
@@ -20,8 +20,8 @@ int main()
         double dy = (((double)rand()/ RAND_MAX) * 500) -250;
 
         int rnd = rand();
-        double x =  cos(((double)rnd/ RAND_MAX) * 2*M_PI) * 900 + dx;
-        double y =  sin(((double)rnd/ RAND_MAX) * 2*M_PI) * 900 + dy;
+        double x =  cos(((double)rnd/ RAND_MAX) * 2*M_PI) * 300 + dx;
+        double y =  sin(((double)rnd/ RAND_MAX) * 2*M_PI) * 300 + dy;
 
         double rnd2 = (((double)rand()/ RAND_MAX)*10);
         double velx = -cos(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) * rnd2;
@@ -35,10 +35,10 @@ int main()
 
     for(int i = 0; i < 1002; i++)
     {
-        std::cout << space.bodies[i].position.x << " " << space.bodies[i].position.y << std::endl;
+       // std::cout << space.bodies[i].position.x << " " << space.bodies[i].position.y << std::endl;
         for(int j = i+1; j < 1002; j++)  {
-            //if(space.bodies[i].position.x == space.bodies[j].position.x and space.bodies[i].position.y == space.bodies[j].position.y)
-            //    std::cout << "WHAT\n" << std::endl;
+            if(space.bodies[i].position.x == space.bodies[j].position.x and space.bodies[i].position.y == space.bodies[j].position.y)
+                std::cout << "WHAT\n" << std::endl;
         }
 
     }

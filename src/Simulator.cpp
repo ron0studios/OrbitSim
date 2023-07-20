@@ -91,6 +91,8 @@ void Simulator::genQuadTree(){
 
                         top->getChildFromIdx(part)->singleNodeMass = body.mass;
                         top->getChildFromIdx(top->singleNodeQuadrant)->singleNodeMass = top->singleNodeMass;
+                        top->getChildFromIdx(part)->singleNodePos = bpos;
+                        top->getChildFromIdx(top->singleNodeQuadrant)->singleNodePos = top->singleNodePos;
 
                         top->singleNodeQuadrant = -1;
                         break;
@@ -137,7 +139,7 @@ void Simulator::delQuadTree(QuadTreeNode* node) {
 void Simulator::update(sf::Int64 delta) {
     delQuadTree(&root);
     genQuadTree();
-    std::cout << "loop\n" << std::endl;
+    //std::cout << "loop\n" << std::endl;
 
     for(auto & bodyA : bodies) {
         bodyA.acceleration = sf::Vector2<double>(0.0, 0.0);

@@ -11,7 +11,7 @@ QuadTreeNode::QuadTreeNode(sf::Vector2<double> position, double mass, double wid
     this->width = width;
     debug = sf::RectangleShape(sf::Vector2f(width,width));
     debug.setFillColor(sf::Color::Transparent);
-    debug.setOutlineThickness(20.0);
+    debug.setOutlineThickness(10.0);
     debug.setOrigin(sf::Vector2f(width/2.0, width/2.0));
     debug.setPosition((float)position.x, (float)position.y);
 }
@@ -67,12 +67,12 @@ int QuadTreeNode::getQuadrantIdx(sf::Vector2<double> pos){
             return 0;
         }
         else{
-            return 1;
+            return 2;
         }
     }
     else{
         if(pos.y <= position.y){
-            return 2;
+            return 1;
         }
         else{
             return 3;
@@ -104,5 +104,16 @@ bool QuadTreeNode::checkPoint(sf::Vector2<double> pos) {
     and pos.y <= position.y+width/2.0 and pos.y >= position.y-width/2.0)
         return true;
     return false;
+}
+
+sf::Vector2<double> QuadTreeNode::getQuadrantCenter(int q) {
+    if(q==0)
+        return sf::Vector2<double>( position.x - width/4.0, position.y - width/4.0);
+    if(q==1)
+        return sf::Vector2<double>( position.x + width/4.0, position.y - width/4.0);
+    if(q==2)
+        return sf::Vector2<double>( position.x - width/4.0, position.y + width/4.0);
+    if(q==3)
+        return sf::Vector2<double>( position.x + width/4.0, position.y + width/4.0);
 }
 

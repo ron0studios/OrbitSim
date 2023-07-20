@@ -16,6 +16,9 @@ class QuadTreeNode {
         sf::RectangleShape debug;
         sf::Vector2<double>  position;
 
+        int singleNodeQuadrant = -1;
+        sf::Vector2<double>  singleNodePos;
+
         QuadTreeNode* NW = nullptr;
         QuadTreeNode* NE = nullptr;
         QuadTreeNode* SW = nullptr;
@@ -28,6 +31,7 @@ class QuadTreeNode {
         int getQuadrantIdx(sf::Vector2<double> pos);
         QuadTreeNode* getQuadrant(sf::Vector2<double> pos);
         sf::Vector2<double> getQuadrantCenter(QuadTreeNode* q);
+        sf::Vector2<double> getQuadrantCenter(int q);
         void setQuadrant(int idx, QuadTreeNode* val);
         bool checkPoint(sf::Vector2<double> pos);
 

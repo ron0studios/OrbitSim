@@ -8,13 +8,14 @@ int main()
     srand(time(0));
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "OrbitSim");
     window.setFramerateLimit(60); // for physics
-    int sizex = 1920*50;
-    int sizey = 1080*50;
+    int sizex = 1920*10;
+    int sizey = 1080*10;
     sf::View view(sf::FloatRect(-sizex/2.0f, -sizey/2.0f, sizex, sizey));
     window.setView(view);
 
     Simulator space;
-    for(int i = 0; i < 5; i++) {
+
+    for(int i = 0; i < 100; i++) {
         int dx = (((double)rand()/ RAND_MAX) * 500) -250;
         int dy = (((double)rand()/ RAND_MAX) * 500) -250;
 
@@ -31,6 +32,14 @@ int main()
     }
     space.addBody(Body(100000,100,sf::Vector2<double>(0, 0)));
     space.addBody(Body(10000000,100,sf::Vector2<double>(5000, 1000), sf::Vector2<double>(-40,-100)));
+
+    /*
+    space.addBody(Body(1,10,sf::Vector2<double>(-100, -100)));
+    space.addBody(Body(1,10,sf::Vector2<double>(100, 100)));
+    space.addBody(Body(1,10,sf::Vector2<double>(100, 75)));
+    space.addBody(Body(1,10,sf::Vector2<double>(100, -175)));
+    space.addBody(Body(1,10,sf::Vector2<double>(-100, -75)));
+     */
 
 
     for(auto i : space.bodies) {

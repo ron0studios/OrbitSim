@@ -5,7 +5,7 @@
 
 int main()
 {
-    srand(time(0));
+    //srand(time(0));
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "OrbitSim");
     window.setFramerateLimit(60); // for physics
     int sizex = 1920*10;
@@ -15,13 +15,13 @@ int main()
 
     Simulator space;
 
-    for(int i = 0; i < 100; i++) {
-        int dx = (((double)rand()/ RAND_MAX) * 500) -250;
-        int dy = (((double)rand()/ RAND_MAX) * 500) -250;
+    for(int i = 0; i < 1000; i++) {
+        double dx = (((double)rand()/ RAND_MAX) * 500) -250;
+        double dy = (((double)rand()/ RAND_MAX) * 500) -250;
 
         int rnd = rand();
-        int x =  cos(((double)rnd/ RAND_MAX) * 2*M_PI) * 3000 + dx;
-        int y =  sin(((double)rnd/ RAND_MAX) * 2*M_PI) * 3000 + dy;
+        double x =  cos(((double)rnd/ RAND_MAX) * 2*M_PI) * 900 + dx;
+        double y =  sin(((double)rnd/ RAND_MAX) * 2*M_PI) * 900 + dy;
 
         double rnd2 = (((double)rand()/ RAND_MAX)*10);
         double velx = -cos(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) * rnd2;
@@ -33,22 +33,29 @@ int main()
     space.addBody(Body(100000,100,sf::Vector2<double>(0, 0)));
     space.addBody(Body(10000000,100,sf::Vector2<double>(5000, 1000), sf::Vector2<double>(-40,-100)));
 
+    for(int i = 0; i < 1002; i++)
+    {
+        std::cout << space.bodies[i].position.x << " " << space.bodies[i].position.y << std::endl;
+        for(int j = i+1; j < 1002; j++)  {
+            //if(space.bodies[i].position.x == space.bodies[j].position.x and space.bodies[i].position.y == space.bodies[j].position.y)
+            //    std::cout << "WHAT\n" << std::endl;
+        }
+
+    }
+
+
     /*
     space.addBody(Body(1,10,sf::Vector2<double>(-100, -100)));
     space.addBody(Body(1,10,sf::Vector2<double>(100, 100)));
     space.addBody(Body(1,10,sf::Vector2<double>(100, 75)));
     space.addBody(Body(1,10,sf::Vector2<double>(100, -175)));
     space.addBody(Body(1,10,sf::Vector2<double>(-100, -75)));
-     */
+    */
 
 
-    for(auto i : space.bodies) {
-        std::cout << i.mass << " " << i.mass << std::endl;
-    }
 
     sf::Clock deltaClock;
     sf::Time dt;
-    space.update(dt.asMicroseconds());
     while (window.isOpen())
     {
         sf::Event event;
@@ -81,18 +88,16 @@ int main()
 
         window.clear();
         space.draw(window);
-        //space.update(dt.asMicroseconds());
+        space.update(dt.asMicroseconds());
+        sf::CircleShape s(1);
+        s.setPosition(0,0);
+        window.draw(s);
+
         window.display();
 
         //view.setCenter(space.bodies.back().position.x, space.bodies.back().position.y);
         //window.setView(view);
 
-        for(auto i : space.bodies) {
-            if (isnan(i.position.x)) {
-                break;
-            }
-            //std::cout << i.position.x << " " << i.position.y << std::endl;
-        }
 
         dt = deltaClock.restart();
     }

@@ -21,6 +21,8 @@ class Simulator {
     private:
         double squarelen(sf::Vector2<double> a);
         void genQuadTree();
+        void delQuadTree(QuadTreeNode* node);
+
         QuadTreeNode root = QuadTreeNode(sf::Vector2<double>(0.0,0.0), 0.0, 0.0);;
         double bounds;
         sf::RectangleShape boundbox;

@@ -11,7 +11,7 @@ QuadTreeNode::QuadTreeNode(sf::Vector2<double> position, double mass, double wid
     this->width = width;
     debug = sf::RectangleShape(sf::Vector2f(width,width));
     debug.setFillColor(sf::Color::Transparent);
-    debug.setOutlineThickness(10.0);
+    debug.setOutlineThickness(2.0);
     debug.setOrigin(sf::Vector2f(width/2.0, width/2.0));
     debug.setPosition((float)position.x, (float)position.y);
 }

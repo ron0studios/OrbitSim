@@ -18,6 +18,7 @@ class QuadTreeNode {
 
         int singleNodeQuadrant = -1;
         sf::Vector2<double>  singleNodePos;
+        double singleNodeMass;
 
         QuadTreeNode* NW = nullptr;
         QuadTreeNode* NE = nullptr;

@@ -4,6 +4,7 @@
 
 #include "Simulator.h"
 #include <iostream>
+#include <stack>
 
 Simulator::Simulator(double bounds) {
     this->bounds = bounds;
@@ -29,13 +30,17 @@ double Simulator::squarelen(sf::Vector2<double> a){
 
 
 void Simulator::genQuadTree(){
+    int id = 0;
     for(auto & body : bodies) {
-        int id = 0;
-        sf::Vector2<double> bpos = body.position;
-        if(bpos.y == -175)
+        id++;
+        //std::cout << id << std::endl;
+        if(id==1001)
         {
-            printf("YH");
+            std::cout<<"WOOO";
         }
+
+        //printf("%i\n", id);
+        sf::Vector2<double> bpos = body.position;
 
         if(abs(bpos.x) > bounds or abs(bpos.y) > bounds) {
             continue;
@@ -44,10 +49,9 @@ void Simulator::genQuadTree(){
         QuadTreeNode* top = &root;
 
         while(true) {
-            id++;
             // deduce quadrant
             int part = top->getQuadrantIdx(bpos);
-            printf("part: %i\n", part);
+            //printf("part: %i\n", part);
 
 
             if(top->getChildFromIdx(part) != nullptr)
@@ -63,13 +67,16 @@ void Simulator::genQuadTree(){
                         sf::Vector2<double> posA = top->getQuadrantCenter(top->singleNodeQuadrant);
                         sf::Vector2<double> posB = top->getQuadrantCenter(part);
                         if(part == top->singleNodeQuadrant){
-                            top->setQuadrant(part, new QuadTreeNode(posA, top->mass + body.mass, top->width/2));
+                            top->setQuadrant(part, new QuadTreeNode(posA, top->mass, top->width/2));
 
                             top->singleNodeQuadrant = -1;
                             sf::Vector2<double> tmp = top->singleNodePos;
+                            double tmpmass = top->singleNodeMass;
                             top = top->getChildFromIdx(part);
                             top->singleNodeQuadrant = top->getQuadrantIdx(tmp);
                             top->singleNodePos = tmp;
+                            top->singleNodeMass = tmpmass;
+
                             part = top->getQuadrantIdx(bpos);
                             continue;
                         }
@@ -82,6 +89,9 @@ void Simulator::genQuadTree(){
                         top->getChildFromIdx(top->singleNodeQuadrant)->singleNodeQuadrant = top->getChildFromIdx(
                                 top->singleNodeQuadrant)->getQuadrantIdx(top->singleNodePos);
 
+                        top->getChildFromIdx(part)->singleNodeMass = body.mass;
+                        top->getChildFromIdx(top->singleNodeQuadrant)->singleNodeMass = top->singleNodeMass;
+
                         top->singleNodeQuadrant = -1;
                         break;
                     }
@@ -92,6 +102,7 @@ void Simulator::genQuadTree(){
                 top->setQuadrant(part, new QuadTreeNode(pos, body.mass, top->width/2));
                 top->getChildFromIdx(part)->singleNodeQuadrant = top->getChildFromIdx(part)->getQuadrantIdx(bpos);
                 top->getChildFromIdx(part)->singleNodePos = bpos;
+                top->getChildFromIdx(part)->singleNodeMass = body.mass;
 
                 top->singleNodeQuadrant = -1;
                 break;
@@ -102,9 +113,31 @@ void Simulator::genQuadTree(){
 
 
 
+// postorder traversal
+void Simulator::delQuadTree(QuadTreeNode* node) {
+    if(node == nullptr)
+        return;
+
+    for(int i = 0; i < 4; i++){
+        if(node->getChildFromIdx(i) == nullptr)
+            continue;
+
+        delQuadTree(node->getChildFromIdx(i));
+    }
+
+    if(node == &root) {
+        root = QuadTreeNode(sf::Vector2<double>(0.0, 0.0), 0.0, bounds * 2.0);
+        return;
+    }
+    delete node;
+    node = nullptr;
+}
+
 
 void Simulator::update(sf::Int64 delta) {
+    delQuadTree(&root);
     genQuadTree();
+    std::cout << "loop\n" << std::endl;
 
     for(auto & bodyA : bodies) {
         bodyA.acceleration = sf::Vector2<double>(0.0, 0.0);
@@ -136,4 +169,7 @@ void Simulator::draw(sf::RenderWindow& window) {
         body.draw(window);
     }
 }
+
+
+
 

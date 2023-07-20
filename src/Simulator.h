@@ -2,6 +2,7 @@
 // Created by ron0 on 19/07/23.
 //
 #include "Body.h"
+#include "QuadTreeNode.h"
 #include <vector>
 #include <math.h>
 
@@ -12,10 +13,18 @@
 class Simulator {
     public:
         std::vector<Body> bodies;
-        Simulator();
+        Simulator(double bounds = 50000);
         void addBody(Body body);
         void update(sf::Int64 delta);
         void draw(sf::RenderWindow& window);
+
+    private:
+        double squarelen(sf::Vector2<double> a);
+        void genQuadTree();
+        QuadTreeNode root = QuadTreeNode(sf::Vector2<double>(0.0,0.0), 0.0, 0.0);;
+        double bounds;
+        sf::RectangleShape boundbox;
+
 };
 
 

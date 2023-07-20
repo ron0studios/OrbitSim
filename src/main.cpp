@@ -7,10 +7,10 @@ int main()
 {
     srand(time(0));
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "OrbitSim");
-    window.setFramerateLimit(60); // for physics
-    int sizex = 1920*3;
-    int sizey = 1080*3;
-    sf::View view(sf::FloatRect(-sizex/2.0f, -sizey/2.0f, sizex, sizey));
+    window.setFramerateLimit(20); // for physics
+    int sizex = 1920*16;
+    int sizey = 1080*16;
+    sf::View view(sf::FloatRect(-sizex/2.0f, -sizey/1.5f, sizex, sizey));
     window.setView(view);
 
     Simulator space;
@@ -29,8 +29,8 @@ int main()
 
         space.addBody(Body(mass,10,sf::Vector2<double>(x, y), sf::Vector2<double>(velx*10,vely*10)));
     }
-    space.addBody(Body(1000,10,sf::Vector2<double>(0, 0)));
-    space.bodies.back().shape.setFillColor(sf::Color::Green);
+    space.addBody(Body(100000,100,sf::Vector2<double>(0, 0)));
+    space.addBody(Body(10000000,100,sf::Vector2<double>(5000, 1000), sf::Vector2<double>(-40,-100)));
 
 
     for(auto i : space.bodies) {
@@ -53,6 +53,9 @@ int main()
         space.draw(window);
         space.update(dt.asMicroseconds());
         window.display();
+
+        view.setCenter(space.bodies.back().position.x, space.bodies.back().position.y);
+        window.setView(view);
 
         for(auto i : space.bodies) {
             if (isnan(i.position.x)) {

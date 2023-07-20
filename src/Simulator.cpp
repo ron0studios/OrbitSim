@@ -15,6 +15,8 @@ void Simulator::addBody(Body body) {
 
 // returns the length of a vector squared
 double squarelen(sf::Vector2<double> a){
+    if(a.x == a.y and a.x == 0)
+        a.x = a.y = 0.1;
 
     return a.x*a.x + a.y*a.y;
 }
@@ -25,7 +27,7 @@ void Simulator::update(sf::Int64 delta) {
         for(auto & bodyB : bodies) {
             if(&bodyA == &bodyB) continue;
             double magnitude = (bodyA.mass * bodyB.mass)/( 0.1 * squarelen(bodyB.position-bodyA.position));
-            if(isnan(magnitude) or isinf(magnitude)) magnitude = 3 * pow(10,7); // 10% speed of light
+            //if(isnan(magnitude) or isinf(magnitude)) magnitude = 3 * pow(10,7); // 10% speed of light
 
 
             sf::Vector2<double> force = bodyB.position-bodyA.position;
@@ -33,10 +35,6 @@ void Simulator::update(sf::Int64 delta) {
             force.x *= magnitude/ sqrt(squarelen(bodyB.position-bodyA.position));
             force.y *= magnitude/ sqrt(squarelen(bodyB.position-bodyA.position));
 
-            if(isnan(force.x)){
-                //std::cout << "HA GOTCHU";
-                int a = 1;
-            }
 
             sf::Vector2<double> accel(force.x/bodyA.mass, force.y/bodyA.mass);
             bodyA.acceleration += accel;

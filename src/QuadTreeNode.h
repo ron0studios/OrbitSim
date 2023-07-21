@@ -15,7 +15,6 @@ class QuadTreeNode {
         double mass = 0.0;
         double width = 0.0;
         sf::RectangleShape debug;
-        bool debugLast = false;
         sf::Vector2<double>  position;
 
         int singleNodeQuadrant = -1;

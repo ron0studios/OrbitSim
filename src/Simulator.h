@@ -15,13 +15,16 @@ class Simulator {
         std::vector<Body> bodies;
         Simulator(double bounds = 50000);
         void addBody(Body body);
-        void update(sf::Int64 delta);
+        void updateForces();
+        void updateTree();
+        void updateBodies(sf::Int64 delta);
         void draw(sf::RenderWindow& window);
 
     private:
         double squarelen(sf::Vector2<double> a);
         void genQuadTree();
         void delQuadTree(QuadTreeNode* node);
+        void calcForce(Body& body);
 
         QuadTreeNode root = QuadTreeNode(sf::Vector2<double>(0.0,0.0), 0.0, 0.0);;
         double bounds;

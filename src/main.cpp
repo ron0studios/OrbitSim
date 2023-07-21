@@ -2,6 +2,7 @@
 #include <random>
 #include <iostream>
 #include "Simulator.h"
+#include <chrono>
 
 int main()
 {
@@ -15,7 +16,7 @@ int main()
 
     Simulator space;
 
-    for(int i = 0; i < 1000; i++) {
+    for(int i = 0; i < 10006; i++) {
         double dx = (((double)rand()/ RAND_MAX) * 500) -250;
         double dy = (((double)rand()/ RAND_MAX) * 500) -250;
 
@@ -58,6 +59,7 @@ int main()
 
     sf::Clock deltaClock;
     sf::Time dt;
+    int iterations = 0;
     while (window.isOpen())
     {
         sf::Event event;
@@ -90,7 +92,21 @@ int main()
 
         window.clear();
         space.draw(window);
-        space.update(dt.asMicroseconds());
+
+        //auto start = std::chrono::high_resolution_clock::now();
+        //std::chrono::high_resolution_clock::time_point timeA, timeB;
+        if(iterations % 10 == 0) {
+            space.updateTree();
+            //timeA = std::chrono::high_resolution_clock::now();
+            space.updateForces();
+            //timeB = std::chrono::high_resolution_clock::now();
+
+            //auto treetime = std::chrono::duration_cast<std::chrono::microseconds>(timeA - start);
+            //auto forcetime = std::chrono::duration_cast<std::chrono::microseconds>(timeB - timeA);
+            //std::cout << treetime.count() << " " << forcetime.count() << std::endl;
+        }
+
+        space.updateBodies(dt.asMicroseconds());
         sf::CircleShape s(1);
         s.setPosition(0,0);
         window.draw(s);
@@ -102,6 +118,7 @@ int main()
 
 
         dt = deltaClock.restart();
+        iterations++;
     }
 
     return 0;

@@ -5,15 +5,21 @@
 #include "QuadTreeNode.h"
 #include <stack>
 
+
+
 QuadTreeNode::QuadTreeNode(sf::Vector2<double> position, double mass, double width) {
     this->position = position;
     this->mass = mass;
     this->width = width;
+
+#ifdef DEBUG
     debug = sf::RectangleShape(sf::Vector2f(width,width));
     debug.setFillColor(sf::Color::Transparent);
     debug.setOutlineThickness(2.0);
     debug.setOrigin(sf::Vector2f(width/2.0, width/2.0));
     debug.setPosition((float)position.x, (float)position.y);
+#endif
+
 }
 
 QuadTreeNode *QuadTreeNode::getChildFromIdx(int idx) {
@@ -46,14 +52,14 @@ sf::Vector2<double> QuadTreeNode::getQuadrantCenter(QuadTreeNode *q){
         return sf::Vector2<double>( position.x + width/4.0, position.y + width/4.0);
 }
 
+
+#ifdef DEBUG
 void QuadTreeNode::draw(sf::RenderWindow &window) {
     std::stack<QuadTreeNode*> trace;
     trace.push(this);
     while(!trace.empty()){
         QuadTreeNode* top = trace.top(); trace.pop();
         window.draw(top->debug);
-
-        if(top->debugLast) continue;
 
         for(int i = 0; i < 4; i++){
             QuadTreeNode* node = top->getChildFromIdx(i);
@@ -62,6 +68,7 @@ void QuadTreeNode::draw(sf::RenderWindow &window) {
         }
     }
 }
+#endif
 
 int QuadTreeNode::getQuadrantIdx(sf::Vector2<double> pos){
     if(pos.x <= position.x){

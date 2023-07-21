@@ -194,7 +194,8 @@
 			[
 				2,
 				4,
-				6
+				6,
+				7
 			]
 		}
 	],
@@ -237,6 +238,11 @@
 		{
 			"backtrace" : 1,
 			"path" : "src/QuadTreeNode.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "src/ctpl.h",
 			"sourceGroupIndex" : 1
 		}
 	],

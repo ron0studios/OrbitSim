@@ -2,6 +2,7 @@
 #include <random>
 #include <iostream>
 #include "Simulator.h"
+#include <thread>
 #include <chrono>
 
 int main()
@@ -16,7 +17,7 @@ int main()
 
     Simulator space;
 
-    for(int i = 0; i < 10006; i++) {
+    for(int i = 0; i < 20006; i++) {
         double dx = (((double)rand()/ RAND_MAX) * 500) -250;
         double dy = (((double)rand()/ RAND_MAX) * 500) -250;
 
@@ -96,9 +97,16 @@ int main()
         //auto start = std::chrono::high_resolution_clock::now();
         //std::chrono::high_resolution_clock::time_point timeA, timeB;
         if(iterations % 10 == 0) {
-            space.updateTree();
+
+            auto f = [&space](){
+                space.updateTree();
+                space.updateForces();
+            };
+            std::thread t(f);
+            t.detach();
+            //space.updateTree();
             //timeA = std::chrono::high_resolution_clock::now();
-            space.updateForces();
+            //space.updateForces();
             //timeB = std::chrono::high_resolution_clock::now();
 
             //auto treetime = std::chrono::duration_cast<std::chrono::microseconds>(timeA - start);

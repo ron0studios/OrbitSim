@@ -210,8 +210,13 @@ void Simulator::updateForces() {
 
 
 
+    /*
+    for(auto &body : bodies) {
+        calcForce(body);
+    }
+     */
 
-    int num_threads = 16;
+    int num_threads = 8;
     std::vector<std::thread> threads(num_threads);
 
     for(int i = 0; i < num_threads; i++){
@@ -220,15 +225,10 @@ void Simulator::updateForces() {
                     calcForce(bodies[j]);
             },i, bodies.size()/num_threads);
     }
-    /*
-    for(int i=0; i < bodies.size(); i++) {
 
-
-        //threads[i] = std::thread([this](Body& b){calcForce(b);}, std::ref(bodies[i]));
-    }
-     */
     for(int i = 0; i < num_threads; i++)
         threads[i].join();
+
 
     /*
     for(auto & bodyA : bodies) {

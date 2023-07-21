@@ -17,9 +17,9 @@ int main()
 
     Simulator space;
 
-    for(int i = 0; i < 20006; i++) {
-        double dx = (((double)rand()/ RAND_MAX) * 500) -250;
-        double dy = (((double)rand()/ RAND_MAX) * 500) -250;
+    for(int i = 0; i < 10006; i++) {
+        double dx = (((double)rand()/ RAND_MAX) * 2000) -1000;
+        double dy = (((double)rand()/ RAND_MAX) * 2000) -1000;
 
         int rnd = rand();
         double x =  cos(((double)rnd/ RAND_MAX) * 2*M_PI) * 3000 + dx;
@@ -98,12 +98,18 @@ int main()
         //std::chrono::high_resolution_clock::time_point timeA, timeB;
         if(iterations % 10 == 0) {
 
+            space.updateTree();
+            space.updateForces();
+
+            /*
             auto f = [&space](){
                 space.updateTree();
                 space.updateForces();
             };
             std::thread t(f);
             t.detach();
+            */
+
             //space.updateTree();
             //timeA = std::chrono::high_resolution_clock::now();
             //space.updateForces();

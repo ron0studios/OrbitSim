@@ -98,17 +98,15 @@ int main()
         //std::chrono::high_resolution_clock::time_point timeA, timeB;
         if(iterations % 10 == 0) {
 
-            space.updateTree();
-            space.updateForces();
+            //space.updateTree();
+            //space.updateForces();
 
-            /*
             auto f = [&space](){
                 space.updateTree();
                 space.updateForces();
             };
             std::thread t(f);
             t.detach();
-            */
 
             //space.updateTree();
             //timeA = std::chrono::high_resolution_clock::now();

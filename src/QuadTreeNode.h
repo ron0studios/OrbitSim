@@ -3,6 +3,7 @@
 //
 
 #include <SFML/Graphics.hpp>
+#include "Body.h"
 
 #ifndef ORBITSIM_QUADTREENODE_H
 #define ORBITSIM_QUADTREENODE_H
@@ -14,11 +15,15 @@ class QuadTreeNode {
         double mass = 0.0;
         double width = 0.0;
         sf::RectangleShape debug;
+        bool debugLast = false;
         sf::Vector2<double>  position;
 
         int singleNodeQuadrant = -1;
         sf::Vector2<double>  singleNodePos;
         double singleNodeMass;
+        Body* singleNodeRef = nullptr;
+
+
 
         QuadTreeNode* NW = nullptr;
         QuadTreeNode* NE = nullptr;

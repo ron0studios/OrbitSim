@@ -20,8 +20,8 @@ int main()
         double dy = (((double)rand()/ RAND_MAX) * 500) -250;
 
         int rnd = rand();
-        double x =  cos(((double)rnd/ RAND_MAX) * 2*M_PI) * 300 + dx;
-        double y =  sin(((double)rnd/ RAND_MAX) * 2*M_PI) * 300 + dy;
+        double x =  cos(((double)rnd/ RAND_MAX) * 2*M_PI) * 3000 + dx;
+        double y =  sin(((double)rnd/ RAND_MAX) * 2*M_PI) * 3000 + dy;
 
         double rnd2 = (((double)rand()/ RAND_MAX)*10);
         double velx = -cos(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) * rnd2;
@@ -33,6 +33,7 @@ int main()
     space.addBody(Body(100000,100,sf::Vector2<double>(0, 0)));
     space.addBody(Body(10000000,100,sf::Vector2<double>(5000, 1000), sf::Vector2<double>(-40,-100)));
 
+    /*
     for(int i = 0; i < 1002; i++)
     {
        // std::cout << space.bodies[i].position.x << " " << space.bodies[i].position.y << std::endl;
@@ -42,6 +43,7 @@ int main()
         }
 
     }
+     */
 
 
     /*

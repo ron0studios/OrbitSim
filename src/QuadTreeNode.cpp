@@ -51,12 +51,14 @@ void QuadTreeNode::draw(sf::RenderWindow &window) {
     trace.push(this);
     while(!trace.empty()){
         QuadTreeNode* top = trace.top(); trace.pop();
+        window.draw(top->debug);
+
+        if(top->debugLast) continue;
 
         for(int i = 0; i < 4; i++){
             QuadTreeNode* node = top->getChildFromIdx(i);
             if(node == nullptr) continue;
             trace.push(node);
-            window.draw(node->debug);
         }
     }
 }

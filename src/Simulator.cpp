@@ -34,10 +34,6 @@ void Simulator::genQuadTree(){
     for(auto & body : bodies) {
         id++;
         //std::cout << id << std::endl;
-        if(id==1001)
-        {
-            std::cout<<"WOOO";
-        }
 
         //printf("%i\n", id);
         sf::Vector2<double> bpos = body.position;
@@ -72,10 +68,12 @@ void Simulator::genQuadTree(){
                             top->singleNodeQuadrant = -1;
                             sf::Vector2<double> tmp = top->singleNodePos;
                             double tmpmass = top->singleNodeMass;
+                            Body* tmpref   = top->singleNodeRef;
                             top = top->getChildFromIdx(part);
                             top->singleNodeQuadrant = top->getQuadrantIdx(tmp);
                             top->singleNodePos = tmp;
                             top->singleNodeMass = tmpmass;
+                            top->singleNodeRef = tmpref;
 
                             part = top->getQuadrantIdx(bpos);
                             continue;
@@ -93,6 +91,8 @@ void Simulator::genQuadTree(){
                         top->getChildFromIdx(top->singleNodeQuadrant)->singleNodeMass = top->singleNodeMass;
                         top->getChildFromIdx(part)->singleNodePos = bpos;
                         top->getChildFromIdx(top->singleNodeQuadrant)->singleNodePos = top->singleNodePos;
+                        top->getChildFromIdx(part)->singleNodeRef = &body;
+                        top->getChildFromIdx(top->singleNodeQuadrant)->singleNodeRef = top->singleNodeRef;
 
                         top->singleNodeQuadrant = -1;
                         break;
@@ -105,6 +105,7 @@ void Simulator::genQuadTree(){
                 top->getChildFromIdx(part)->singleNodeQuadrant = top->getChildFromIdx(part)->getQuadrantIdx(bpos);
                 top->getChildFromIdx(part)->singleNodePos = bpos;
                 top->getChildFromIdx(part)->singleNodeMass = body.mass;
+                top->getChildFromIdx(part)->singleNodeRef = &body;
 
                 top->singleNodeQuadrant = -1;
                 break;
@@ -136,11 +137,75 @@ void Simulator::delQuadTree(QuadTreeNode* node) {
 }
 
 
+
 void Simulator::update(sf::Int64 delta) {
     delQuadTree(&root);
     genQuadTree();
     //std::cout << "loop\n" << std::endl;
 
+    int i = -1;
+    for(auto & body : bodies) {
+        i++;
+        // traverse tree
+        body.acceleration = sf::Vector2<double>(0.0, 0.0);
+
+        std::stack<QuadTreeNode*> trace;
+        trace.push(&root);
+        while(!trace.empty()){
+            QuadTreeNode* node = trace.top(); trace.pop();
+
+            if(node->singleNodeQuadrant != -1)
+            {
+                if(node->singleNodeRef == &body)
+                    continue;
+
+
+                double magnitude = (body.mass * node->singleNodeMass)/( 0.1 * squarelen(node->singleNodePos-body.position));
+                //if(isnan(magnitude) or isinf(magnitude)) magnitude = 3 * pow(10,7); // 10% speed of light
+
+
+                sf::Vector2<double> force = node->singleNodePos-body.position;
+                //std::cout << "\t" << force.x << " " << force.y << std::endl;
+                force.x *= magnitude/ sqrt(squarelen(node->singleNodePos-body.position));
+                force.y *= magnitude/ sqrt(squarelen(node->singleNodePos-body.position));
+
+
+                sf::Vector2<double> accel(force.x/body.mass, force.y/body.mass);
+                body.acceleration += accel;
+                continue;
+            }
+
+            double ratio = node->width/ sqrt(squarelen(node->position- body.position));
+            if(ratio < 0.5) {
+                double magnitude = (body.mass * node->mass)/( 0.1 * squarelen(node->position-body.position));
+                //if(isnan(magnitude) or isinf(magnitude)) magnitude = 3 * pow(10,7); // 10% speed of light
+
+
+                sf::Vector2<double> force = node->position-body.position;
+                //std::cout << "\t" << force.x << " " << force.y << std::endl;
+                force.x *= magnitude/ sqrt(squarelen(node->position-body.position));
+                force.y *= magnitude/ sqrt(squarelen(node->position-body.position));
+
+
+                sf::Vector2<double> accel(force.x/body.mass, force.y/body.mass);
+                body.acceleration += accel;
+
+                if(body.mass == 10000000) node->debugLast = true;
+
+            }
+            else {
+                for (int i = 0; i < 4; i++) {
+                    if (node->getChildFromIdx(i) == nullptr)
+                        continue;
+
+                    trace.push(node->getChildFromIdx(i));
+                }
+            }
+        }
+    }
+    for(auto & body : bodies) body.update(delta);
+
+    /*
     for(auto & bodyA : bodies) {
         bodyA.acceleration = sf::Vector2<double>(0.0, 0.0);
         for(auto & bodyB : bodies) {
@@ -162,6 +227,7 @@ void Simulator::update(sf::Int64 delta) {
         //std::cout << "\t" << bodyA.acceleration.x << " " << bodyA.acceleration.y << std::endl;
     }
     for(auto & body : bodies) body.update(delta);
+    */
 }
 
 void Simulator::draw(sf::RenderWindow& window) {

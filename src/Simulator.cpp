@@ -6,7 +6,9 @@
 #include <iostream>
 #include <stack>
 #include <thread>
+#include <cfloat>
 #include "ctpl.h"
+
 
 
 Simulator::Simulator(double bounds) {
@@ -25,8 +27,8 @@ void Simulator::addBody(Body body) {
 
 // returns the length of a vector squared
 double Simulator::squarelen(sf::Vector2<double> a){
-    if(a.x == a.y and a.x == 0)
-        a.x = a.y = 0.1;
+    //if(a.x == a.y and a.x == 0)
+        //a.x = a.y = 1000000000;
 
     return a.x*a.x + a.y*a.y;
 }
@@ -142,6 +144,7 @@ void Simulator::delQuadTree(QuadTreeNode* node) {
 
 
 void Simulator::updateTree() {
+    //std::lock_guard<std::mutex> guard(mut);
     delQuadTree(&root);
     genQuadTree();
 }
@@ -162,15 +165,17 @@ void Simulator::calcForce(Body &body) {
             if(node->singleNodeRef == &body)
                 continue;
 
+            if(node->singleNodePos==body.position)
+                continue;
 
-            double magnitude = (body.mass * node->singleNodeMass)/( 0.1 * squarelen(node->singleNodePos-body.position));
+            double magnitude = (body.mass * node->singleNodeMass)/sqrt(squarelen(node->singleNodePos-body.position) + 10000);
             //if(isnan(magnitude) or isinf(magnitude)) magnitude = 3 * pow(10,7); // 10% speed of light
 
 
             sf::Vector2<double> force = node->singleNodePos-body.position;
             //std::cout << "\t" << force.x << " " << force.y << std::endl;
-            force.x *= magnitude/ sqrt(squarelen(node->singleNodePos-body.position));
-            force.y *= magnitude/ sqrt(squarelen(node->singleNodePos-body.position));
+            force.x *= magnitude/ sqrt(squarelen(node->singleNodePos-body.position)+10000);
+            force.y *= magnitude/ sqrt(squarelen(node->singleNodePos-body.position)+10000);
 
 
             sf::Vector2<double> accel(force.x/body.mass, force.y/body.mass);
@@ -180,14 +185,17 @@ void Simulator::calcForce(Body &body) {
 
         double ratio = node->width/ sqrt(squarelen(node->position- body.position));
         if(ratio < 0.5) {
-            double magnitude = (body.mass * node->mass)/( 0.1 * squarelen(node->position-body.position));
+
+            if(node->position == body.position) continue;
+
+            double magnitude = (body.mass * node->mass)/(squarelen(node->position-body.position)+10000);
             //if(isnan(magnitude) or isinf(magnitude)) magnitude = 3 * pow(10,7); // 10% speed of light
 
 
             sf::Vector2<double> force = node->position-body.position;
             //std::cout << "\t" << force.x << " " << force.y << std::endl;
-            force.x *= magnitude/ sqrt(squarelen(node->position-body.position));
-            force.y *= magnitude/ sqrt(squarelen(node->position-body.position));
+            force.x *= magnitude/ sqrt(squarelen(node->position-body.position)+10000);
+            force.y *= magnitude/ sqrt(squarelen(node->position-body.position)+10000);
 
 
             sf::Vector2<double> accel(force.x/body.mass, force.y/body.mass);
@@ -206,6 +214,7 @@ void Simulator::calcForce(Body &body) {
 }
 
 void Simulator::updateForces() {
+    //std::lock_guard<std::mutex> guard(mut);
     //std::cout << "loop\n" << std::endl;
 
 
@@ -216,7 +225,8 @@ void Simulator::updateForces() {
     }
      */
 
-    int num_threads = 8;
+
+    int num_threads = 16;
     std::vector<std::thread> threads(num_threads);
 
     for(int i = 0; i < num_threads; i++){
@@ -230,19 +240,27 @@ void Simulator::updateForces() {
         threads[i].join();
 
 
+
     /*
     for(auto & bodyA : bodies) {
         bodyA.acceleration = sf::Vector2<double>(0.0, 0.0);
         for(auto & bodyB : bodies) {
             if(&bodyA == &bodyB) continue;
-            double magnitude = (bodyA.mass * bodyB.mass)/( 0.1 * squarelen(bodyB.position-bodyA.position));
+
+
+            //if(sqrt(squarelen(bodyB.position-bodyA.position)) <  (bodyA.radius+bodyB.radius))
+            //{
+            //    continue;
+            //}
+
+            double magnitude = (bodyA.mass * bodyB.mass)/sqrt(squarelen(bodyB.position-bodyA.position) + 10000);
             //if(isnan(magnitude) or isinf(magnitude)) magnitude = 3 * pow(10,7); // 10% speed of light
 
 
             sf::Vector2<double> force = bodyB.position-bodyA.position;
             //std::cout << "\t" << force.x << " " << force.y << std::endl;
-            force.x *= magnitude/ sqrt(squarelen(bodyB.position-bodyA.position));
-            force.y *= magnitude/ sqrt(squarelen(bodyB.position-bodyA.position));
+            force.x *= magnitude/ sqrt(squarelen(bodyB.position-bodyA.position) + 10000);
+            force.y *= magnitude/ sqrt(squarelen(bodyB.position-bodyA.position) + 10000);
 
 
             sf::Vector2<double> accel(force.x/bodyA.mass, force.y/bodyA.mass);
@@ -251,8 +269,8 @@ void Simulator::updateForces() {
         }
         //std::cout << "\t" << bodyA.acceleration.x << " " << bodyA.acceleration.y << std::endl;
     }
-    for(auto & body : bodies) body.update(delta);
     */
+    //for(auto & body : bodies) body.update(delta);
 }
 
 void Simulator::draw(sf::RenderWindow& window) {
@@ -265,6 +283,10 @@ void Simulator::draw(sf::RenderWindow& window) {
 }
 
 void Simulator::updateBodies(sf::Int64 delta) {
+    //double minforce = 0;
+    //for(auto & i : bodies)
+        //minforce = std::max(minforce, pow(i.acceleration.x,2) + pow(i.acceleration.y,2));
+    //std::cout << minforce << std::endl;
     for(auto & body : bodies) body.update(delta);
 }
 

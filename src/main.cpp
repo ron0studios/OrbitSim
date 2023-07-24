@@ -25,7 +25,7 @@ int main()
     space.addBody(Body(100000000,100,sf::Vector2<double>(500, 0) ));
     space.bodies.back().shape.setFillColor(sf::Color::Green);
      */
-    for(int i = 0; i < 5016; i++) {
+    for(int i = 0; i < 1015; i++) {
         //double dx = (((double)rand()/ RAND_MAX) * 28284) -14142;
         //double dy = (((double)rand()/ RAND_MAX) * 28284) -14142;
 
@@ -50,7 +50,7 @@ int main()
         //space.bodies.back().shape.setFillColor(sf::Color(255,255,255,40));
         //space.bodies.back().shape.setFillColor()
     }
-    space.addBody(Body(10000000,10,sf::Vector2<double>(0, 0)));
+    space.addBody(Body(1000000,10,sf::Vector2<double>(0, 0)));
     space.bodies.back().shape.setFillColor(sf::Color::Green);
 
 
@@ -237,9 +237,6 @@ int main()
         //std::chrono::high_resolution_clock::time_point timeA, timeB;
         if(iterations % 1 == 0) {
 
-            space.updateTree();
-            space.updateForces();
-            space.updateBodies(dt.asMicroseconds());
 
             /*
             auto f = [&space](){
@@ -261,6 +258,10 @@ int main()
             //std::cout << treetime.count() << " " << forcetime.count() << std::endl;
         }
 
+        space.updateTree();
+        space.updateForces();
+        space.draw(window);
+        space.updateBodies(dt.asMicroseconds());
 
         window.display();
 
@@ -272,6 +273,7 @@ int main()
         iterations++;
 
         std::cout << dt.asSeconds() << std::endl;
+        //std::cout << space.bodies.back().acceleration.x << " " << space.bodies.back().acceleration.y << std::endl;
     }
 
     return 0;

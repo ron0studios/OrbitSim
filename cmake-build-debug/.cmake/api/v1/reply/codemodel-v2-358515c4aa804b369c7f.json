@@ -30,7 +30,7 @@
 						2
 					],
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-_deps.sfml-build-Debug-a63252cf407c29132378.json",
+					"jsonFile" : "directory-_deps.sfml-build-Debug-868b08d0ba7a3a306c27.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.7.2"
@@ -62,7 +62,7 @@
 				{
 					"build" : "_deps/sfml-build/src/SFML/System",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-_deps.sfml-build.src.SFML.System-Debug-cdb0454db5308b992e4f.json",
+					"jsonFile" : "directory-_deps.sfml-build.src.SFML.System-Debug-2498494b9943ed73857f.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.7.2"
@@ -78,7 +78,7 @@
 				{
 					"build" : "_deps/sfml-build/src/SFML/Window",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-_deps.sfml-build.src.SFML.Window-Debug-27fdbc73a48c74488baa.json",
+					"jsonFile" : "directory-_deps.sfml-build.src.SFML.Window-Debug-95d39ca2b29dcf1d6e12.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.7.2"
@@ -94,7 +94,7 @@
 				{
 					"build" : "_deps/sfml-build/src/SFML/Network",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-_deps.sfml-build.src.SFML.Network-Debug-a52f2d9b65432b6c5fd4.json",
+					"jsonFile" : "directory-_deps.sfml-build.src.SFML.Network-Debug-2bb1494c808aba245df5.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.7.2"
@@ -110,7 +110,7 @@
 				{
 					"build" : "_deps/sfml-build/src/SFML/Graphics",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-_deps.sfml-build.src.SFML.Graphics-Debug-f17bcff7ae517ae6d9c5.json",
+					"jsonFile" : "directory-_deps.sfml-build.src.SFML.Graphics-Debug-03611787b5b12b9b1eb0.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.7.2"
@@ -126,7 +126,7 @@
 				{
 					"build" : "_deps/sfml-build/src/SFML/Audio",
 					"hasInstallRule" : true,
-					"jsonFile" : "directory-_deps.sfml-build.src.SFML.Audio-Debug-b25c1a51c3498f03f9ea.json",
+					"jsonFile" : "directory-_deps.sfml-build.src.SFML.Audio-Debug-a1da957a5830390d324f.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "3.7.2"
@@ -186,42 +186,42 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "OrbitSim::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-OrbitSim-Debug-ed0f7fad7098fb8c5b61.json",
+					"jsonFile" : "target-OrbitSim-Debug-5e6d8b14d86174fbee06.json",
 					"name" : "OrbitSim",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 7,
 					"id" : "sfml-audio::@a153e5727587c53fce98",
-					"jsonFile" : "target-sfml-audio-Debug-5f728f5b8cfcb433ea7a.json",
+					"jsonFile" : "target-sfml-audio-Debug-13ade804eebd8c6e5b1e.json",
 					"name" : "sfml-audio",
 					"projectIndex" : 1
 				},
 				{
 					"directoryIndex" : 6,
 					"id" : "sfml-graphics::@98af38147d5fa7e70f61",
-					"jsonFile" : "target-sfml-graphics-Debug-7d26eebb07c41c10244d.json",
+					"jsonFile" : "target-sfml-graphics-Debug-317d94ee8d4e6a1fd4e1.json",
 					"name" : "sfml-graphics",
 					"projectIndex" : 1
 				},
 				{
 					"directoryIndex" : 5,
 					"id" : "sfml-network::@d7f79968b2699e7782cb",
-					"jsonFile" : "target-sfml-network-Debug-964514e604fe81e0d712.json",
+					"jsonFile" : "target-sfml-network-Debug-dc942ecfb68e88580e2a.json",
 					"name" : "sfml-network",
 					"projectIndex" : 1
 				},
 				{
 					"directoryIndex" : 3,
 					"id" : "sfml-system::@8cb1db2982443611e568",
-					"jsonFile" : "target-sfml-system-Debug-005888cf020d47d8be8d.json",
+					"jsonFile" : "target-sfml-system-Debug-00453f14fb9cfd251b18.json",
 					"name" : "sfml-system",
 					"projectIndex" : 1
 				},
 				{
 					"directoryIndex" : 4,
 					"id" : "sfml-window::@5730451e331e3690ae65",
-					"jsonFile" : "target-sfml-window-Debug-4d988e3855fa6cb7dd42.json",
+					"jsonFile" : "target-sfml-window-Debug-de16bf585f90166a8b45.json",
 					"name" : "sfml-window",
 					"projectIndex" : 1
 				}

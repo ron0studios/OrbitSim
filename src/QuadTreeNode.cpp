@@ -6,7 +6,6 @@
 #include <stack>
 
 
-
 QuadTreeNode::QuadTreeNode(sf::Vector2<double> position, double mass, double width) {
     this->position = position;
     this->mass = mass;

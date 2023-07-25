@@ -10,7 +10,7 @@
 class Body {
     public:
         sf::CircleShape shape;
-        float mass, radius;
+        double mass, radius;
         sf::Vector2<double> acceleration, velocity, position;
 
         // debug

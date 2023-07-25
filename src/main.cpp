@@ -8,7 +8,8 @@
 
 int main()
 {
-    srand(time(0));
+    //srand(time(0));
+    double speed = 0.5;
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "OrbitSim");
     window.setFramerateLimit(60); // for physics
     int sizex = 1920*1;
@@ -25,12 +26,13 @@ int main()
     space.addBody(Body(100000000,100,sf::Vector2<double>(500, 0) ));
     space.bodies.back().shape.setFillColor(sf::Color::Green);
      */
-    for(int i = 0; i < 1015; i++) {
+
+     for(int i = 0; i < 10000; i++) {
         //double dx = (((double)rand()/ RAND_MAX) * 28284) -14142;
         //double dy = (((double)rand()/ RAND_MAX) * 28284) -14142;
 
         double rnd = rand();
-        double r = 20000 * sqrt( pow((double)rand()/RAND_MAX, 2));
+        double r = 1000 * sqrt( pow((double)rand()/RAND_MAX, 2));
         double theta = ((double)rnd/RAND_MAX) * 2 * M_PI;
         double x = r * cos(theta);
         double y = r * sin(theta);
@@ -42,28 +44,33 @@ int main()
         //std::cout << (1-(sqrt(x*x + y*y)/56568)) << std::endl;
 
         double rnd2 = (((double)rand()/ RAND_MAX)*10);
-        double velx = -cos(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  20 * (2- r/20000) * 1;
-        double vely =  sin(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  20 * (2- r/20000) * 1;
+        double velx = -cos(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  20 * (2- r/20000) * 0.1;
+        double vely =  sin(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  20 * (2- r/20000) * 0.1;
         double mass = rnd2;
 
-        space.addBody(Body(100,10 * mass,sf::Vector2<double>(x, y), sf::Vector2<double>(velx*10,vely*10)));
+        //double rndx =  (((double)rand()/ RAND_MAX)*100)-50;
+        //double rndy =  (((double)rand()/ RAND_MAX)*100)-50;
+
+        space.addBody(Body(1000,10 * mass,sf::Vector2<double>(x, y), sf::Vector2<double>(velx*10,vely*10)));
+        //space.addBody(Body(rnd2*1000,100 * mass,sf::Vector2<double>(x, y), sf::Vector2<double>(rndx*300,rndy*300)));
         //space.bodies.back().shape.setFillColor(sf::Color(255,255,255,40));
         //space.bodies.back().shape.setFillColor()
     }
-    space.addBody(Body(1000000,10,sf::Vector2<double>(0, 0)));
-    space.bodies.back().shape.setFillColor(sf::Color::Green);
+    //space.addBody(Body(10000000,10,sf::Vector2<double>(50000, 30000), sf::Vector2<double>(-300,-500)));
+    space.addBody(Body(100000,10,sf::Vector2<double>(0, 0)));
+    //space.bodies.back().shape.setFillColor(sf::Color::Green);
 
 
 
     /*
-    for(int i = -50000; i < 50000; i+=1000){
-        for(int j = -50000; j < 50000; j+=1000){
+    for(int i = -500000; i < 500000; i+=1000){
+        for(int j = -500000; j < 500000; j+=1000){
 
-            double rnd = (((double)rand()/ RAND_MAX) * 10000);
+            double rnd = (((double)rand()/ RAND_MAX) * 1000);
 
             double rnd2 = (((double)rand()/ RAND_MAX)*1000)-500;
             double rnd3 = (((double)rand()/ RAND_MAX)*1000)-500;
-            space.addBody(Body(rnd, 100 * rnd/10000, sf::Vector2<double>(i,j)));
+            space.addBody(Body(rnd, 100 * rnd/1000, sf::Vector2<double>(i,j)));
             //space.bodies.back().shape.setFillColor(sf::Color(255,255,255,40));
         }
     }
@@ -185,18 +192,19 @@ int main()
             window.setView(view);*/
         }
 
+
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
             view.setSize(view.getSize().x * (1 - 1 * dt.asSeconds()), view.getSize().y * (1 - 1 * dt.asSeconds()));
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::E))
             view.setSize(view.getSize().x * (1 + 1 * dt.asSeconds()), view.getSize().y * (1 + 1 * dt.asSeconds()));
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-            view.setCenter(view.getCenter().x, view.getCenter().y - 5000*dt.asSeconds());
+            view.setCenter(view.getCenter().x, view.getCenter().y - speed*view.getSize().y*dt.asSeconds());
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-            view.setCenter(view.getCenter().x - 5000*dt.asSeconds(), view.getCenter().y);
+            view.setCenter(view.getCenter().x - speed*view.getSize().x*dt.asSeconds(), view.getCenter().y);
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-            view.setCenter(view.getCenter().x, view.getCenter().y + 5000*dt.asSeconds());
+            view.setCenter(view.getCenter().x, view.getCenter().y + speed*view.getSize().y*dt.asSeconds());
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-            view.setCenter(view.getCenter().x + 5000*dt.asSeconds(), view.getCenter().y);
+            view.setCenter(view.getCenter().x + speed*view.getSize().x*dt.asSeconds(), view.getCenter().y);
         window.setView(view);
 
         window.clear();
@@ -216,8 +224,14 @@ int main()
             int gridx = (pos.x - origin.x)/(size.x/1920);
             int gridy = (pos.y - origin.y)/(size.y/1080);
 
-            for(int i = 0; i < 4; i++)
-                pix[4*((gridy*1920) + gridx) + i] = std::min(pix[4*((gridy*1920) + gridx) + i]+255, 255);
+
+            //std::cout << (int)body.shape.getFillColor().r << " " << (int)body.shape.getFillColor().g << " " << (int)body.shape.getFillColor().b << std::endl;
+            pix[4*((gridy*1920) + gridx) + 0] = body.shape.getFillColor().r;
+            pix[4*((gridy*1920) + gridx) + 1] = body.shape.getFillColor().g;
+            pix[4*((gridy*1920) + gridx) + 2] = body.shape.getFillColor().b;
+            pix[4*((gridy*1920) + gridx) + 3] = 255;
+            //for(int i = 0; i < 4; i++)
+             //   pix[4*((gridy*1920) + gridx) + i] = std::min(pix[4*((gridy*1920) + gridx) + i]+255, 255);
         }
 
         img.create(1920,1080,pix);
@@ -235,18 +249,17 @@ int main()
 
         //auto start = std::chrono::high_resolution_clock::now();
         //std::chrono::high_resolution_clock::time_point timeA, timeB;
-        if(iterations % 1 == 0) {
+        if(iterations % 10 == 0) {
 
 
-            /*
-            auto f = [&space](){
+            auto f = [&space, dt](){
                 space.updateTree();
-                space.updateForces();
+                space.updateForces(false);
+                space.updateBodies(dt.asMicroseconds());
             };
             std::thread t(f);
-            //t.detach();
-            t.join();
-            */
+            t.detach();
+            //t.join();
 
             //space.updateTree();
             //timeA = std::chrono::high_resolution_clock::now();
@@ -258,10 +271,12 @@ int main()
             //std::cout << treetime.count() << " " << forcetime.count() << std::endl;
         }
 
-        space.updateTree();
-        space.updateForces();
-        space.draw(window);
-        space.updateBodies(dt.asMicroseconds());
+
+        //space.updateTree();
+        //space.updateForces();
+        //space.draw(window);
+        //space.drawTree(window);
+        //space.updateBodies(dt.asMicroseconds());
 
         window.display();
 

@@ -70,13 +70,6 @@ build CMakeFiles/OrbitSim.dir/src/Simulator.cpp.o: CXX_COMPILER__OrbitSim_Debug 
   OBJECT_DIR = CMakeFiles/OrbitSim.dir
   OBJECT_FILE_DIR = CMakeFiles/OrbitSim.dir/src
 
-build CMakeFiles/OrbitSim.dir/src/QuadTreeNode.cpp.o: CXX_COMPILER__OrbitSim_Debug /home/ron0/development/cpp-projects/OrbitSim/src/QuadTreeNode.cpp || cmake_object_order_depends_target_OrbitSim
-  DEP_FILE = CMakeFiles/OrbitSim.dir/src/QuadTreeNode.cpp.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
-  INCLUDES = -I/home/ron0/development/cpp-projects/OrbitSim/cmake-build-debug/_deps/sfml-src/include
-  OBJECT_DIR = CMakeFiles/OrbitSim.dir
-  OBJECT_FILE_DIR = CMakeFiles/OrbitSim.dir/src
-
 build CMakeFiles/OrbitSim.dir/src/QuadTree.cpp.o: CXX_COMPILER__OrbitSim_Debug /home/ron0/development/cpp-projects/OrbitSim/src/QuadTree.cpp || cmake_object_order_depends_target_OrbitSim
   DEP_FILE = CMakeFiles/OrbitSim.dir/src/QuadTree.cpp.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++20
@@ -92,7 +85,7 @@ build CMakeFiles/OrbitSim.dir/src/QuadTree.cpp.o: CXX_COMPILER__OrbitSim_Debug /
 #############################################
 # Link the executable OrbitSim
 
-build OrbitSim: CXX_EXECUTABLE_LINKER__OrbitSim_Debug CMakeFiles/OrbitSim.dir/src/main.cpp.o CMakeFiles/OrbitSim.dir/src/Body.cpp.o CMakeFiles/OrbitSim.dir/src/Simulator.cpp.o CMakeFiles/OrbitSim.dir/src/QuadTreeNode.cpp.o CMakeFiles/OrbitSim.dir/src/QuadTree.cpp.o | _deps/sfml-build/lib/libsfml-graphics-d.so.2.6.0 _deps/sfml-build/lib/libsfml-audio-d.so.2.6.0 _deps/sfml-build/lib/libsfml-window-d.so.2.6.0 _deps/sfml-build/lib/libsfml-network-d.so.2.6.0 _deps/sfml-build/lib/libsfml-system-d.so.2.6.0 || _deps/sfml-build/lib/libsfml-audio-d.so _deps/sfml-build/lib/libsfml-graphics-d.so _deps/sfml-build/lib/libsfml-network-d.so _deps/sfml-build/lib/libsfml-system-d.so _deps/sfml-build/lib/libsfml-window-d.so _deps/sfml-build/lib/libsfml-graphics-d.so _deps/sfml-build/lib/libsfml-audio-d.so _deps/sfml-build/lib/libsfml-window-d.so _deps/sfml-build/lib/libsfml-network-d.so _deps/sfml-build/lib/libsfml-system-d.so
+build OrbitSim: CXX_EXECUTABLE_LINKER__OrbitSim_Debug CMakeFiles/OrbitSim.dir/src/main.cpp.o CMakeFiles/OrbitSim.dir/src/Body.cpp.o CMakeFiles/OrbitSim.dir/src/Simulator.cpp.o CMakeFiles/OrbitSim.dir/src/QuadTree.cpp.o | _deps/sfml-build/lib/libsfml-graphics-d.so.2.6.0 _deps/sfml-build/lib/libsfml-audio-d.so.2.6.0 _deps/sfml-build/lib/libsfml-window-d.so.2.6.0 _deps/sfml-build/lib/libsfml-network-d.so.2.6.0 _deps/sfml-build/lib/libsfml-system-d.so.2.6.0 || _deps/sfml-build/lib/libsfml-audio-d.so _deps/sfml-build/lib/libsfml-graphics-d.so _deps/sfml-build/lib/libsfml-network-d.so _deps/sfml-build/lib/libsfml-system-d.so _deps/sfml-build/lib/libsfml-window-d.so _deps/sfml-build/lib/libsfml-graphics-d.so _deps/sfml-build/lib/libsfml-audio-d.so _deps/sfml-build/lib/libsfml-window-d.so _deps/sfml-build/lib/libsfml-network-d.so _deps/sfml-build/lib/libsfml-system-d.so
   FLAGS = -g
   LINK_LIBRARIES = -Wl,-rpath,/home/ron0/development/cpp-projects/OrbitSim/cmake-build-debug/_deps/sfml-build/lib:  _deps/sfml-build/lib/libsfml-graphics-d.so.2.6.0  _deps/sfml-build/lib/libsfml-audio-d.so.2.6.0  _deps/sfml-build/lib/libsfml-window-d.so.2.6.0  _deps/sfml-build/lib/libsfml-network-d.so.2.6.0  _deps/sfml-build/lib/libsfml-system-d.so.2.6.0
   OBJECT_DIR = CMakeFiles/OrbitSim.dir

@@ -11,7 +11,7 @@ FetchContent_Declare(SFML
         GIT_TAG 2.6.x)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(OrbitSim src/main.cpp src/Body.cpp src/Body.h src/Simulator.cpp src/Simulator.h src/QuadTreeNode.cpp src/QuadTreeNode.h src/ctpl.h)
+add_executable(OrbitSim src/main.cpp src/Body.cpp src/Body.h src/Simulator.cpp src/Simulator.h src/ctpl.h src/QuadTree.cpp src/QuadTree.h)
 target_link_libraries(OrbitSim PRIVATE sfml-graphics sfml-audio sfml-window sfml-system sfml-network)
 target_compile_features(OrbitSim PRIVATE cxx_std_17)
 if (WIN32 AND BUILD_SHARED_LIBS)

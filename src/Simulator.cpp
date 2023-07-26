@@ -64,10 +64,10 @@ void Simulator::updateForces(bool bruteForce) {
 
     for(int i = 0; i < num_threads; i++){
         threads[i] = std::thread([this](int i, int n){
-            for(int j = i*n; j < ((i+1)*n); j++)
+            for(int j = i*n; j < ((i+1)*n) and j < bodies.size(); j++)
                 tree.updateForce(&bodies[j], 0.5);
                 //calcForce(bodies[j]);
-        },i, std::ceil(bodies.size()/num_threads));
+        },i, std::ceil((double)bodies.size()/num_threads));
     }
 
 

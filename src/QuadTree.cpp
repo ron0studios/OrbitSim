@@ -255,7 +255,7 @@ sf::Vector2<double> QuadTree::forcePair(double massA, double massB, sf::Vector2<
     double softening = 100;
     double distance  = sqrt(pow(posB.x-posA.x,2) + pow(posB.y-posA.y, 2));
 
-    double mag = std::min((massA*massB)/(pow(distance,1) + pow(softening,1)), 3000000.0);
+    double mag = std::min((massA*massB)/(pow(distance,1) + pow(softening,1)), 300000000.0);
 
 
 

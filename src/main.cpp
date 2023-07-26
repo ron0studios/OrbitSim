@@ -39,10 +39,19 @@ int main()
     window.setView(view);
 
     Simulator space(1000000);
-    double timescale  = 0.5;
+    double timescale  = 1;
     double resolution = 10.0;
 
-    addGalaxy(space, 10000, 100000, 0, 10000, 1, 0, 0, 0, 0);
+    //space.addBody(Body(333000, 10, sf::Vector2<double>(0.0,0.0)));
+    //space.addBody(Body(1, 1, sf::Vector2<double>(500.0,0.0), sf::Vector2<double>(0,-500)));
+    //space.addBody(Body(0.012, 1, sf::Vector2<double>(500.0 + 1.26,0.0), sf::Vector2<double>(0,-550)));
+    //space.addBody(Body(0.06, 10, sf::Vector2<double>(100.0,0.0), sf::Vector2<double>(0,-400)));
+    //space.addBody(Body(0.82, 10, sf::Vector2<double>(300.0,0.0), sf::Vector2<double>(0,-700)));
+    //space.addBody(Body(0.11, 10, sf::Vector2<double>(700.0,0.0), sf::Vector2<double>(0,-400)));
+    //addGalaxy(space, 100000, 100, 10000, 100000, 20, 0, 0, 0, 0);
+    addGalaxy(space, 10000, 100, 10000, 10000, 10, 0, 0, 0, 0);
+    addGalaxy(space, 10000, 100, 10000, 10000, 10, -100000, -100000, 0, 1000);
+    addGalaxy(space, 10000, 100, 10000, 10000, 10, 100000, 100000, 0, -1000);
     //space.addBody(Body(10000000, 10, sf::Vector2<double>(1000,1000)));
     /*
     for(int i = 0; i < 100; i++){
@@ -329,6 +338,7 @@ int main()
         space.updateTree();
         space.updateForces(false);
         space.updateBodies(dt.asMicroseconds() * timescale);
+        //space.draw(window);
         //space.drawTree(window);
 
 

@@ -42,7 +42,7 @@ int main()
     double timescale  = 0.5;
     double resolution = 10.0;
 
-    addGalaxy(space, 100000, 100000, 0, 10000, 1, 0, 0, 0, 0);
+    addGalaxy(space, 10000, 100000, 0, 10000, 1, 0, 0, 0, 0);
     //space.addBody(Body(10000000, 10, sf::Vector2<double>(1000,1000)));
     /*
     for(int i = 0; i < 100; i++){
@@ -250,7 +250,6 @@ int main()
 
 
 
-    space.updateTree();
     sf::Clock deltaClock;
     sf::Time dt;
     int iterations = 0;
@@ -327,12 +326,11 @@ int main()
 
         //auto start = std::chrono::high_resolution_clock::now();
         //std::chrono::high_resolution_clock::time_point timeA, timeB;
-        //space.updateTree();
-        //space.updateForces(false);
-        //space.updateBodies(dt.asMicroseconds() * timescale);
+        space.updateTree();
+        space.updateForces(false);
+        space.updateBodies(dt.asMicroseconds() * timescale);
         //space.drawTree(window);
 
-        space.drawTree(window);
 
         if(iterations % 100 == 0) {
 

@@ -27,7 +27,7 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies)
     tree.push_back({0,0.0,bound*2.0,0, 0.0, 0.0, nullptr, sf::RectangleShape(sf::Vector2f(bound*2.0, bound*2.0))}); // root
     tree.back().r.setOrigin(bound,bound);
     tree.back().r.setPosition(0.0, 0.0);
-    tree.back().r.setOutlineThickness(2.0);
+    tree.back().r.setOutlineThickness(5.0);
     tree.back().r.setFillColor(sf::Color::Transparent);
 #else
     tree.push_back({0,0.0,bound*2.0,0, 0.0, 0.0, nullptr}); // root
@@ -59,7 +59,7 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies)
 #if DEBUG
                 tree[idx].r.setOrigin(tree[idx].width/2.0,tree[idx].width/2.0);
                 tree[idx].r.setPosition(cx,cy);
-                tree[idx].r.setOutlineThickness(2.0);
+                tree[idx].r.setOutlineThickness(5.0);
                 tree[idx].r.setFillColor(sf::Color::Transparent);
 #endif
                 break;
@@ -111,7 +111,7 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies)
                         cy2 += tree[idx].width/4.0;
 
                     tree.back().r.setPosition(cx2,cy2);
-                    tree.back().r.setOutlineThickness(2.0);
+                    tree.back().r.setOutlineThickness(5.0);
                     tree.back().r.setFillColor(sf::Color::Transparent);
 #else
                     tree.push_back({0, 0.0, tree[idx].width / 2.0, 0, 0.0, 0.0, nullptr});
@@ -255,7 +255,7 @@ sf::Vector2<double> QuadTree::forcePair(double massA, double massB, sf::Vector2<
     double softening = 100;
     double distance  = sqrt(pow(posB.x-posA.x,2) + pow(posB.y-posA.y, 2));
 
-    double mag = std::min((massA*massB)/(pow(distance,2) + pow(softening,2)), 3000000.0);
+    double mag = std::min((massA*massB)/(pow(distance,1) + pow(softening,1)), 3000000.0);
 
 
 

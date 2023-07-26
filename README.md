@@ -20,6 +20,9 @@ https://github.com/ron0studios/OrbitSim/assets/47331292/332809cd-ecd0-485e-b7a7-
 https://github.com/ron0studios/OrbitSim/assets/47331292/e0dd1de7-8974-4398-ad0a-a6325d75f1fe
 > 100k particles spread across 10^8 metres zoom-out
 
+![image](https://github.com/ron0studios/OrbitSim/assets/47331292/74ac65bb-61bd-4488-a9e8-2ff41b282ede)
+> those 100k particles eventually cluster and form something similar to the cosmic web
+
 
 ![image](https://github.com/ron0studios/OrbitSim/assets/47331292/aa85bda6-71be-4d52-ba7d-cc64319464d0)
 > QuadTree visualisation with 10k asteroid ring (no central planet)

@@ -8,6 +8,8 @@
 #include <iostream>
 
 QuadTree::QuadTree() {
+    r.setFillColor(sf::Color::Transparent);
+    r.setOutlineThickness(2.0);
 }
 
 /**
@@ -17,8 +19,19 @@ QuadTree::QuadTree() {
  */
 QuadTree::QuadTree(double bound, std::vector<Body> *bodies)
 {
+    r.setFillColor(sf::Color::Transparent);
+    r.setOutlineThickness(2.0);
     this->bound = bound;
+
+#if DEBUG
+    tree.push_back({0,0.0,bound*2.0,0, 0.0, 0.0, nullptr, sf::RectangleShape(sf::Vector2f(bound*2.0, bound*2.0))}); // root
+    tree.back().r.setOrigin(bound,bound);
+    tree.back().r.setPosition(0.0, 0.0);
+    tree.back().r.setOutlineThickness(2.0);
+    tree.back().r.setFillColor(sf::Color::Transparent);
+#else
     tree.push_back({0,0.0,bound*2.0,0, 0.0, 0.0, nullptr}); // root
+#endif
 
     // center x, center y
     double cx, cy;
@@ -36,7 +49,6 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies)
 
         while(!stack.empty()) {
             int idx = stack.top(); stack.pop();
-            node* dbg = &tree[idx];
 
             if(tree[idx].mass == 0) {
                 tree[idx].mass = body.mass;
@@ -44,6 +56,12 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies)
                 tree[idx].total = 1;
                 tree[idx].massx = body.position.x;
                 tree[idx].massy = body.position.y;
+#if DEBUG
+                tree[idx].r.setOrigin(tree[idx].width/2.0,tree[idx].width/2.0);
+                tree[idx].r.setPosition(cx,cy);
+                tree[idx].r.setOutlineThickness(2.0);
+                tree[idx].r.setFillColor(sf::Color::Transparent);
+#endif
                 break;
             }
 
@@ -75,8 +93,31 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies)
             }
             else {
                 tree[idx].child = (int)tree.size();
-                for(int i = 0; i < 4; i++)
-                    tree.push_back({0,0.0,tree[idx].width/2.0,0, 0.0, 0.0, nullptr});
+                for(int i = 0; i < 4; i++) {
+#if DEBUG
+                    tree.push_back({0, 0.0, tree[idx].width / 2.0, 0, 0.0, 0.0, nullptr, sf::RectangleShape(sf::Vector2f(tree[idx].width/2.0, tree[idx].width/2.0))});
+                    tree.back().r.setOrigin(tree[idx].width / 4.0,tree[idx].width / 4.0);
+
+                    double cx2 = cx;
+                    double cy2 = cy;
+                    if(i%2)
+                        cx2 += tree[idx].width/4.0;
+                    else
+                        cx2 -= tree[idx].width/4.0;
+
+                    if(i < 2)
+                        cy2 -= tree[idx].width/4.0;
+                    else
+                        cy2 += tree[idx].width/4.0;
+
+                    tree.back().r.setPosition(cx2,cy2);
+                    tree.back().r.setOutlineThickness(2.0);
+                    tree.back().r.setFillColor(sf::Color::Transparent);
+#else
+                    tree.push_back({0, 0.0, tree[idx].width / 2.0, 0, 0.0, 0.0, nullptr});
+#endif
+
+                }
 
                 int quadA = getQuadrant(sf::Vector2<double>(cx,cy), tree[idx].singleChild->position);
 
@@ -205,15 +246,24 @@ void QuadTree::updateForce(Body *body, double theta) {
  */
 sf::Vector2<double> QuadTree::forcePair(double massA, double massB, sf::Vector2<double> posA, sf::Vector2<double> posB)
 {
+
     if(posA == posB){
+        std::cout << "AAAAAAAAAAAAAAAA";
         return {0.0,0.0};
     }
 
-    double softening = 10;
+    double softening = 100;
     double distance  = sqrt(pow(posB.x-posA.x,2) + pow(posB.y-posA.y, 2));
 
-    double mag = (massA*massB)/(pow(distance,2) + pow(softening,2));
+    double mag = std::min((massA*massB)/(pow(distance,2) + pow(softening,2)), 3000000.0);
 
+
+
+    /*
+    if(mag >= 30000000){
+        return {0.0,0.0};
+    }
+     */
 
     sf::Vector2<double> force = (posB-posA) * (mag/distance);
 
@@ -221,36 +271,13 @@ sf::Vector2<double> QuadTree::forcePair(double massA, double massB, sf::Vector2<
 }
 
 void QuadTree::draw(sf::RenderWindow &window) {
-    std::stack<std::pair<std::pair<int,double>, sf::Vector2<double>>> x; x.push({{0,bound*2.0},{0.0,0.0}});
-
-    while(!x.empty()){
-        auto idx = x.top(); x.pop();
-
-        if(idx.first.second < 10) continue;
-        sf::RectangleShape r(sf::Vector2f(idx.first.second, idx.first.second));
-        r.setOrigin(idx.first.second/2.0,idx.first.second/2.0);
-        r.setPosition(idx.second.x, idx.second.y);
-        r.setFillColor(sf::Color::Transparent);
-        r.setOutlineThickness(2.0);
-        window.draw(r);
-
-        if(tree[idx.first.first].child == 0) continue;
-        for(int i = 0; i < 4; i++) {
-            double cx = idx.second.x;
-            double cy = idx.second.y;
-            if(i%2)
-                cx += tree[idx.first.first].width/4.0;
-            else
-                cx -= tree[idx.first.first].width/4.0;
-
-            if(i<2)
-                cy -= tree[idx.first.first].width/4.0;
-            else
-                cy += tree[idx.first.first].width/4.0;
-
-            x.push({{tree[idx.first.first].child + i,idx.first.second/2.0},{cx,cy}});
-        }
+#if DEBUG
+    for(int i = 0 ; i < tree.size(); i++){
+        window.draw(tree[i].r);
     }
+#else
+    throw std::logic_error("debug is not enabled!");
+#endif
 }
 
 

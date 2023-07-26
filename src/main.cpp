@@ -6,18 +6,58 @@
 #include <chrono>
 
 
+void addGalaxy(Simulator& sim, double starnum, double starmass, double c_mass, double rad, double rotspeed, double cx, double cy, double c_velx, double c_vely){
+    for(int i = 0; i < starnum; i++) {
+        //double dx = (((double)rand()/ RAND_MAX) * 28284) -14142;
+        //double dy = (((double)rand()/ RAND_MAX) * 28284) -14142;
+
+        double radius = rad;
+        double rnd = rand();
+        double r = radius * sqrt( pow((double)rand()/RAND_MAX, 2));
+        double theta = ((double)rnd/RAND_MAX) * 2 * M_PI;
+        double x = r * cos(theta);
+        double y = r * sin(theta);
+
+        double rnd2 = (((double)rand()/ RAND_MAX)*10);
+        double velx = -cos(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  200 * (2- r/radius) * rotspeed;
+        double vely =  sin(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  200 * (2- r/radius) * rotspeed;
+
+        sim.addBody(Body(starmass * rnd2 * 10,20 * rnd2,sf::Vector2<double>(x+cx, y+cy), sf::Vector2<double>(velx + c_velx,vely + c_vely)));
+    }
+    if(c_mass) sim.addBody(Body(c_mass,10,sf::Vector2<double>(cx, cy), sf::Vector2<double>(c_velx, c_vely)));
+}
+
 int main()
 {
     //srand(time(0));
     double speed = 0.5;
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "OrbitSim");
-    window.setFramerateLimit(60); // for physics
+    window.setFramerateLimit(60);
     int sizex = 1920*1;
     int sizey = 1080*1;
     sf::View view(sf::FloatRect(-sizex/2.0f, -sizey/2.0f, sizex, sizey));
     window.setView(view);
 
     Simulator space(1000000);
+    double timescale  = 0.5;
+    double resolution = 10.0;
+
+    addGalaxy(space, 100000, 100000, 0, 10000, 1, 0, 0, 0, 0);
+    //space.addBody(Body(10000000, 10, sf::Vector2<double>(1000,1000)));
+    /*
+    for(int i = 0; i < 100; i++){
+        double x = (((double)rand()/ RAND_MAX)*100000)-50000;
+        double y = (((double)rand()/ RAND_MAX)*100000)-50000;
+        double starmass = (((double)rand()/ RAND_MAX)*900)+100;
+        double cmass = (((double)rand()/ RAND_MAX)*2);
+        double rad = (((double)rand()/ RAND_MAX)*2);
+        double rspeed = (((double)rand()/ RAND_MAX)*1)+1;
+        double angle = atan(y/x);
+        double velx = -cos(M_PI*0.5 - angle) * 10.0;
+        double vely =  sin(M_PI*0.5 - angle) * 10.0;
+        addGalaxy(space, 100, starmass, 1000000*cmass, 500*rad, rspeed, x, y, velx, vely);
+    }
+     */
 
     /*
     space.addBody(Body(10000,100,sf::Vector2<double>(0, 0),sf::Vector2<double>(0,400) ));
@@ -27,12 +67,14 @@ int main()
     space.bodies.back().shape.setFillColor(sf::Color::Green);
      */
 
-     for(int i = 0; i < 10000; i++) {
+    /*
+     for(int i = 0; i < 1015; i++) {
         //double dx = (((double)rand()/ RAND_MAX) * 28284) -14142;
         //double dy = (((double)rand()/ RAND_MAX) * 28284) -14142;
 
+        double radius = 100.0;
         double rnd = rand();
-        double r = 1000 * sqrt( pow((double)rand()/RAND_MAX, 2));
+        double r = radius * sqrt( pow((double)rand()/RAND_MAX, 2));
         double theta = ((double)rnd/RAND_MAX) * 2 * M_PI;
         double x = r * cos(theta);
         double y = r * sin(theta);
@@ -44,8 +86,8 @@ int main()
         //std::cout << (1-(sqrt(x*x + y*y)/56568)) << std::endl;
 
         double rnd2 = (((double)rand()/ RAND_MAX)*10);
-        double velx = -cos(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  20 * (2- r/20000) * 0.1;
-        double vely =  sin(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  20 * (2- r/20000) * 0.1;
+        double velx = -cos(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  20 * (2- r/radius) * 1;
+        double vely =  sin(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  20 * (2- r/radius) * 1;
         double mass = rnd2;
 
         //double rndx =  (((double)rand()/ RAND_MAX)*100)-50;
@@ -57,20 +99,55 @@ int main()
         //space.bodies.back().shape.setFillColor()
     }
     //space.addBody(Body(10000000,10,sf::Vector2<double>(50000, 30000), sf::Vector2<double>(-300,-500)));
-    space.addBody(Body(100000,10,sf::Vector2<double>(0, 0)));
+    space.addBody(Body(10000000,10,sf::Vector2<double>(0, 0)));
     //space.bodies.back().shape.setFillColor(sf::Color::Green);
 
 
+    for(int i = 0; i < 1015; i++) {
+        //double dx = (((double)rand()/ RAND_MAX) * 28284) -14142;
+        //double dy = (((double)rand()/ RAND_MAX) * 28284) -14142;
+
+        double radius = 100.0;
+        double rnd = rand();
+        double r = radius * sqrt( pow((double)rand()/RAND_MAX, 2));
+        double theta = ((double)rnd/RAND_MAX) * 2 * M_PI;
+        double x = r * cos(theta);
+        double y = r * sin(theta);
+
+        //double x =  cos(((double)rnd/ RAND_MAX) * 2*M_PI) * 20000 + dx;
+        //double y =  sin(((double)rnd/ RAND_MAX) * 2*M_PI) * 20000 + dy;
+
+        //std::cout << x << " " << y << std::endl;
+        //std::cout << (1-(sqrt(x*x + y*y)/56568)) << std::endl;
+
+        double rnd2 = (((double)rand()/ RAND_MAX)*10);
+        double velx = -cos(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  20 * (2- r/radius) * 1;
+        double vely =  sin(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  20 * (2- r/radius) * 1;
+        double mass = rnd2;
+
+        //double rndx =  (((double)rand()/ RAND_MAX)*100)-50;
+        //double rndy =  (((double)rand()/ RAND_MAX)*100)-50;
+
+        space.addBody(Body(1000,10 * mass,sf::Vector2<double>(x+5000, y+5000), sf::Vector2<double>(velx*10,vely*10)));
+        //space.addBody(Body(rnd2*1000,100 * mass,sf::Vector2<double>(x, y), sf::Vector2<double>(rndx*300,rndy*300)));
+        //space.bodies.back().shape.setFillColor(sf::Color(255,255,255,40));
+        //space.bodies.back().shape.setFillColor()
+    }
+    //space.addBody(Body(10000000,10,sf::Vector2<double>(50000, 30000), sf::Vector2<double>(-300,-500)));
+    space.addBody(Body(10000000,10,sf::Vector2<double>(5000,5000), sf::Vector2<double>(-100,-100)));
+    //space.bodies.back().shape.setFillColor(sf::Color::Green);
+
+     */
 
     /*
-    for(int i = -500000; i < 500000; i+=1000){
-        for(int j = -500000; j < 500000; j+=1000){
+    for(int i = -1000; i < 1000; i+=10){
+        for(int j = -1000; j < 1000; j+=10){
 
             double rnd = (((double)rand()/ RAND_MAX) * 1000);
 
             double rnd2 = (((double)rand()/ RAND_MAX)*1000)-500;
             double rnd3 = (((double)rand()/ RAND_MAX)*1000)-500;
-            space.addBody(Body(rnd, 100 * rnd/1000, sf::Vector2<double>(i,j)));
+            space.addBody(Body(rnd, 100 * rnd/1000, sf::Vector2<double>(i,j), sf::Vector2<double>(i,j)));
             //space.bodies.back().shape.setFillColor(sf::Color(255,255,255,40));
         }
     }
@@ -150,17 +227,16 @@ int main()
     //space.addBody(Body(10000000,100,sf::Vector2<double>(5000, 1000), sf::Vector2<double>(-40,-100)));
     //space.bodies.back().debug = true;
 
-    /*
-    for(int i = 0; i < 1002; i++)
+
+    for(int i = 0; i < space.bodies.size(); i++)
     {
-       // std::cout << space.bodies[i].position.x << " " << space.bodies[i].position.y << std::endl;
-        for(int j = i+1; j < 1002; j++)  {
+        for(int j = i+1; j < space.bodies.size(); j++)  {
             if(space.bodies[i].position.x == space.bodies[j].position.x and space.bodies[i].position.y == space.bodies[j].position.y)
-                std::cout << "WHAT\n" << std::endl;
+                throw std::domain_error("two bodies cannot have the same coordinate!");
         }
 
     }
-     */
+    std::cout << "OBJECTS LOADED" << std::endl;
 
 
     /*
@@ -173,6 +249,8 @@ int main()
 
 
 
+
+    space.updateTree();
     sf::Clock deltaClock;
     sf::Time dt;
     int iterations = 0;
@@ -249,17 +327,31 @@ int main()
 
         //auto start = std::chrono::high_resolution_clock::now();
         //std::chrono::high_resolution_clock::time_point timeA, timeB;
-        if(iterations % 10 == 0) {
+        //space.updateTree();
+        //space.updateForces(false);
+        //space.updateBodies(dt.asMicroseconds() * timescale);
+        //space.drawTree(window);
+
+        space.drawTree(window);
+
+        if(iterations % 100 == 0) {
 
 
+
+            /*
             auto f = [&space, dt](){
+                auto start = std::chrono::high_resolution_clock::now();
                 space.updateTree();
                 space.updateForces(false);
                 space.updateBodies(dt.asMicroseconds());
+                auto timeA = std::chrono::high_resolution_clock::now();
+                auto forcetime = std::chrono::duration_cast<std::chrono::microseconds>(timeA - start);
+                std::cout << forcetime.count()/1000000.0 << std::endl;
             };
             std::thread t(f);
             t.detach();
             //t.join();
+             */
 
             //space.updateTree();
             //timeA = std::chrono::high_resolution_clock::now();
@@ -287,7 +379,7 @@ int main()
         dt = deltaClock.restart();
         iterations++;
 
-        std::cout << dt.asSeconds() << std::endl;
+        //std::cout << dt.asSeconds() << std::endl;
         //std::cout << space.bodies.back().acceleration.x << " " << space.bodies.back().acceleration.y << std::endl;
     }
 

@@ -7,7 +7,9 @@
 
 #include <SFML/Graphics.hpp>
 #include "Body.h"
-#include <math.h>
+#include <cmath>
+#include <mutex>
+#include "globals.h"
 
 class QuadTree {
     public:
@@ -18,6 +20,7 @@ class QuadTree {
         void draw(sf::RenderWindow& window);
         static sf::Vector2<double> forcePair(double massA, double massB, sf::Vector2<double> posA, sf::Vector2<double> posB);
     private:
+        sf::RectangleShape r;
         static int getQuadrant(sf::Vector2<double> center, sf::Vector2<double> s);
         static int getQuadrant(double cx, double cy, double sx, double sy);
         double bound;
@@ -27,6 +30,7 @@ class QuadTree {
             double mass = 0.0;
             double width = 0.0;
 
+
             // center of mass calculations
             int total   = 0;
             double massx = 0.0;
@@ -34,6 +38,10 @@ class QuadTree {
 
             // if node has 1 child
             Body* singleChild = nullptr;
+
+#if DEBUG
+            sf::RectangleShape r;
+#endif
         };
 
        std::vector<node> tree;

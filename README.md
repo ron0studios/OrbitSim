@@ -23,3 +23,17 @@ https://github.com/ron0studios/OrbitSim/assets/47331292/e0dd1de7-8974-4398-ad0a-
 
 ![image](https://github.com/ron0studios/OrbitSim/assets/47331292/aa85bda6-71be-4d52-ba7d-cc64319464d0)
 > QuadTree visualisation with 10k asteroid ring (no central planet)
+
+
+## details
+---
+- capable of loading up to and over 100k particles without a GPU
+- fairly accurate (can create stable orbits)
+- capable of creating spirals (almost) and barred galaxies
+- particles are rendered as pixel values instead of polygons for efficiency
+- multithreading support for updating forces
+- A very efficient implementation of the barnes-hut treecode algorithm
+  - the tree is generated with iteratively (recursion is slower and more memory intensive)
+  - the tree is stored linearly in an array (faster access, less pointer access)
+  - the tree nodes only save one pointer and 2-3 doubles for better performance
+ 

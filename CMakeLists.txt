@@ -1,30 +1,19 @@
-cmake_minimum_required(VERSION 3.25)
-project(OrbitSim)
+# This is an example of how to use FetchContent to easily
+# manage 3rd-party dependencies
+# First, check out src/CMakeLists.txt - it's really simple!
+# Then, check out dependencies directory, it get a bit more complex
+# there, but you'll see how it goes
+#
+# Options:
+# * USE_SYSTEM_DEPS - try to find dependencies using find_package (OFF by default)
+# * LINK_DEPS_STATIC - link to dependencies statically (ON by default)
+#
+cmake_minimum_required(VERSION 3.12)
 
-set(CMAKE_CXX_STANDARD 20)
+project(imgui-sfml-example
+  VERSION 1.0
+  LANGUAGES CXX
+)
 
-#add_executable(OrbitSim main.cpp)
-
-include(FetchContent)
-FetchContent_Declare(SFML
-        GIT_REPOSITORY https://github.com/SFML/SFML.git
-        GIT_TAG 2.6.x)
-FetchContent_MakeAvailable(SFML)
-
-add_executable(OrbitSim src/main.cpp src/Body.cpp src/Body.h src/Simulator.cpp src/Simulator.h src/ctpl.h src/QuadTree.cpp src/QuadTree.h src/globals.h)
-target_link_libraries(OrbitSim PRIVATE sfml-graphics sfml-audio sfml-window sfml-system sfml-network)
-target_compile_features(OrbitSim PRIVATE cxx_std_17)
-if (WIN32 AND BUILD_SHARED_LIBS)
-    add_custom_command(TARGET OrbitSim POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:OrbitSim> $<TARGET_FILE_DIR:OrbitSim> COMMAND_EXPAND_LISTS)
-endif()
-
-install(TARGETS OrbitSim)
-
-# Detect and add SFML
-#set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
-#find_package(SFML 2.6 REQUIRED system window graphics network audio)
-#if(SFML_FOUND)
-#    include_directories(${SFML_INCLUDE_DIR})
-#    target_link_libraries(OrbitSim PRIVATE SFML::Graphics SFML::Audio SFML::Window SFML::System)
-#endif()
+add_subdirectory(dependencies)
+add_subdirectory(src)

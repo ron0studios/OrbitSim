@@ -25,6 +25,7 @@ class QuadTree {
         static int getQuadrant(double cx, double cy, double sx, double sy);
         double bound;
 
+
         struct node {
             int child   = 0;
             double mass = 0.0;

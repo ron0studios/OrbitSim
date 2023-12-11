@@ -4,9 +4,10 @@
 #include "Simulator.h"
 #include <thread>
 #include <chrono>
+#include "imgui-SFML.h"
+#include "imgui.h"
 
-
-void addGalaxy(Simulator& sim, double starnum, double starmass, double c_mass, double rad, double rotspeed, double cx, double cy, double c_velx, double c_vely){
+void addGalaxy(Simulator& sim, double starnum, double starmass, double c_mass, double rad, double rotspeed, double cx, double cy, double c_velx, double c_vely, double radial=0, double massvar = 10.0){
     for(int i = 0; i < starnum; i++) {
         //double dx = (((double)rand()/ RAND_MAX) * 28284) -14142;
         //double dy = (((double)rand()/ RAND_MAX) * 28284) -14142;
@@ -18,11 +19,13 @@ void addGalaxy(Simulator& sim, double starnum, double starmass, double c_mass, d
         double x = r * cos(theta);
         double y = r * sin(theta);
 
-        double rnd2 = (((double)rand()/ RAND_MAX)*10);
+        double rnd2 = (((double)rand()/ RAND_MAX)*massvar);
         double velx = -cos(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  200 * (2- r/radius) * rotspeed;
         double vely =  sin(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  200 * (2- r/radius) * rotspeed;
 
-        sim.addBody(Body(starmass * rnd2 * 10,20 * rnd2,sf::Vector2<double>(x+cx, y+cy), sf::Vector2<double>(velx + c_velx,vely + c_vely)));
+        double velradx = radial*x;
+        double velrady = radial*y;
+        sim.addBody(Body(starmass * rnd2 * 10,20 * rnd2,sf::Vector2<double>(x+cx, y+cy), sf::Vector2<double>(velx + c_velx + velradx,vely + c_vely + velrady)));
     }
     if(c_mass) sim.addBody(Body(c_mass,10,sf::Vector2<double>(cx, cy), sf::Vector2<double>(c_velx, c_vely)));
 }
@@ -32,15 +35,21 @@ int main()
     //srand(time(0));
     double speed = 0.5;
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "OrbitSim");
+    ImGui::SFML::Init(window);
     window.setFramerateLimit(60);
     int sizex = 1920*1;
     int sizey = 1080*1;
     sf::View view(sf::FloatRect(-sizex/2.0f, -sizey/2.0f, sizex, sizey));
     window.setView(view);
 
-    Simulator space(1000000);
-    double timescale  = 1;
+    Simulator space(10000000);
+    double timescale  = 0.01;
     double resolution = 10.0;
+
+    addGalaxy(space, 100, 10000, 1000000000000, 1000, 200, -00000, -00000, 0, 000,0.0, 1.0);
+    addGalaxy(space, 100, 10000, 1000000000000, 1000, 200, 10000, 10000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100000, 100000, 1000000000, 1000000, 3, 0, 0, 0, 0, 0, 100.0);
+    //addGalaxy(space, 100000, 1000, 1000000000000, 10000, 100, 0, 0, 0, 0, 1000, 100.0);
 
     //space.addBody(Body(333000, 10, sf::Vector2<double>(0.0,0.0)));
     //space.addBody(Body(1, 1, sf::Vector2<double>(500.0,0.0), sf::Vector2<double>(0,-500)));
@@ -49,9 +58,11 @@ int main()
     //space.addBody(Body(0.82, 10, sf::Vector2<double>(300.0,0.0), sf::Vector2<double>(0,-700)));
     //space.addBody(Body(0.11, 10, sf::Vector2<double>(700.0,0.0), sf::Vector2<double>(0,-400)));
     //addGalaxy(space, 100000, 100, 10000, 100000, 20, 0, 0, 0, 0);
-    addGalaxy(space, 10000, 100, 10000, 10000, 10, 0, 0, 0, 0);
-    addGalaxy(space, 10000, 100, 10000, 10000, 10, -100000, -100000, 0, 1000);
-    addGalaxy(space, 10000, 100, 10000, 10000, 10, 100000, 100000, 0, -1000);
+    //addGalaxy(space, 10000, 100, 10000, 10000, 10, 0, 0, 0, 0);
+
+    //addGalaxy(space, 10000, 100, 10000, 10000, 10, -00000, -00000, 0, 000);
+    //addGalaxy(space, 10000, 100, 10000, 10000, 10, -100000, -100000, 0, 1000);
+    //addGalaxy(space, 10000, 100, 10000, 10000, 10, 100000, 100000, 0, -1000);
     //space.addBody(Body(10000000, 10, sf::Vector2<double>(1000,1000)));
     /*
     for(int i = 0; i < 100; i++){
@@ -256,6 +267,7 @@ int main()
     space.addBody(Body(1,10,sf::Vector2<double>(-100, -75)));
     */
 
+    bool focus = true;
 
 
 
@@ -267,6 +279,9 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
+            ImGui::SFML::ProcessEvent(event);
+            if(event.type == sf::Event::GainedFocus) focus = true;
+            if(event.type == sf::Event::LostFocus) focus = false;
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))  window.close();
             if (event.type == sf::Event::Closed)                       window.close();
 
@@ -279,19 +294,33 @@ int main()
         }
 
 
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-            view.setSize(view.getSize().x * (1 - 1 * dt.asSeconds()), view.getSize().y * (1 - 1 * dt.asSeconds()));
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::E))
-            view.setSize(view.getSize().x * (1 + 1 * dt.asSeconds()), view.getSize().y * (1 + 1 * dt.asSeconds()));
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-            view.setCenter(view.getCenter().x, view.getCenter().y - speed*view.getSize().y*dt.asSeconds());
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-            view.setCenter(view.getCenter().x - speed*view.getSize().x*dt.asSeconds(), view.getCenter().y);
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-            view.setCenter(view.getCenter().x, view.getCenter().y + speed*view.getSize().y*dt.asSeconds());
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-            view.setCenter(view.getCenter().x + speed*view.getSize().x*dt.asSeconds(), view.getCenter().y);
+        if(focus) {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+                view.setSize(view.getSize().x * (1 - 1 * dt.asSeconds()), view.getSize().y * (1 - 1 * dt.asSeconds()));
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+                view.setSize(view.getSize().x * (1 + 1 * dt.asSeconds()), view.getSize().y * (1 + 1 * dt.asSeconds()));
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+                view.setCenter(view.getCenter().x, view.getCenter().y - speed * view.getSize().y * dt.asSeconds());
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+                view.setCenter(view.getCenter().x - speed * view.getSize().x * dt.asSeconds(), view.getCenter().y);
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+                view.setCenter(view.getCenter().x, view.getCenter().y + speed * view.getSize().y * dt.asSeconds());
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+                view.setCenter(view.getCenter().x + speed * view.getSize().x * dt.asSeconds(), view.getCenter().y);
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+                timescale = !timescale;
+            //view.setCenter(view.getCenter().x + speed*view.getSize().x*dt.asSeconds(), view.getCenter().y);
+        }
         window.setView(view);
+
+
+        ImGui::SFML::Update(window, deltaClock.restart());
+
+        ImGui::Begin("Hello, world!");
+        ImGui::Button("Look at this pretty button");
+        ImGui::End();
+
+        ImGui::ShowDemoWindow();
 
         window.clear();
         //space.draw(window);
@@ -378,6 +407,7 @@ int main()
         //space.drawTree(window);
         //space.updateBodies(dt.asMicroseconds());
 
+        ImGui::SFML::Render(window);
         window.display();
 
         //view.setCenter(space.bodies.back().position.x, space.bodies.back().position.y);
@@ -387,7 +417,7 @@ int main()
         dt = deltaClock.restart();
         iterations++;
 
-        //std::cout << dt.asSeconds() << std::endl;
+        std::cout << dt.asSeconds() << "\t\t" << view.getSize().x << std::endl;
         //std::cout << space.bodies.back().acceleration.x << " " << space.bodies.back().acceleration.y << std::endl;
     }
 

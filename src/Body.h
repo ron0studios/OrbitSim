@@ -2,6 +2,7 @@
 // Created by ron0 on 19/07/23.
 //
 #include <SFML/Graphics.hpp>
+#include "globals.h"
 
 #ifndef ORBITSIM_BODY_H
 #define ORBITSIM_BODY_H

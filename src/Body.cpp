@@ -15,6 +15,7 @@ Body::Body(float mass, float radius, sf::Vector2<double> position, sf::Vector2<d
     this->velocity = velocity;
     acceleration = sf::Vector2<double>(0.0, 0.0);
 
+#if DEBUG
     this->shape = sf::CircleShape(radius);
     this->shape.setPosition((float)position.x, (float)position.y);
     this->shape.setOrigin(radius,radius);
@@ -23,11 +24,13 @@ Body::Body(float mass, float radius, sf::Vector2<double> position, sf::Vector2<d
     this->veldir = sf::RectangleShape(sf::Vector2f(50.0, 3.0));
     this->accdir = sf::RectangleShape(sf::Vector2f(50.0, 3.0));
     accdir.setFillColor(sf::Color(100,100,100));
+#endif
 }
 
 void Body::update(sf::Int64 delta) {
-    int totForce = std::min(( (sqrt(pow(acceleration.x,2) + pow(acceleration.y,2)) * mass)/ 100000000) * 255, (double)255);
-    shape.setFillColor(sf::Color(55+std::min(totForce,200), totForce, 255-totForce));
+    int totForce = std::min(( (sqrt(pow(acceleration.x,2) + pow(acceleration.y,2)) * mass)/ 2000000000000) * 255, (double)255);
+    shape.setFillColor(sf::Color(100+std::min(totForce,155), 100+std::min(155,totForce), 255-totForce));
+    shape.setFillColor(sf::Color(100+std::min(totForce,155), 100+std::min(155,totForce), 255-totForce));
     velocity += acceleration * (delta/ 1000000.0);
     position += velocity * (delta/ 1000000.0);
 }
@@ -40,6 +43,8 @@ void Body::draw(sf::RenderWindow &window) {
     //shape.setFillColor(sf::Color(totForce, totForce, 255-totForce));
 
 
+    window.draw(shape);
+#if DEBUG
     if(debug) {
         veldir.setPosition((float) position.x, (float) position.y);
         //veldir.setSize(sf::Vector2f(sqrt(velocity.x*velocity.x + velocity.y*velocity.y), 3.0));
@@ -52,10 +57,10 @@ void Body::draw(sf::RenderWindow &window) {
         accdir.setRotation(arot * (180 / M_PI));
     }
 
-    window.draw(shape);
     if(debug) {
         window.draw(veldir);
         window.draw(accdir);
     }
+#endif
 }
 

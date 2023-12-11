@@ -236,6 +236,8 @@ void QuadTree::updateForce(Body *body, double theta) {
     }
 }
 
+
+
 /**
  * calculates the force *on* mass A *from* mass B
  * @param massA
@@ -252,10 +254,10 @@ sf::Vector2<double> QuadTree::forcePair(double massA, double massB, sf::Vector2<
         return {0.0,0.0};
     }
 
-    double softening = 100;
+    double softening = 10;
     double distance  = sqrt(pow(posB.x-posA.x,2) + pow(posB.y-posA.y, 2));
 
-    double mag = std::min((massA*massB)/(pow(distance,1) + pow(softening,1)), 300000000.0);
+    double mag = std::min((massA*massB)/(pow(distance,2) + pow(softening,2)), 300000000.0 * 1000.0);
 
 
 

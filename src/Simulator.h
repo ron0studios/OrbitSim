@@ -24,8 +24,6 @@ class Simulator {
 
     private:
         std::mutex mut;
-        double squarelen(sf::Vector2<double> a);
-        void calcForce(Body& body);
 
         double bounds;
         sf::RectangleShape boundbox;

@@ -202,7 +202,7 @@ void QuadTree::updateForce(Body *body, double theta) {
         if(n.mass == 0) continue;
 
         if(n.child > 0){
-            double distance = sqrt(pow(n.massx-body->position.x,2) + pow(n.massy-body->position.y, 2));
+            double distance = sqrt(pow(n.massx-body->position.x,2) + pow(n.massy-body->position.y, 2))/10.0;
             double ratio = n.width/(distance);
 
             if(ratio <= theta){
@@ -255,7 +255,7 @@ sf::Vector2<double> QuadTree::forcePair(double massA, double massB, sf::Vector2<
     }
 
     double softening = 10;
-    double distance  = sqrt(pow(posB.x-posA.x,2) + pow(posB.y-posA.y, 2));
+    double distance  = sqrt(pow(posB.x-posA.x,2) + pow(posB.y-posA.y, 2))/10.0;
 
     double mag = std::min((massA*massB)/(pow(distance,2) + pow(softening,2)), 300000000.0 * 1000.0);
 

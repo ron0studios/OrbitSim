@@ -10,7 +10,13 @@
     <option name="reloaded" value="true" />
   </component>
   <component name="CMakeRunConfigurationManager">
-    <generated />
+    <generated>
+      <config projectName="imgui-sfml-example" targetName="sfml-window" />
+      <config projectName="imgui-sfml-example" targetName="sfml-system" />
+      <config projectName="imgui-sfml-example" targetName="ImGui-SFML" />
+      <config projectName="imgui-sfml-example" targetName="sfml-graphics" />
+      <config projectName="imgui-sfml-example" targetName="imgui-sfml-example" />
+    </generated>
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -20,14 +26,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c358710-20fc-425d-b42f-954a2271f4df" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Body.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Body.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Body.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Body.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/QuadTree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/QuadTree.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/QuadTree.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/QuadTree.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Simulator.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Simulator.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -59,30 +59,35 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "CMakeSettings",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="CMake Application.imgui-sfml-example">
+}]]></component>
+  <component name="RunManager" selected="CMake Application.OrbitSim">
     <configuration name="ImGui-SFML" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="imgui-sfml-example" TARGET_NAME="ImGui-SFML" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+    <configuration name="OrbitSim" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="imgui-sfml-example" TARGET_NAME="imgui-sfml-example" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="imgui-sfml-example" RUN_TARGET_NAME="imgui-sfml-example">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="imgui-sfml-example" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="imgui-sfml-example" TARGET_NAME="imgui-sfml-example" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="imgui-sfml-example" RUN_TARGET_NAME="imgui-sfml-example">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -107,7 +112,7 @@
       <item itemvalue="CMake Application.sfml-graphics" />
       <item itemvalue="CMake Application.sfml-system" />
       <item itemvalue="CMake Application.sfml-window" />
-      <item itemvalue="CMake Application.imgui-sfml-example" />
+      <item itemvalue="CMake Application.OrbitSim" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -119,7 +124,7 @@
       <option name="presentableId" value="Default" />
       <updated>1702295798975</updated>
       <workItem from="1702295800357" duration="95000" />
-      <workItem from="1702295908039" duration="7000" />
+      <workItem from="1702295908039" duration="2142000" />
     </task>
     <servers />
   </component>

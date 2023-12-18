@@ -34,7 +34,10 @@ int main()
 {
     //srand(time(0));
     double speed = 0.5;
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "OrbitSim");
+    double window_width  = 1920;
+    double window_height = 1080;
+    sf::RenderWindow window(sf::VideoMode(window_width, window_height), "OrbitSim");
+    window.setPosition(sf::Vector2i(0,0));
     ImGui::SFML::Init(window);
     window.setFramerateLimit(60);
     int sizex = 1920*1;
@@ -43,11 +46,27 @@ int main()
     window.setView(view);
 
     Simulator space(10000000);
-    double timescale  = 1;
-    double resolution = 10.0;
+    float timescale  = 1;
 
-    addGalaxy(space, 1000, 10, 1000, 1000, 20, -00000, -00000, 0, 000,0.0, 1.0);
-    addGalaxy(space, 1000, 100, 1000, 1000, 20, 10000, 10000, 0, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, -00000, -00000, 0, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, -1000, 1000, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, 1000, 1000, 0, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, 1000, -1000, 0, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, 1000, 0, 000,0.0, 1.0);
+
+    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000, -00000, 0, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000-1000, -1000, 1000, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000+1000, 1000, 0, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000+1000, -1000, 0, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000-1000, 1000, 0, 000,0.0, 1.0);
+
+
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, -00000.1, -00000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, -1000.1, -1000, 1000, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, 1000.1, 1000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, 1000.1, -1000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, -1000.1, 1000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 100, 1000, 10, 20, 10000, 10000, 0, 000,0.0, 1.0);
     //addGalaxy(space, 100000, 100000, 1000000000, 1000000, 3, 0, 0, 0, 0, 0, 100.0);
     //addGalaxy(space, 100000, 1000, 1000000000000, 10000, 100, 0, 0, 0, 0, 1000, 100.0);
 
@@ -316,11 +335,22 @@ int main()
 
         ImGui::SFML::Update(window, deltaClock.restart());
 
-        ImGui::Begin("Hello, world!");
-        ImGui::Button("Look at this pretty button");
+        ImGuiWindowFlags flags;
+        flags |= ImGuiWindowFlags_NoTitleBar;
+        flags |= ImGuiWindowFlags_NoResize;
+        flags |= ImGuiWindowFlags_NoMove;
+        ImGui::Begin("Hello, world!", NULL, flags);
+        ImGui::SetWindowPos(ImVec2(0.0,0.9*window_height));
+        ImGui::SetWindowSize(ImVec2(window_width,window_height/10.0));
+
+        if(ImGui::Button("Pause")){
+            timescale = 0.0;
+        }
+
+        ImGui::SliderFloat("timescale",&timescale, 0.001, 2.0);
         ImGui::End();
 
-        ImGui::ShowDemoWindow();
+        //ImGui::ShowDemoWindow();
 
         window.clear();
         //space.draw(window);

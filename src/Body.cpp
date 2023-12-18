@@ -28,7 +28,7 @@ Body::Body(float mass, float radius, sf::Vector2<double> position, sf::Vector2<d
 }
 
 void Body::update(sf::Int64 delta) {
-    int totForce = std::min(( (sqrt(pow(acceleration.x,2) + pow(acceleration.y,2)) * mass)/ 2000000000000) * 255, (double)255);
+    int totForce = std::min(( (sqrt(pow(acceleration.x,2) + pow(acceleration.y,2)) * mass)/ 200000000) * 255, (double)255);
     shape.setFillColor(sf::Color(100+std::min(totForce,155), 100+std::min(155,totForce), 255-totForce));
     shape.setFillColor(sf::Color(100+std::min(totForce,155), 100+std::min(155,totForce), 255-totForce));
     velocity += acceleration * (delta/ 1000000.0);

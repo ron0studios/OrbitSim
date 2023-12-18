@@ -47,6 +47,7 @@ int main()
 
     Simulator space(10000000);
     float timescale  = 1;
+    bool paused = false;
 
     addGalaxy(space, 100, 1000, 1000, 100, 1, -00000, -00000, 0, 000,0.0, 1.0);
     addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, -1000, 1000, 000,0.0, 1.0);
@@ -87,7 +88,8 @@ int main()
             if(event.type == sf::Event::LostFocus) focus = false;
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))  window.close();
             if (event.type == sf::Event::Closed)                       window.close();
-
+            if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Space)
+                paused = !paused;
 
             /*if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
                 view.setSize(view.getSize().x * 0.8, view.getSize().y * 0.8);
@@ -110,8 +112,7 @@ int main()
                 view.setCenter(view.getCenter().x, view.getCenter().y + speed * view.getSize().y * dt.asSeconds());
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 view.setCenter(view.getCenter().x + speed * view.getSize().x * dt.asSeconds(), view.getCenter().y);
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-                timescale = !timescale;
+            //if(sf::Keyboard::(sf::Keyboard::Space))  paused = !paused;
             //view.setCenter(view.getCenter().x + speed*view.getSize().x*dt.asSeconds(), view.getCenter().y);
         }
         window.setView(view);
@@ -128,7 +129,7 @@ int main()
         ImGui::SetWindowSize(ImVec2(window_width,window_height/10.0));
 
         if(ImGui::Button("Pause")){
-            timescale = 0.0;
+            paused = !paused;
         }
 
         ImGui::SliderFloat("timescale",&timescale, 0.001, 2.0);
@@ -187,7 +188,7 @@ int main()
         //std::chrono::high_resolution_clock::time_point timeA, timeB;
         space.updateTree();
         space.updateForces(false);
-        space.updateBodies(dt.asMicroseconds() * timescale);
+        space.updateBodies(dt.asMicroseconds() * timescale * paused);
         //space.draw(window);
         //space.drawTree(window);
 

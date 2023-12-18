@@ -48,6 +48,7 @@ int main()
     Simulator space(10000000);
     float timescale  = 1;
     bool paused = false;
+    bool render_tree = true;
 
     addGalaxy(space, 100, 1000, 1000, 100, 1, -00000, -00000, 0, 000,0.0, 1.0);
     addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, -1000, 1000, 000,0.0, 1.0);
@@ -133,6 +134,15 @@ int main()
         }
 
         ImGui::SliderFloat("timescale",&timescale, 0.001, 2.0);
+        ImGui::Checkbox("render Quad Tree?", &render_tree);
+        ImGui::Text("FPS %.2f", 1/dt.asSeconds() );
+        ImGui::End();
+
+        flags |= ImGuiWindowFlags_NoBackground;
+        ImGui::Begin("debug corner", NULL, flags);
+        //ImGui::SetWindowSize(ImVec2(window_width,window_height/10.0));
+        ImGui::SetWindowPos(ImVec2(0.0,0.0));
+        ImGui::Text("FPS %.2f", 1/dt.asSeconds() );
         ImGui::End();
 
         //ImGui::ShowDemoWindow();
@@ -190,7 +200,7 @@ int main()
         space.updateForces(false);
         space.updateBodies(dt.asMicroseconds() * timescale * paused);
         //space.draw(window);
-        space.drawTree(window);
+        if(render_tree) space.drawTree(window);
 
 
         if(iterations % 100 == 0) {

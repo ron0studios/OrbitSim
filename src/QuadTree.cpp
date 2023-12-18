@@ -253,7 +253,6 @@ sf::Vector2<double> QuadTree::forcePair(double massA, double massB, sf::Vector2<
 
 void QuadTree::draw(sf::RenderWindow &window) {
     for(size_t i = 0; i < tree.size(); i++){
-        std::cout << i << std::endl;
         sf::RectangleShape r(sf::Vector2f(tree[i].width, tree[i].width));
         r.setOrigin(tree[i].width/2, tree[i].width/2);
         /*sf::Vector2f position(0,0);

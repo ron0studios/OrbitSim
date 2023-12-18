@@ -23,15 +23,7 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies)
     r.setOutlineThickness(2.0);
     this->bound = bound;
 
-#if DEBUG
-    tree.push_back({0,0.0,bound*2.0,0, 0.0, 0.0, nullptr, sf::RectangleShape(sf::Vector2f(bound*2.0, bound*2.0))}); // root
-    tree.back().r.setOrigin(bound,bound);
-    tree.back().r.setPosition(0.0, 0.0);
-    tree.back().r.setOutlineThickness(5.0);
-    tree.back().r.setFillColor(sf::Color::Transparent);
-#else
     tree.push_back({0,0.0,bound*2.0,0, 0.0, 0.0, nullptr}); // root
-#endif
 
     // center x, center y
     double cx, cy;
@@ -56,12 +48,9 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies)
                 tree[idx].total = 1;
                 tree[idx].massx = body.position.x;
                 tree[idx].massy = body.position.y;
-#if DEBUG
-                tree[idx].r.setOrigin(tree[idx].width/2.0,tree[idx].width/2.0);
-                tree[idx].r.setPosition(cx,cy);
-                tree[idx].r.setOutlineThickness(5.0);
-                tree[idx].r.setFillColor(sf::Color::Transparent);
-#endif
+
+                tree[idx].cx = cx;
+                tree[idx].cy = cy;
                 break;
             }
 
@@ -94,10 +83,6 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies)
             else {
                 tree[idx].child = (int)tree.size();
                 for(int i = 0; i < 4; i++) {
-#if DEBUG
-                    tree.push_back({0, 0.0, tree[idx].width / 2.0, 0, 0.0, 0.0, nullptr, sf::RectangleShape(sf::Vector2f(tree[idx].width/2.0, tree[idx].width/2.0))});
-                    tree.back().r.setOrigin(tree[idx].width / 4.0,tree[idx].width / 4.0);
-
                     double cx2 = cx;
                     double cy2 = cy;
                     if(i%2)
@@ -110,13 +95,7 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies)
                     else
                         cy2 += tree[idx].width/4.0;
 
-                    tree.back().r.setPosition(cx2,cy2);
-                    tree.back().r.setOutlineThickness(5.0);
-                    tree.back().r.setFillColor(sf::Color::Transparent);
-#else
-                    tree.push_back({0, 0.0, tree[idx].width / 2.0, 0, 0.0, 0.0, nullptr});
-#endif
-
+                    tree.push_back({0, 0.0, tree[idx].width / 2.0, 0, 0.0, 0.0, nullptr, cx2, cy2});
                 }
 
                 int quadA = getQuadrant(sf::Vector2<double>(cx,cy), tree[idx].singleChild->position);
@@ -273,13 +252,48 @@ sf::Vector2<double> QuadTree::forcePair(double massA, double massB, sf::Vector2<
 }
 
 void QuadTree::draw(sf::RenderWindow &window) {
-#if DEBUG
-    for(int i = 0 ; i < tree.size(); i++){
-        window.draw(tree[i].r);
+    for(size_t i = 0; i < tree.size(); i++){
+        std::cout << i << std::endl;
+        sf::RectangleShape r(sf::Vector2f(tree[i].width, tree[i].width));
+        r.setOrigin(tree[i].width/2, tree[i].width/2);
+        /*sf::Vector2f position(0,0);
+        int node = 0;
+        int width = bound*2;
+        while(node != i){
+            std::cout << node << " " << i << std::endl;
+            int quad = getQuadrant(position.x, position.y, tree[i].massx, tree[i].massy);
+            if(i != 0 and tree[i].massx == 0 and tree[i].massy == 0)
+                quad = getQuadrant(position.x, position.y, tree[i].singleChild->position.x, tree[i].singleChild->position.y);
+            node = tree[i].child+quad;
+            switch (quad){
+                case 0:
+                    position.x -= width/4;
+                    position.y -= width/4;
+                    break;
+                case 1:
+                    position.x += width/4;
+                    position.y -= width/4;
+                    break;
+                case 2:
+                    position.x -= width/4;
+                    position.y += width/4;
+                    break;
+                case 3:
+                    position.x += width/4;
+                    position.y += width/4;
+                    break;
+            }
+            width /= 2;
+        }
+        r.setPosition(position);*/
+
+        r.setOutlineThickness(window.getView().getSize().x/1920);
+        r.setFillColor(sf::Color::Transparent);
+        r.setOutlineColor(sf::Color(255,255,255,10));
+        r.setPosition(tree[i].cx, tree[i].cy);
+
+        window.draw(r);
     }
-#else
-    throw std::logic_error("debug is not enabled!");
-#endif
 }
 
 

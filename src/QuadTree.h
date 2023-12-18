@@ -40,9 +40,8 @@ class QuadTree {
             // if node has 1 child
             Body* singleChild = nullptr;
 
-#if DEBUG
-            sf::RectangleShape r;
-#endif
+            double cx = 0.0;
+            double cy = 0.0;
         };
 
        std::vector<node> tree;

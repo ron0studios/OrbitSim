@@ -190,7 +190,7 @@ int main()
         space.updateForces(false);
         space.updateBodies(dt.asMicroseconds() * timescale * paused);
         //space.draw(window);
-        //space.drawTree(window);
+        space.drawTree(window);
 
 
         if(iterations % 100 == 0) {
@@ -239,7 +239,7 @@ int main()
         dt = deltaClock.restart();
         iterations++;
 
-        std::cout << dt.asSeconds() << "\t\t" << view.getSize().x << std::endl;
+        //std::cout << dt.asSeconds() << "\t\t" << view.getSize().x << std::endl;
         //std::cout << space.bodies.back().acceleration.x << " " << space.bodies.back().acceleration.y << std::endl;
     }
 

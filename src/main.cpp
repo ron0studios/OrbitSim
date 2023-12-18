@@ -355,26 +355,33 @@ int main()
         window.clear();
         //space.draw(window);
         sf::Image img;
+        int scale = 4;
+        float brightness = 0.5;
         sf::Uint8 pix[1920*1080*4] = {0};
 
 
         sf::Vector2f origin = sf::Vector2f(view.getCenter().x-view.getSize().x/2, view.getCenter().y-view.getSize().y/2);
         sf::Vector2f size = sf::Vector2f(view.getSize().x, view.getSize().y);
 
+
         for(auto & body  : space.bodies){
             sf::Vector2<double> pos = body.position;
             if(pos.x < origin.x or pos.x > origin.x + size.x) continue;
             if(pos.y < origin.y or pos.y > origin.y + size.y) continue;
 
-            int gridx = (pos.x - origin.x)/(size.x/1920);
-            int gridy = (pos.y - origin.y)/(size.y/1080);
+            int gridx = (pos.x - origin.x)/(size.x/1920); gridx -= gridx % scale;
+            int gridy = (pos.y - origin.y)/(size.y/1080); gridy -= gridy % scale;
 
 
             //std::cout << (int)body.shape.getFillColor().r << " " << (int)body.shape.getFillColor().g << " " << (int)body.shape.getFillColor().b << std::endl;
-            pix[4*((gridy*1920) + gridx) + 0] = body.shape.getFillColor().r;
-            pix[4*((gridy*1920) + gridx) + 1] = body.shape.getFillColor().g;
-            pix[4*((gridy*1920) + gridx) + 2] = body.shape.getFillColor().b;
-            pix[4*((gridy*1920) + gridx) + 3] = 255;
+            for(int i = 0; i < scale; i++){
+                for(int j = 0; j < scale; j++){
+                    pix[4*(((gridy+i)*1920) + gridx+j) + 0] = body.shape.getFillColor().r;
+                    pix[4*(((gridy+i)*1920) + gridx+j) + 1] = body.shape.getFillColor().g;
+                    pix[4*(((gridy+i)*1920) + gridx+j) + 2] = body.shape.getFillColor().b;
+                    pix[4*(((gridy+i)*1920) + gridx+j) + 3] += (int)((255*scale*brightness)/scale);
+                }
+            }
             //for(int i = 0; i < 4; i++)
              //   pix[4*((gridy*1920) + gridx) + i] = std::min(pix[4*((gridy*1920) + gridx) + i]+255, 255);
         }

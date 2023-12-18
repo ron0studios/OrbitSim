@@ -113,6 +113,12 @@ int main()
                 view.setCenter(view.getCenter().x, view.getCenter().y + speed * view.getSize().y * dt.asSeconds());
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 view.setCenter(view.getCenter().x + speed * view.getSize().x * dt.asSeconds(), view.getCenter().y);
+
+            if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+                sf::Vector2<double> pos = (sf::Vector2<double>)window.mapPixelToCoords(sf::Mouse::getPosition());
+                std::cout << pos.x << " " << pos.y << std::endl;
+                space.bodies.push_back(Body(1.0,1.0,pos));
+            }
             //if(sf::Keyboard::(sf::Keyboard::Space))  paused = !paused;
             //view.setCenter(view.getCenter().x + speed*view.getSize().x*dt.asSeconds(), view.getCenter().y);
         }
@@ -138,11 +144,13 @@ int main()
         ImGui::Text("FPS %.2f", 1/dt.asSeconds() );
         ImGui::End();
 
-        flags |= ImGuiWindowFlags_NoBackground;
-        ImGui::Begin("debug corner", NULL, flags);
+        ImGuiWindowFlags flags2 = flags;
+        flags2 |= ImGuiWindowFlags_NoBackground;
+        ImGui::Begin("debug corner", NULL, flags2);
         //ImGui::SetWindowSize(ImVec2(window_width,window_height/10.0));
         ImGui::SetWindowPos(ImVec2(0.0,0.0));
         ImGui::Text("FPS %.2f", 1/dt.asSeconds() );
+        ImGui::Text("Entity Count %i", (int)space.bodies.size());
         ImGui::End();
 
         //ImGui::ShowDemoWindow();

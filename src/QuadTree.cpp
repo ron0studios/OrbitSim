@@ -98,6 +98,10 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies)
                     tree.push_back({0, 0.0, tree[idx].width / 2.0, 0, 0.0, 0.0, nullptr, cx2, cy2});
                 }
 
+                if(tree[idx].singleChild->position==body.position){
+                    throw std::logic_error("Two bodies cannot have the exact same position!");
+                }
+
                 int quadA = getQuadrant(sf::Vector2<double>(cx,cy), tree[idx].singleChild->position);
 
                 tree[tree[idx].child+quadA].mass = tree[idx].singleChild->mass;
@@ -229,7 +233,7 @@ sf::Vector2<double> QuadTree::forcePair(double massA, double massB, sf::Vector2<
 {
 
     if(posA == posB){
-        std::cout << "AAAAAAAAAAAAAAAA";
+        throw std::logic_error("Two bodies cannot have the exact same position!");
         return {0.0,0.0};
     }
 

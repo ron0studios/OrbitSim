@@ -20,7 +20,7 @@ class Body {
         sf::RectangleShape accdir;
 
         Body(float mass, float radius, sf::Vector2<double> position, sf::Vector2<double> velocity = sf::Vector2<double>(0.0f, 0.0f));
-        void update(sf::Int64 delta); // updates based on acceleration and velocity
+        void update(sf::Int64 delta, double maxForce); // updates based on acceleration and velocity
         void draw(sf::RenderWindow& window);
 };
 

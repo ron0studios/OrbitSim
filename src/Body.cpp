@@ -26,11 +26,40 @@ Body::Body(float mass, float radius, sf::Vector2<double> position, sf::Vector2<d
     accdir.setFillColor(sf::Color(100,100,100));
 #endif
 }
+/*def convert_to_rgb(minimum, maximum, value):
+    minimum, maximum = float(minimum), float(maximum)
+    halfmax = (minimum + maximum) / 2
+    if minimum <= value <= halfmax:
+        r = 0
+        g = int( 255./(halfmax - minimum) * (value - minimum))
+        b = int( 255. + -255./(halfmax - minimum)  * (value - minimum))
+        return (r,g,b)
+    elif halfmax < value <= maximum:
+        r = int( 255./(maximum - halfmax) * (value - halfmax))
+        g = int( 255. + -255./(maximum - halfmax)  * (value - halfmax))
+        b = 0
+        return (r,g,b)*/
 
-void Body::update(sf::Int64 delta) {
-    int totForce = std::min(( (sqrt(pow(acceleration.x,2) + pow(acceleration.y,2)) * mass)/ 200000000) * 255, (double)255);
-    shape.setFillColor(sf::Color(100+std::min(totForce,155), 100+std::min(155,totForce), 255-totForce));
-    shape.setFillColor(sf::Color(100+std::min(totForce,155), 100+std::min(155,totForce), 255-totForce));
+sf::Color convert_to_rgb(double min, double max, double val){
+    double halfmax = (min + max) / 2.0;
+    int r,g,b;
+    if(min <= val and val <= halfmax){
+        r = 0;
+        g = (int)(255.0/ (halfmax-min)*(val-min));
+        b = (int)(255.0 + -255.0/(halfmax-min)*(val-min));
+    }
+    else{
+        r = (int)(255.0/(max-halfmax)*(val-halfmax));
+        g = (int)(255.0 + -255.0/(max-halfmax) * (val-halfmax));
+        b = 0;
+    }
+    return sf::Color(r,g,b, 255.0);
+}
+
+void Body::update(sf::Int64 delta, double maxForce) {
+    int totForce = sqrt(pow(acceleration.x,2) + pow(acceleration.y,2)) * mass;
+    //shape.setFillColor(sf::Color(100+std::min(totForce,155), 100+std::min(155,totForce), 255-totForce));
+    shape.setFillColor(convert_to_rgb(0, maxForce, totForce));
     velocity += acceleration * (delta/ 1000000.0);
     position += velocity * (delta/ 1000000.0);
 }

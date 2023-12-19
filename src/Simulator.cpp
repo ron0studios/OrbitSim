@@ -27,7 +27,9 @@ void Simulator::addBody(Body body) {
 
 void Simulator::updateTree() {
     std::lock_guard<std::mutex> guard(mut);
+
     tree = QuadTree(this->bounds, &bodies);
+
     //delQuadTree(&root);
     //genQuadTree();
 }
@@ -35,10 +37,42 @@ void Simulator::updateTree() {
 
 void Simulator::updateForces(bool bruteForce) {
     std::lock_guard<std::mutex> guard(mut);
+    maxForce = -1;
     //std::cout << "loop\n" << std::endl;
 
 
     if(bruteForce) {
+
+
+        int num_threads = 16;
+        std::vector<std::thread> threads(num_threads);
+
+        for(int i = 0; i < num_threads; i++){
+            threads[i] = std::thread([this](int i, int n){
+
+                for(int j = i*n; j < ((i+1)*n) and j < bodies.size(); j++) {
+                    for (auto &bodyB: bodies) {
+                        if (&bodies[j] == &bodyB) continue;
+
+                        bodies[j].acceleration +=
+                                tree.forcePair(bodies[j].mass, bodyB.mass, bodies[j].position, bodyB.position) / bodies[j].mass;
+
+                    }
+                }
+
+            },i, std::ceil((double)bodies.size()/num_threads));
+        }
+
+
+        for(int i = 0; i < num_threads; i++)
+            threads[i].join();
+
+
+
+
+
+
+        /*
         for (auto &bodyA: bodies) {
             bodyA.acceleration = sf::Vector2<double>(0.0, 0.0);
             for (auto &bodyB: bodies) {
@@ -50,6 +84,7 @@ void Simulator::updateForces(bool bruteForce) {
             }
             //std::cout << "\t" << bodyA.acceleration.x << " " << bodyA.acceleration.y << std::endl;
         }
+         */
         return;
     }
 
@@ -59,13 +94,20 @@ void Simulator::updateForces(bool bruteForce) {
     }
      */
 
+
     int num_threads = 16;
     std::vector<std::thread> threads(num_threads);
 
     for(int i = 0; i < num_threads; i++){
         threads[i] = std::thread([this](int i, int n){
-            for(int j = i*n; j < ((i+1)*n) and j < bodies.size(); j++)
+
+            sf::Clock clock;
+            for(int j = i*n; j < ((i+1)*n) and j < bodies.size(); j++) {
                 tree.updateForce(&bodies[j], 0.5);
+                maxForce = std::max(maxForce, bodies[j].mass * std::sqrt(std::pow(bodies[j].acceleration.x,2) + std::pow(bodies[j].acceleration.y,2)));
+            }
+
+            std::cout << clock.restart().asSeconds() << "\t";
                 //calcForce(bodies[j]);
         },i, std::ceil((double)bodies.size()/num_threads));
     }
@@ -74,6 +116,7 @@ void Simulator::updateForces(bool bruteForce) {
     for(int i = 0; i < num_threads; i++)
         threads[i].join();
 
+    std::cout << std::endl;
 
     /*
     for(auto &body : bodies) {
@@ -121,7 +164,7 @@ void Simulator::updateBodies(sf::Int64 delta) {
     //for(auto & i : bodies)
         //minforce = std::max(minforce, pow(i.acceleration.x,2) + pow(i.acceleration.y,2));
     //std::cout << minforce << std::endl;
-    for(auto & body : bodies) body.update(delta);
+    for(auto & body : bodies) body.update(delta, maxForce);
 }
 
 void Simulator::drawTree(sf::RenderWindow &window) {

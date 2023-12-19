@@ -129,7 +129,6 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies)
 
         }
     }
-
 }
 
 int QuadTree::getQuadrant(sf::Vector2<double> center, sf::Vector2<double> s) {
@@ -175,6 +174,7 @@ int QuadTree::getQuadrant(double cx, double cy, double sx, double sy) {
 }
 
 void QuadTree::updateForce(Body *body, double theta) {
+
     std::stack<int> stack; stack.push(0);
     body->acceleration = {0.0,0.0};
 
@@ -185,7 +185,7 @@ void QuadTree::updateForce(Body *body, double theta) {
         if(n.mass == 0) continue;
 
         if(n.child > 0){
-            double distance = sqrt(pow(n.massx-body->position.x,2) + pow(n.massy-body->position.y, 2))/10.0;
+            double distance = sqrt(pow(n.massx-body->position.x,2) + pow(n.massy-body->position.y, 2));
             double ratio = n.width/(distance);
 
             if(ratio <= theta){
@@ -217,6 +217,7 @@ void QuadTree::updateForce(Body *body, double theta) {
             body->acceleration += accel;
         }
     }
+
 }
 
 

@@ -24,6 +24,7 @@ class Simulator {
 
     private:
         std::mutex mut;
+        double maxForce = -1;
 
         double bounds;
         sf::RectangleShape boundbox;

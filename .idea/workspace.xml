@@ -27,7 +27,12 @@
   <component name="ChangeListManager">
     <list default="true" id="1c358710-20fc-425d-b42f-954a2271f4df" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Body.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Body.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Body.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Body.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/QuadTree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/QuadTree.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/QuadTree.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/QuadTree.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Simulator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Simulator.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Simulator.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Simulator.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -38,7 +43,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Release" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -120,7 +125,9 @@
       <updated>1702295798975</updated>
       <workItem from="1702295800357" duration="95000" />
       <workItem from="1702295908039" duration="2142000" />
-      <workItem from="1702897558856" duration="17504000" />
+      <workItem from="1702897558856" duration="18915000" />
+      <workItem from="1702985923542" duration="2923000" />
+      <workItem from="1703024010573" duration="4326000" />
     </task>
     <servers />
   </component>

@@ -20,6 +20,7 @@ class QuadTree {
         void draw(sf::RenderWindow& window);
         static sf::Vector2<double> forcePair(double massA, double massB, sf::Vector2<double> posA, sf::Vector2<double> posB);
     private:
+
         sf::RectangleShape r;
         static int getQuadrant(sf::Vector2<double> center, sf::Vector2<double> s);
         static int getQuadrant(double cx, double cy, double sx, double sy);

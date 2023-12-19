@@ -50,17 +50,19 @@ int main()
     bool paused = false;
     bool render_tree = true;
 
-    addGalaxy(space, 100, 1000, 1000, 100, 1, -00000, -00000, 0, 000,0.0, 1.0);
-    addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, -1000, 1000, 000,0.0, 1.0);
-    addGalaxy(space, 100, 1000, 1000, 100, 1, 1000, 1000, 0, 000,0.0, 1.0);
-    addGalaxy(space, 100, 1000, 1000, 100, 1, 1000, -1000, 0, 000,0.0, 1.0);
-    addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, 1000, 0, 000,0.0, 1.0);
+    addGalaxy(space, 10000, 1000, 1000, 10000, 5, -00000, -00000, 0, 000,0.0, 1.0);
 
-    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000, -00000, 0, 000,0.0, 1.0);
-    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000-1000, -1000, 1000, 000,0.0, 1.0);
-    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000+1000, 1000, 0, 000,0.0, 1.0);
-    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000+1000, -1000, 0, 000,0.0, 1.0);
-    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000-1000, 1000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, -00000, -00000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, -1000, 1000, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, 1000, 1000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, 1000, -1000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, 1000, 0, 000,0.0, 1.0);
+
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000, -00000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000-1000, -1000, 1000, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000+1000, 1000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000+1000, -1000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000-1000, 1000, 0, 000,0.0, 1.0);
 
 
 
@@ -79,6 +81,9 @@ int main()
     sf::Clock deltaClock;
     sf::Time dt;
     int iterations = 0;
+
+
+
     while (window.isOpen())
     {
         sf::Event event;
@@ -114,11 +119,17 @@ int main()
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 view.setCenter(view.getCenter().x + speed * view.getSize().x * dt.asSeconds(), view.getCenter().y);
 
+            /*
             if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                 sf::Vector2<double> pos = (sf::Vector2<double>)window.mapPixelToCoords(sf::Mouse::getPosition());
+                double rnd1 = rand();
+                double rnd2 = rand();
+                pos.x += 20*(rnd1/RAND_MAX)-10;
+                pos.y += 20*(rnd2/RAND_MAX)-10;
                 std::cout << pos.x << " " << pos.y << std::endl;
-                space.bodies.push_back(Body(1.0,1.0,pos));
+                space.bodies.push_back(Body(1000000.0,1.0,pos));
             }
+             */
             //if(sf::Keyboard::(sf::Keyboard::Space))  paused = !paused;
             //view.setCenter(view.getCenter().x + speed*view.getSize().x*dt.asSeconds(), view.getCenter().y);
         }
@@ -157,6 +168,8 @@ int main()
 
         window.clear();
         //space.draw(window);
+
+
         sf::Image img;
         int scale = 4;
         float brightness = 0.5;
@@ -202,6 +215,7 @@ int main()
 
         window.draw(sprite);
 
+
         //auto start = std::chrono::high_resolution_clock::now();
         //std::chrono::high_resolution_clock::time_point timeA, timeB;
         space.updateTree();
@@ -246,6 +260,7 @@ int main()
         //space.draw(window);
         //space.drawTree(window);
         //space.updateBodies(dt.asMicroseconds());
+
 
         ImGui::SFML::Render(window);
         window.display();

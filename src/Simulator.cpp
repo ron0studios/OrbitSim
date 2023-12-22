@@ -95,13 +95,14 @@ void Simulator::updateForces(bool bruteForce) {
      */
 
 
+    /*
     for(int j = 0; j < bodies.size(); j++) {
         tree.updateForce(&bodies[j], 0.5);
         //maxForce = std::max(maxForce, bodies[j].mass * std::sqrt(std::pow(bodies[j].acceleration.x,2) + std::pow(bodies[j].acceleration.y,2)));
         maxForce = std::max(maxForce, std::sqrt(std::pow(bodies[j].velocity.x,2) + std::pow(bodies[j].velocity.y,2)));
     }
+     */
 
-    /*
     int num_threads = 16;
     std::vector<std::thread> threads(num_threads);
 
@@ -121,7 +122,6 @@ void Simulator::updateForces(bool bruteForce) {
 
     for(int i = 0; i < num_threads; i++)
         threads[i].join();
-        */
 
 
 

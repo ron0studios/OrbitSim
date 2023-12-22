@@ -51,11 +51,28 @@ int main()
     bool render_tree = true;
     bool use_colors = true;
     bool simple_render = true;
+    bool render_arrows = false;
     int scale = 4;
     float brightness = 1;
     float tree_brightness = 0.04;
 
-    //addGalaxy(space, 10000, 1000, 1000, 1000, 0.2, -00000, -00000, -0, 000,.0, 1.0);
+
+    if (!sf::Shader::isAvailable())
+    {
+        throw std::logic_error("shaders not supported");
+    }
+
+    sf::Shader shader;
+
+    // load only the fragment shader
+    if (!shader.loadFromFile("fragment.frag", sf::Shader::Fragment))
+    {
+        throw std::logic_error("fragment shader not working");
+    }
+
+
+
+    //addGalaxy(space, 10000, 1000, 1000, 10000, 5, -00000, -00000, -0, 000,.4, 1.0);
     //addGalaxy(space, 10000, 1000, 1000, 10000, 0, -00000, -00000, -0, 000,.0, 1.0);
 
     addGalaxy(space, 100, 1000, 1000, 100, 1, -00000, -00000, 0, 000,0.0, 1.0);
@@ -92,6 +109,9 @@ int main()
 
     while (window.isOpen())
     {
+        shader.setUniform("currentTexture", sf::Shader::CurrentTexture);
+        //shader.setUniform("blur_radius", 0.00001f);
+
 
         sf::Event event;
         while (window.pollEvent(event))
@@ -188,7 +208,9 @@ int main()
                 ImGui::Text("enable to render using pixels instead of polygons (can break on some systems)");
                 ImGui::EndTooltip();
             }
-            ImGui::Checkbox("Render arrows?", &use_colors);
+            ImGui::BeginDisabled(simple_render);
+            ImGui::Checkbox("Render arrows?", &render_arrows);
+            ImGui::EndDisabled();
             if(ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal)) {
                 ImGui::BeginTooltip();
                 ImGui::Text("enable to render arrows for acceleration and velocity on shapes");
@@ -197,10 +219,15 @@ int main()
         ImGui::EndGroup();
         ImGui::SameLine();
         ImGui::BeginChild("sliders", ImVec2(window_width/4.0, window_height/10.0), false);
+
             ImGui::SliderInt("resolution", &scale,1,40);
             if(ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal)) {
                 ImGui::BeginTooltip();
                 ImGui::Text("sets the resolution of simple rendering, higher -> lower resolution");
+                ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0,200,2002,255));
+                ImGui::Text("It is recommended that you use common factors of 1920x1080, such as:");
+                ImGui::Text("(1,2,3,4,5,6,8,10,12,15,20,24,30,40)");
+                ImGui::PopStyleColor();
                 ImGui::EndTooltip();
             }
             ImGui::SliderFloat("star brightness", &brightness, 0.1, 1);
@@ -209,7 +236,9 @@ int main()
                 ImGui::Text("sets the brightness of simple rendering stars by modifying its alpha value");
                 ImGui::EndTooltip();
             }
+            ImGui::BeginDisabled(!render_tree);
             ImGui::SliderFloat("tree brightness",&tree_brightness, 0.01, 1.0);
+            ImGui::EndDisabled();
             if(ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal)) {
                 ImGui::BeginTooltip();
                 ImGui::Text("Sets the brightness of each new QuadTree square drawn by modifying its alpha value");
@@ -300,7 +329,7 @@ int main()
             sprite.setPosition(view.getCenter().x, view.getCenter().y);
             sprite.setScale((float) view.getSize().x / 1920.0f, (float) view.getSize().y / 1080.0f);
 
-            window.draw(sprite);
+            window.draw(sprite);//, &shader);
         }
         else{ space.draw(window); }
 

@@ -16,4 +16,6 @@ project(imgui-sfml-example
 )
 
 add_subdirectory(dependencies)
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/fragment.frag
+        DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/src)
 add_subdirectory(src)

@@ -17,7 +17,7 @@ class Simulator {
         Simulator(double bounds = 50000);
         void addBody(Body body);
         void updateForces(bool bruteForce=false);
-        void updateTree();
+        void updateTree(float brightness);
         void updateBodies(sf::Int64 delta);
         void draw(sf::RenderWindow& window);
         void drawTree(sf::RenderWindow& window);

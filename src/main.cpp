@@ -49,20 +49,26 @@ int main()
     float timescale  = 1;
     bool paused = false;
     bool render_tree = true;
+    bool use_colors = true;
+    bool simple_render = true;
+    int scale = 4;
+    float brightness = 1;
+    float tree_brightness = 0.04;
 
-    addGalaxy(space, 10000, 1000, 1000, 10000, 5, -00000, -00000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 10000, 1000, 1000, 1000, 0.2, -00000, -00000, -0, 000,.0, 1.0);
+    //addGalaxy(space, 10000, 1000, 1000, 10000, 0, -00000, -00000, -0, 000,.0, 1.0);
 
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, -00000, -00000, 0, 000,0.0, 1.0);
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, -1000, 1000, 000,0.0, 1.0);
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, 1000, 1000, 0, 000,0.0, 1.0);
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, 1000, -1000, 0, 000,0.0, 1.0);
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, 1000, 0, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, -00000, -00000, 0, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, -1000, 1000, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, 1000, 1000, 0, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, 1000, -1000, 0, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, 1000, 0, 000,0.0, 1.0);
 
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000, -00000, 0, 000,0.0, 1.0);
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000-1000, -1000, 1000, 000,0.0, 1.0);
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000+1000, 1000, 0, 000,0.0, 1.0);
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000+1000, -1000, 0, 000,0.0, 1.0);
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000-1000, 1000, 0, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000, -00000, 0, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000-1000, -1000, 1000, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000+1000, 1000, 0, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000+1000, -1000, 0, 000,0.0, 1.0);
+    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000-1000, 1000, 0, 000,0.0, 1.0);
 
 
 
@@ -80,8 +86,8 @@ int main()
 
     sf::Clock deltaClock;
     sf::Time dt;
+    sf::Uint8* pix;
     int iterations = 0;
-
 
 
     while (window.isOpen())
@@ -89,19 +95,25 @@ int main()
         sf::Event event;
         while (window.pollEvent(event))
         {
-            ImGui::SFML::ProcessEvent(event);
-            if(event.type == sf::Event::GainedFocus) focus = true;
-            if(event.type == sf::Event::LostFocus) focus = false;
+            ImGui::SFML::ProcessEvent(window, event);
+            //if(event.type == sf::Event::GainedFocus) focus = true;
+            //if(event.type == sf::Event::LostFocus) focus = false;
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))  window.close();
             if (event.type == sf::Event::Closed)                       window.close();
             if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Space)
                 paused = !paused;
 
-            /*if(sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-                view.setSize(view.getSize().x * 0.8, view.getSize().y * 0.8);
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::E))
-                view.setSize(view.getSize().x * 1.25, view.getSize().y * 1.25);
-            window.setView(view);*/
+
+            /*
+            if(event.type == sf::Event::MouseButtonReleased and event.key.code == sf::Mouse::Left){
+                sf::Vector2<double> pos = (sf::Vector2<double>)window.mapPixelToCoords(sf::Mouse::getPosition());
+                if((float)sf::Mouse::getPosition().y/window.getSize().y > 0.9) continue;
+                //addGalaxy(space, 100, 10000, 0, 1000, 0, pos.x, pos.y, -0, 000,.0, 1.0);
+                addGalaxy(space, 0, 10000, 100000000000, 1000, 0, pos.x, pos.y, -0, 000,.0, 1.0);
+            }
+             */
+
+
         }
 
 
@@ -119,40 +131,65 @@ int main()
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 view.setCenter(view.getCenter().x + speed * view.getSize().x * dt.asSeconds(), view.getCenter().y);
 
-            /*
-            if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-                sf::Vector2<double> pos = (sf::Vector2<double>)window.mapPixelToCoords(sf::Mouse::getPosition());
-                double rnd1 = rand();
-                double rnd2 = rand();
-                pos.x += 20*(rnd1/RAND_MAX)-10;
-                pos.y += 20*(rnd2/RAND_MAX)-10;
-                std::cout << pos.x << " " << pos.y << std::endl;
-                space.bodies.push_back(Body(1000000.0,1.0,pos));
-            }
-             */
-            //if(sf::Keyboard::(sf::Keyboard::Space))  paused = !paused;
             //view.setCenter(view.getCenter().x + speed*view.getSize().x*dt.asSeconds(), view.getCenter().y);
         }
         window.setView(view);
 
 
-        ImGui::SFML::Update(window, deltaClock.restart());
 
-        ImGuiWindowFlags flags;
+        ImGui::SFML::Update(window, dt);
+
+        ImGui::SetNextWindowPos(ImVec2(0.0,0.9*window_height));
+        ImGui::SetNextWindowSize(ImVec2(window_width,window_height/10.0));
+        //ImGui::SetNextWindowContentSize(ImVec2(window_width,window_height/10.0));
+
+        ImGuiWindowFlags flags=0;
         flags |= ImGuiWindowFlags_NoTitleBar;
         flags |= ImGuiWindowFlags_NoResize;
         flags |= ImGuiWindowFlags_NoMove;
+        flags |= ImGuiWindowFlags_NoScrollbar;
         ImGui::Begin("Hello, world!", NULL, flags);
-        ImGui::SetWindowPos(ImVec2(0.0,0.9*window_height));
-        ImGui::SetWindowSize(ImVec2(window_width,window_height/10.0));
 
-        if(ImGui::Button("Pause")){
-            paused = !paused;
+        if(ImGui::Button("Settings", ImVec2(window_height/10.0 - 15.0, window_height/10.0 - 15.0))){
+            ImGui::OpenPopup("settings");
         }
 
-        ImGui::SliderFloat("timescale",&timescale, 0.001, 2.0);
-        ImGui::Checkbox("render Quad Tree?", &render_tree);
-        ImGui::Text("FPS %.2f", 1/dt.asSeconds() );
+        if(ImGui::BeginPopupModal("settings", NULL, ImGuiWindowFlags_Tooltip)){
+            ImGui::EndPopup();
+        }
+        //ImGui::Mod;
+
+        ImGui::SameLine();
+
+        ImGui::BeginGroup();
+        /*
+        if(ImGui::Button("Pause", ImVec2(window_height/20.0 -15.0, window_height/20.0 -15.0))){
+            paused = !paused;
+        }
+         */
+        ImGui::SameLine();
+        ImGui::BeginGroup();
+            ImGui::Checkbox("render Quad Tree?", &render_tree);
+            if(ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal)) {
+                ImGui::BeginTooltip();
+                ImGui::Text("enable to render the debug quad-tree responsible for the Barnes-Hut algorithm");
+                ImGui::EndTooltip();
+            }
+            ImGui::Checkbox("Use Colors?", &use_colors);
+        ImGui::Checkbox("Simple rendering?", &simple_render);
+        ImGui::Checkbox("Render arrows?", &use_colors);
+        ImGui::EndGroup();
+        ImGui::SameLine();
+        ImGui::BeginChild("sliders", ImVec2(window_width/4.0, window_height/10.0), false);
+            ImGui::SliderInt("resolution", &scale,1,40);
+            ImGui::SliderFloat("star brightness", &brightness, 0.1, 1);
+            ImGui::SliderFloat("timescale",&timescale, 0.001, 2.0);
+            ImGui::SliderFloat("tree brightness",&tree_brightness, 0.01, 1.0);
+        ImGui::EndChild();
+        //ImGui::SetNextItemWidth(window_width/5.0);
+
+        ImGui::EndGroup();
+
         ImGui::End();
 
         ImGuiWindowFlags flags2 = flags;
@@ -162,119 +199,92 @@ int main()
         ImGui::SetWindowPos(ImVec2(0.0,0.0));
         ImGui::Text("FPS %.2f", 1/dt.asSeconds() );
         ImGui::Text("Entity Count %i", (int)space.bodies.size());
+        ImGui::Text("Iterations: %i", iterations);
         ImGui::End();
 
-        //ImGui::ShowDemoWindow();
+        //ImGui::EndFrame();
+        ImGui::ShowDemoWindow();
 
         window.clear();
         //space.draw(window);
 
 
-        sf::Image img;
-        int scale = 4;
-        float brightness = 0.5;
-        sf::Uint8 pix[1920*1080*4] = {0};
 
-
-        sf::Vector2f origin = sf::Vector2f(view.getCenter().x-view.getSize().x/2, view.getCenter().y-view.getSize().y/2);
-        sf::Vector2f size = sf::Vector2f(view.getSize().x, view.getSize().y);
-
-
-        for(auto & body  : space.bodies){
-            sf::Vector2<double> pos = body.position;
-            if(pos.x < origin.x or pos.x > origin.x + size.x) continue;
-            if(pos.y < origin.y or pos.y > origin.y + size.y) continue;
-
-            int gridx = (pos.x - origin.x)/(size.x/1920); gridx -= gridx % scale;
-            int gridy = (pos.y - origin.y)/(size.y/1080); gridy -= gridy % scale;
-
-
-            //std::cout << (int)body.shape.getFillColor().r << " " << (int)body.shape.getFillColor().g << " " << (int)body.shape.getFillColor().b << std::endl;
-            for(int i = 0; i < scale; i++){
-                for(int j = 0; j < scale; j++){
-                    pix[4*(((gridy+i)*1920) + gridx+j) + 0] = body.shape.getFillColor().r;
-                    pix[4*(((gridy+i)*1920) + gridx+j) + 1] = body.shape.getFillColor().g;
-                    pix[4*(((gridy+i)*1920) + gridx+j) + 2] = body.shape.getFillColor().b;
-                    pix[4*(((gridy+i)*1920) + gridx+j) + 3] += (int)((255*scale*brightness)/scale);
-                }
-            }
-            //for(int i = 0; i < 4; i++)
-             //   pix[4*((gridy*1920) + gridx) + i] = std::min(pix[4*((gridy*1920) + gridx) + i]+255, 255);
-        }
-
-        img.create(1920,1080,pix);
+        //sf::Image img;
 
         sf::Texture tex;
-        tex.loadFromImage(img);
-
+        tex.create(1920,1080);
         sf::Sprite sprite;
         sprite.setTexture(tex);
-        sprite.setOrigin(960, 540);
-        sprite.setPosition(view.getCenter().x, view.getCenter().y);
-        sprite.setScale((float)view.getSize().x/1920.0f, (float)view.getSize().y/1080.0f);
 
-        window.draw(sprite);
+        //std::vector<sf::Uint8> pix(1920*1080*4, 0);
+
+
+        if(simple_render) {
+            sf::Vector2f origin = sf::Vector2f(view.getCenter().x - view.getSize().x / 2,
+                                               view.getCenter().y - view.getSize().y / 2);
+            sf::Vector2f size = sf::Vector2f(view.getSize().x, view.getSize().y);
+            pix = new sf::Uint8[1920 * 1080 * 4];
+            memset(pix, 0, 1920 * 1080 * 4 * sizeof(sf::Uint8));
+
+
+            for (auto &body: space.bodies) {
+                sf::Vector2<double> pos = body.position;
+                if (!use_colors) body.shape.setFillColor(sf::Color::White);
+                if (pos.x < origin.x or pos.x > origin.x + size.x) continue;
+                if (pos.y < origin.y or pos.y > origin.y + size.y) continue;
+
+                int gridx = (pos.x - origin.x) / (size.x / 1920.0);
+                gridx -= gridx % scale;
+                int gridy = (pos.y - origin.y) / (size.y / 1080.0);
+                gridy -= gridy % scale;
+
+
+                //std::cout << (int)body.shape.getFillColor().r << " " << (int)body.shape.getFillColor().g << " " << (int)body.shape.getFillColor().b << std::endl;
+                for (int i = 0; i < scale; i++) {
+                    for (int j = 0; j < scale; j++) {
+                        pix[4 * (((gridy + i) * 1920) + gridx + j) + 0] = body.shape.getFillColor().r;
+                        pix[4 * (((gridy + i) * 1920) + gridx + j) + 1] = body.shape.getFillColor().g;
+                        pix[4 * (((gridy + i) * 1920) + gridx + j) + 2] = body.shape.getFillColor().b;
+                        pix[4 * (((gridy + i) * 1920) + gridx + j) + 3] = std::min(255,(int)pix[4 * (((gridy + i) * 1920) + gridx + j) + 3]+ (int)(255 * brightness));
+                    }
+                }
+                //for(int i = 0; i < 4; i++)
+                //   pix[4*((gridy*1920) + gridx) + i] = std::min(pix[4*((gridy*1920) + gridx) + i]+255, 255);
+            }
+
+            //img.create(1920,1080,pix.data());
+
+            //tex.loadFromImage(img);
+            tex.update(pix);
+
+            sprite.setOrigin(960, 540);
+            sprite.setPosition(view.getCenter().x, view.getCenter().y);
+            sprite.setScale((float) view.getSize().x / 1920.0f, (float) view.getSize().y / 1080.0f);
+
+            window.draw(sprite);
+        }
+        else{ space.draw(window); }
 
 
         //auto start = std::chrono::high_resolution_clock::now();
         //std::chrono::high_resolution_clock::time_point timeA, timeB;
-        space.updateTree();
+        space.updateTree(tree_brightness);
         space.updateForces(false);
         space.updateBodies(dt.asMicroseconds() * timescale * paused);
         //space.draw(window);
         if(render_tree) space.drawTree(window);
 
 
-        if(iterations % 100 == 0) {
-
-
-
-            /*
-            auto f = [&space, dt](){
-                auto start = std::chrono::high_resolution_clock::now();
-                space.updateTree();
-                space.updateForces(false);
-                space.updateBodies(dt.asMicroseconds());
-                auto timeA = std::chrono::high_resolution_clock::now();
-                auto forcetime = std::chrono::duration_cast<std::chrono::microseconds>(timeA - start);
-                std::cout << forcetime.count()/1000000.0 << std::endl;
-            };
-            std::thread t(f);
-            t.detach();
-            //t.join();
-             */
-
-            //space.updateTree();
-            //timeA = std::chrono::high_resolution_clock::now();
-            //space.updateForces();
-            //timeB = std::chrono::high_resolution_clock::now();
-
-            //auto treetime = std::chrono::duration_cast<std::chrono::microseconds>(timeA - start);
-            //auto forcetime = std::chrono::duration_cast<std::chrono::microseconds>(timeB - timeA);
-            //std::cout << treetime.count() << " " << forcetime.count() << std::endl;
-        }
-
-
-        //space.updateTree();
-        //space.updateForces();
-        //space.draw(window);
-        //space.drawTree(window);
-        //space.updateBodies(dt.asMicroseconds());
-
-
         ImGui::SFML::Render(window);
         window.display();
 
-        //view.setCenter(space.bodies.back().position.x, space.bodies.back().position.y);
-        //window.setView(view);
-
+        if(simple_render) delete[] pix;
 
         dt = deltaClock.restart();
-        iterations++;
-
-        //std::cout << dt.asSeconds() << "\t\t" << view.getSize().x << std::endl;
-        //std::cout << space.bodies.back().acceleration.x << " " << space.bodies.back().acceleration.y << std::endl;
+        if(paused) iterations++;
     }
 
+    ImGui::SFML::Shutdown();
     return 0;
 }

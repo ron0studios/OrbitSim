@@ -13,7 +13,7 @@
 
 class QuadTree {
     public:
-        QuadTree(double bound, std::vector<Body>* bodies);
+        QuadTree(double bound, std::vector<Body>* bodies, float brightness);
         QuadTree();
 
         void updateForce(Body* body, double theta = 0.5);
@@ -25,6 +25,7 @@ class QuadTree {
         static int getQuadrant(sf::Vector2<double> center, sf::Vector2<double> s);
         static int getQuadrant(double cx, double cy, double sx, double sy);
         double bound;
+        float brightness = 0.04;
 
 
         struct node {

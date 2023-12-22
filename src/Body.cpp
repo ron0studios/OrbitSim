@@ -15,6 +15,8 @@ Body::Body(float mass, float radius, sf::Vector2<double> position, sf::Vector2<d
     this->velocity = velocity;
     acceleration = sf::Vector2<double>(0.0, 0.0);
 
+    shape.setRadius(radius);
+
 #if DEBUG
     this->shape = sf::CircleShape(radius);
     this->shape.setPosition((float)position.x, (float)position.y);
@@ -41,6 +43,11 @@ Body::Body(float mass, float radius, sf::Vector2<double> position, sf::Vector2<d
         return (r,g,b)*/
 
 sf::Color convert_to_rgb(double min, double max, double val){
+
+    //min = 0;
+    //max = 1;
+    //val = 1/(1+std::exp(-val));
+
     double halfmax = (min + max) / 2.0;
     int r,g,b;
     if(min <= val and val <= halfmax){
@@ -57,11 +64,12 @@ sf::Color convert_to_rgb(double min, double max, double val){
 }
 
 void Body::update(sf::Int64 delta, double maxForce) {
-    int totForce = sqrt(pow(acceleration.x,2) + pow(acceleration.y,2)) * mass;
+    int totForce = sqrt(pow(velocity.x,2) + pow(velocity.y,2));// * mass;
     //shape.setFillColor(sf::Color(100+std::min(totForce,155), 100+std::min(155,totForce), 255-totForce));
     shape.setFillColor(convert_to_rgb(0, maxForce, totForce));
     velocity += acceleration * (delta/ 1000000.0);
     position += velocity * (delta/ 1000000.0);
+
 }
 
 void Body::draw(sf::RenderWindow &window) {

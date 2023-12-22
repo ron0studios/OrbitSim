@@ -17,8 +17,9 @@ QuadTree::QuadTree() {
  * @param bound the max distance from the origin of the tree (half the max width of the tree)
  * @param bodies the vector of bodies to generate the tree from
  */
-QuadTree::QuadTree(double bound, std::vector<Body> *bodies)
+QuadTree::QuadTree(double bound, std::vector<Body> *bodies, float brightness)
 {
+    this->brightness = brightness;
     r.setFillColor(sf::Color::Transparent);
     r.setOutlineThickness(2.0);
     this->bound = bound;
@@ -98,7 +99,10 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies)
                     tree.push_back({0, 0.0, tree[idx].width / 2.0, 0, 0.0, 0.0, nullptr, cx2, cy2});
                 }
 
-                if(tree[idx].singleChild->position==body.position){
+
+
+                if(std::abs(tree[idx].singleChild->position.x-body.position.x) < 0.00000001
+                or std::abs(tree[idx].singleChild->position.y-body.position.y) < 0.00000001){
                     throw std::logic_error("Two bodies cannot have the exact same position!");
                 }
 
@@ -129,6 +133,8 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies)
 
         }
     }
+
+    //std::cout << tree.size() << std::endl;
 }
 
 int QuadTree::getQuadrant(sf::Vector2<double> center, sf::Vector2<double> s) {
@@ -239,9 +245,9 @@ sf::Vector2<double> QuadTree::forcePair(double massA, double massB, sf::Vector2<
     }
 
     double softening = 10;
-    double distance  = sqrt(pow(posB.x-posA.x,2) + pow(posB.y-posA.y, 2))/10.0;
+    double distance  = sqrt(pow(posB.x-posA.x,2) + pow(posB.y-posA.y, 2))/10;
 
-    double mag = std::min((massA*massB)/(pow(distance,2) + pow(softening,2)), 300000000.0 * 1000.0);
+    double mag = std::min((massA*massB)/(pow(distance,2) + pow(softening,2)), 300000000.0);
 
 
 
@@ -293,7 +299,7 @@ void QuadTree::draw(sf::RenderWindow &window) {
 
         r.setOutlineThickness(window.getView().getSize().x/1920);
         r.setFillColor(sf::Color::Transparent);
-        r.setOutlineColor(sf::Color(255,255,255,10));
+        r.setOutlineColor(sf::Color(255,255,255,(sf::Uint8)(255*brightness) ));
         r.setPosition(tree[i].cx, tree[i].cy);
 
         window.draw(r);

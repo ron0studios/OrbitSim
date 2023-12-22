@@ -26,13 +26,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="651613cc-8cfe-4b50-b32b-bff70bfd9e07" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Body.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Body.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/QuadTree.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/QuadTree.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/QuadTree.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/QuadTree.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Simulator.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/Simulator.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Simulator.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/Simulator.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -135,7 +129,7 @@
       <workItem from="1703255189860" duration="1072000" />
       <workItem from="1703256957554" duration="3000" />
       <workItem from="1703257185027" duration="2753000" />
-      <workItem from="1703261894659" duration="3558000" />
+      <workItem from="1703261894659" duration="4812000" />
     </task>
     <servers />
   </component>

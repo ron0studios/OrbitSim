@@ -176,15 +176,50 @@ int main()
                 ImGui::EndTooltip();
             }
             ImGui::Checkbox("Use Colors?", &use_colors);
-        ImGui::Checkbox("Simple rendering?", &simple_render);
-        ImGui::Checkbox("Render arrows?", &use_colors);
+            if(ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal)) {
+                ImGui::BeginTooltip();
+                ImGui::Text("enable to render the stars on a 'heatmap-like' colour scale");
+                ImGui::EndTooltip();
+            }
+            ImGui::Checkbox("Simple rendering?", &simple_render);
+            if(ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal)) {
+                ImGui::BeginTooltip();
+                ImGui::Text("enable to render using pixels instead of polygons (can break on some systems)");
+                ImGui::EndTooltip();
+            }
+            ImGui::Checkbox("Render arrows?", &use_colors);
+            if(ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal)) {
+                ImGui::BeginTooltip();
+                ImGui::Text("enable to render arrows for acceleration and velocity on shapes");
+                ImGui::EndTooltip();
+            }
         ImGui::EndGroup();
         ImGui::SameLine();
         ImGui::BeginChild("sliders", ImVec2(window_width/4.0, window_height/10.0), false);
             ImGui::SliderInt("resolution", &scale,1,40);
+            if(ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal)) {
+                ImGui::BeginTooltip();
+                ImGui::Text("sets the resolution of simple rendering, higher -> lower resolution");
+                ImGui::EndTooltip();
+            }
             ImGui::SliderFloat("star brightness", &brightness, 0.1, 1);
-            ImGui::SliderFloat("timescale",&timescale, 0.001, 2.0);
+            if(ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal)) {
+                ImGui::BeginTooltip();
+                ImGui::Text("sets the brightness of simple rendering stars by modifying its alpha value");
+                ImGui::EndTooltip();
+            }
             ImGui::SliderFloat("tree brightness",&tree_brightness, 0.01, 1.0);
+            if(ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal)) {
+                ImGui::BeginTooltip();
+                ImGui::Text("Sets the brightness of each new QuadTree square drawn by modifying its alpha value");
+                ImGui::EndTooltip();
+            }
+            ImGui::SliderFloat("timescale",&timescale, 0.001, 2.0);
+            if(ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal)) {
+                ImGui::BeginTooltip();
+                ImGui::Text("Changes the speed of the simulation. Higher->faster");
+                ImGui::EndTooltip();
+            }
         ImGui::EndChild();
         //ImGui::SetNextItemWidth(window_width/5.0);
 
@@ -194,16 +229,18 @@ int main()
 
         ImGuiWindowFlags flags2 = flags;
         flags2 |= ImGuiWindowFlags_NoBackground;
+        flags2 |= ImGuiWindowFlags_AlwaysAutoResize;
         ImGui::Begin("debug corner", NULL, flags2);
         //ImGui::SetWindowSize(ImVec2(window_width,window_height/10.0));
         ImGui::SetWindowPos(ImVec2(0.0,0.0));
         ImGui::Text("FPS %.2f", 1/dt.asSeconds() );
         ImGui::Text("Entity Count %i", (int)space.bodies.size());
         ImGui::Text("Iterations: %i", iterations);
+        ImGui::Text("Mouse pos: (%i, %i)", (int)window.mapPixelToCoords(sf::Mouse::getPosition()).x, (int)window.mapPixelToCoords(sf::Mouse::getPosition()).y);
         ImGui::End();
 
         //ImGui::EndFrame();
-        ImGui::ShowDemoWindow();
+        //ImGui::ShowDemoWindow();
 
         window.clear();
         //space.draw(window);

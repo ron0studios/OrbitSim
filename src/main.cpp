@@ -92,6 +92,7 @@ int main()
 
     while (window.isOpen())
     {
+
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -139,8 +140,8 @@ int main()
 
         ImGui::SFML::Update(window, dt);
 
-        ImGui::SetNextWindowPos(ImVec2(0.0,0.9*window_height));
-        ImGui::SetNextWindowSize(ImVec2(window_width,window_height/10.0));
+        ImGui::SetNextWindowPos(ImVec2(0.0,window.getSize().y-window_height/10.0));
+        ImGui::SetNextWindowSize(ImVec2(window.getSize().x,window_height/10.0));
         //ImGui::SetNextWindowContentSize(ImVec2(window_width,window_height/10.0));
 
         ImGuiWindowFlags flags=0;

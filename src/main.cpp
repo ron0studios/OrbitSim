@@ -97,6 +97,7 @@ void addGalaxy(Simulator& sim, double starnum, double starmass, double c_mass, d
     if(c_mass) sim.addBody(Body(c_mass,10,sf::Vector2<double>(cx, cy), sf::Vector2<double>(c_velx, c_vely)));
 }
 
+
 int main()
 {
     //srand(time(0));
@@ -122,6 +123,7 @@ int main()
     int scale = 4;
     float brightness = 1;
     float tree_brightness = 0.04;
+    std::string selected_brush = "";
 
 
 
@@ -180,14 +182,22 @@ int main()
                 paused = !paused;
 
 
-/*
             if(event.type == sf::Event::MouseButtonReleased and event.key.code == sf::Mouse::Left){
                 sf::Vector2<double> pos = (sf::Vector2<double>)window.mapPixelToCoords(sf::Mouse::getPosition());
                 if((float)sf::Mouse::getPosition().y/window.getSize().y > 0.9) continue;
                 //addGalaxy(space, 100, 10000, 0, 1000, 0, pos.x, pos.y, -0, 000,.0, 1.0);
-                addGalaxy(space, 0, 10000, 100000000000, 1000, 0, pos.x, pos.y, -0, 000,.0, 1.0);
+
+                if(selected_brush == "single")
+                        addGalaxy(space, 0, 0, 1000, 1000, 0, pos.x, pos.y, -0, 000,.0, 1.0);
+                if(selected_brush == "black_hole")
+                        addGalaxy(space, 0, 10000, 100000000000, 1000, 0, pos.x, pos.y, -0, 000,.0, 1.0);
+                if(selected_brush == "cluster100")
+                        addGalaxy(space, 100, 1000, 1000, 100, 1, pos.x, pos.y, 0, 000,0.0, 1.0);
+                if(selected_brush == "cluster1k")
+                    addGalaxy(space, 1000, 1000, 1000, 1000, 1, pos.x, pos.y, 0, 000,0.0, 1.0);
+                if(selected_brush == "cluster10k")
+                    addGalaxy(space, 10000, 1000, 1000, 10000, 1, pos.x, pos.y, 0, 000,0.0, 1.0);
             }
-*/
 
 
         }
@@ -310,15 +320,45 @@ int main()
         ImGui::SameLine();
 
         ImGui::BeginChild("brushes", ImVec2(window_width/4.0, window_height/10.0 -15.0), true, ImGuiWindowFlags_NoScrollbar);
-        ImGui::Button("single", ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0));
+        ImGui::BeginDisabled(!selected_brush.empty() and selected_brush != "single");
+        if(ImGui::Button("single", ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0)))
+            if(selected_brush=="single")
+                selected_brush="";
+            else
+                selected_brush = "single";
+        ImGui::EndDisabled();
         ImGui::SameLine();
-        ImGui::Button("black_hole", ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0));
+        ImGui::BeginDisabled(!selected_brush.empty() and selected_brush != "black_hole");
+        if(ImGui::Button("black_hole", ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0)))
+            if(selected_brush=="black_hole")
+                selected_brush="";
+            else
+                selected_brush = "black_hole";
+        ImGui::EndDisabled();
         ImGui::SameLine();
-        ImGui::Button("cluster100", ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0));
+        ImGui::BeginDisabled(!selected_brush.empty() and selected_brush != "cluster100");
+        if(ImGui::Button("cluster100", ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0)))
+            if(selected_brush=="cluster100")
+                selected_brush="";
+            else
+                selected_brush = "cluster100";
+        ImGui::EndDisabled();
         ImGui::SameLine();
-        ImGui::Button("cluster1k", ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0));
+        ImGui::BeginDisabled(!selected_brush.empty() and selected_brush != "cluster1k");
+        if(ImGui::Button("cluster1k", ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0)))
+            if(selected_brush=="cluster1k")
+                selected_brush="";
+            else
+                selected_brush = "cluster1k";
+        ImGui::EndDisabled();
         ImGui::SameLine();
-        ImGui::Button("cluster10k", ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0));
+        ImGui::BeginDisabled(!selected_brush.empty() and selected_brush != "cluster10k");
+        if(ImGui::Button("cluster10k", ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0)))
+            if(selected_brush=="cluster10k")
+                selected_brush="";
+            else
+                selected_brush = "cluster10k";
+        ImGui::EndDisabled();
         ImGui::EndChild();
 
         ImGui::End();
@@ -333,10 +373,11 @@ int main()
         ImGui::Text("Entity Count %i", (int)space.bodies.size());
         ImGui::Text("Iterations: %i", iterations);
         ImGui::Text("Mouse pos: (%i, %i)", (int)window.mapPixelToCoords(sf::Mouse::getPosition()).x, (int)window.mapPixelToCoords(sf::Mouse::getPosition()).y);
+        ImGui::Text("Current brush: (%s)", selected_brush.c_str());
         ImGui::End();
 
         //ImGui::EndFrame();
-        ImGui::ShowDemoWindow();
+        //ImGui::ShowDemoWindow();
 
         window.clear();
         //space.draw(window);

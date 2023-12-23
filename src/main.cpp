@@ -8,6 +8,72 @@
 #include "imgui.h"
 
 void addGalaxy(Simulator& sim, double starnum, double starmass, double c_mass, double rad, double rotspeed, double cx, double cy, double c_velx, double c_vely, double radial=0, double massvar = 10.0){
+
+
+    int num_threads = 16;
+    std::vector<std::thread> threads(num_threads);
+    std::vector<Body*> ptrarr((int)starnum,nullptr);
+
+
+    /*
+     * NOTE OF BUG
+     * YOU CANT USE A REGULAR FOR LOOP BECAUSE THE "i" VALUE IS DELETED AT THE END OF THE LOOP DUMB
+     */
+
+    for(int i = 0; i < num_threads; i++){
+        //std::cout << i << std::endl;
+        threads[i] = std::thread([&](int i, int n){
+            //std::cout << "\t\t" << i << " " << num_threads << std::endl;
+            for(int j = i*n; j < ((i+1)*n); j++) {
+                if(j >= starnum) break;
+
+                //double dx = (((double)rand()/ RAND_MAX) * 28284) -14142;
+                //double dy = (((double)rand()/ RAND_MAX) * 28284) -14142;
+
+                double radius = rad;
+                double rnd = rand();
+                double r = radius * sqrt( pow((double)rand()/RAND_MAX, 2));
+                double theta = ((double)rnd/RAND_MAX) * 2 * M_PI;
+                double x = r * cos(theta);
+                double y = r * sin(theta);
+
+                double rnd2 = (((double)rand()/ RAND_MAX)*massvar);
+                double velx = -cos(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  200 * (2- r/radius) * rotspeed;
+                double vely =  sin(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  200 * (2- r/radius) * rotspeed;
+
+                double velradx = radial*x;
+                double velrady = radial*y;
+                ptrarr[j] = new Body(starmass * rnd2 * 10,20 * rnd2,sf::Vector2<double>(x+cx, y+cy), sf::Vector2<double>(velx + c_velx + velradx,vely + c_vely + velrady));
+                //sim.addBody(Body(starmass * rnd2 * 10,20 * rnd2,sf::Vector2<double>(x+cx, y+cy), sf::Vector2<double>(velx + c_velx + velradx,vely + c_vely + velrady)));
+            }
+
+            //calcForce(bodies[j]);
+        },i,std::ceil((double)starnum/num_threads));
+    }
+    //std::cout << threads[0] << std::endl;
+
+    for(int i = 0; i < num_threads; i++) {
+        threads[i].join();
+    }
+
+    int nullcount = 0;
+    for(int i = 0; i < starnum; i++){
+        //std::cout << "do" << std::endl;
+        if(ptrarr[i] == nullptr){
+            //std::cout << "\t" << i << std::endl;
+            nullcount++;
+        }
+        sim.addBody(*ptrarr[i]);
+    }
+    std::cout << nullcount << std::endl;
+
+    for(Body* b : ptrarr)
+        delete b;
+    ptrarr.clear();
+
+
+    /*
+
     for(int i = 0; i < starnum; i++) {
         //double dx = (((double)rand()/ RAND_MAX) * 28284) -14142;
         //double dy = (((double)rand()/ RAND_MAX) * 28284) -14142;
@@ -27,6 +93,7 @@ void addGalaxy(Simulator& sim, double starnum, double starmass, double c_mass, d
         double velrady = radial*y;
         sim.addBody(Body(starmass * rnd2 * 10,20 * rnd2,sf::Vector2<double>(x+cx, y+cy), sf::Vector2<double>(velx + c_velx + velradx,vely + c_vely + velrady)));
     }
+     */
     if(c_mass) sim.addBody(Body(c_mass,10,sf::Vector2<double>(cx, cy), sf::Vector2<double>(c_velx, c_vely)));
 }
 
@@ -57,35 +124,22 @@ int main()
     float tree_brightness = 0.04;
 
 
-    if (!sf::Shader::isAvailable())
-    {
-        throw std::logic_error("shaders not supported");
-    }
-
-    sf::Shader shader;
-
-    // load only the fragment shader
-    if (!shader.loadFromFile("fragment.frag", sf::Shader::Fragment))
-    {
-        throw std::logic_error("fragment shader not working");
-    }
-
-
 
     //addGalaxy(space, 10000, 1000, 1000, 10000, 5, -00000, -00000, -0, 000,.4, 1.0);
+    //addGalaxy(space, 10000, 1000, 1000, 10000, 5, -50000, -50000, 1000, 000,.4, 1.0);
     //addGalaxy(space, 10000, 1000, 1000, 10000, 0, -00000, -00000, -0, 000,.0, 1.0);
 
-    addGalaxy(space, 100, 1000, 1000, 100, 1, -00000, -00000, 0, 000,0.0, 1.0);
-    addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, -1000, 1000, 000,0.0, 1.0);
-    addGalaxy(space, 100, 1000, 1000, 100, 1, 1000, 1000, 0, 000,0.0, 1.0);
-    addGalaxy(space, 100, 1000, 1000, 100, 1, 1000, -1000, 0, 000,0.0, 1.0);
-    addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, 1000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, -00000, -00000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, -1000, 1000, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, 1000, 1000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, 1000, -1000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, 1000, 0, 000,0.0, 1.0);
 
-    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000, -00000, 0, 000,0.0, 1.0);
-    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000-1000, -1000, 1000, 000,0.0, 1.0);
-    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000+1000, 1000, 0, 000,0.0, 1.0);
-    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000+1000, -1000, 0, 000,0.0, 1.0);
-    addGalaxy(space, 100, 1000, 1000, 100, 1, 10000-1000, 1000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000, -00000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000-1000, -1000, 1000, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000+1000, 1000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000+1000, -1000, 0, 000,0.0, 1.0);
+    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000-1000, 1000, 0, 000,0.0, 1.0);
 
 
 
@@ -109,7 +163,8 @@ int main()
 
     while (window.isOpen())
     {
-        shader.setUniform("currentTexture", sf::Shader::CurrentTexture);
+        //shader.setUniform("currentTexture", sf::Shader::CurrentTexture);
+        //std::cout << space.bodies.size() << std::endl;
         //shader.setUniform("blur_radius", 0.00001f);
 
 
@@ -125,14 +180,14 @@ int main()
                 paused = !paused;
 
 
-            /*
+/*
             if(event.type == sf::Event::MouseButtonReleased and event.key.code == sf::Mouse::Left){
                 sf::Vector2<double> pos = (sf::Vector2<double>)window.mapPixelToCoords(sf::Mouse::getPosition());
                 if((float)sf::Mouse::getPosition().y/window.getSize().y > 0.9) continue;
                 //addGalaxy(space, 100, 10000, 0, 1000, 0, pos.x, pos.y, -0, 000,.0, 1.0);
                 addGalaxy(space, 0, 10000, 100000000000, 1000, 0, pos.x, pos.y, -0, 000,.0, 1.0);
             }
-             */
+*/
 
 
         }
@@ -251,9 +306,20 @@ int main()
                 ImGui::EndTooltip();
             }
         ImGui::EndChild();
-        //ImGui::SetNextItemWidth(window_width/5.0);
-
         ImGui::EndGroup();
+        ImGui::SameLine();
+
+        ImGui::BeginChild("brushes", ImVec2(window_width/4.0, window_height/10.0 -15.0), true, ImGuiWindowFlags_NoScrollbar);
+        ImGui::Button("single", ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0));
+        ImGui::SameLine();
+        ImGui::Button("black_hole", ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0));
+        ImGui::SameLine();
+        ImGui::Button("cluster100", ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0));
+        ImGui::SameLine();
+        ImGui::Button("cluster1k", ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0));
+        ImGui::SameLine();
+        ImGui::Button("cluster10k", ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0));
+        ImGui::EndChild();
 
         ImGui::End();
 
@@ -270,7 +336,7 @@ int main()
         ImGui::End();
 
         //ImGui::EndFrame();
-        //ImGui::ShowDemoWindow();
+        ImGui::ShowDemoWindow();
 
         window.clear();
         //space.draw(window);

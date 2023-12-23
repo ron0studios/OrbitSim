@@ -120,6 +120,7 @@ int main()
     bool use_colors = true;
     bool simple_render = true;
     bool render_arrows = false;
+    bool can_place = true;
     int scale = 4;
     float brightness = 1;
     float tree_brightness = 0.04;
@@ -187,16 +188,18 @@ int main()
                 if((float)sf::Mouse::getPosition().y/window.getSize().y > 0.9) continue;
                 //addGalaxy(space, 100, 10000, 0, 1000, 0, pos.x, pos.y, -0, 000,.0, 1.0);
 
-                if(selected_brush == "single")
-                        addGalaxy(space, 0, 0, 1000, 1000, 0, pos.x, pos.y, -0, 000,.0, 1.0);
-                if(selected_brush == "black_hole")
-                        addGalaxy(space, 0, 10000, 100000000000, 1000, 0, pos.x, pos.y, -0, 000,.0, 1.0);
-                if(selected_brush == "cluster100")
-                        addGalaxy(space, 100, 1000, 1000, 100, 1, pos.x, pos.y, 0, 000,0.0, 1.0);
-                if(selected_brush == "cluster1k")
-                    addGalaxy(space, 1000, 1000, 1000, 1000, 1, pos.x, pos.y, 0, 000,0.0, 1.0);
-                if(selected_brush == "cluster10k")
-                    addGalaxy(space, 10000, 1000, 1000, 10000, 1, pos.x, pos.y, 0, 000,0.0, 1.0);
+                if(can_place) {
+                    if (selected_brush == "single")
+                        addGalaxy(space, 0, 0, 1000, 1000, 0, pos.x, pos.y, -0, 000, .0, 1.0);
+                    if (selected_brush == "black_hole")
+                        addGalaxy(space, 0, 10000, 100000000000, 1000, 0, pos.x, pos.y, -0, 000, .0, 1.0);
+                    if (selected_brush == "cluster100")
+                        addGalaxy(space, 100, 1000, 1000, 100, 1, pos.x, pos.y, 0, 000, 0.0, 1.0);
+                    if (selected_brush == "cluster1k")
+                        addGalaxy(space, 1000, 1000, 1000, 1000, 1, pos.x, pos.y, 0, 000, 0.0, 1.0);
+                    if (selected_brush == "cluster10k")
+                        addGalaxy(space, 10000, 1000, 1000, 10000, 1, pos.x, pos.y, 0, 000, 0.0, 1.0);
+                }
             }
 
 
@@ -238,9 +241,15 @@ int main()
 
         if(ImGui::Button("Settings", ImVec2(window_height/10.0 - 15.0, window_height/10.0 - 15.0))){
             ImGui::OpenPopup("settings");
+            can_place = false;
         }
 
         if(ImGui::BeginPopupModal("settings", NULL, ImGuiWindowFlags_Tooltip)){
+            if(ImGui::Button("close")){
+                //ImGui::
+                ImGui::CloseCurrentPopup();
+                can_place = true;
+            }
             ImGui::EndPopup();
         }
         //ImGui::Mod;

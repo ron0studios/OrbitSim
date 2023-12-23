@@ -410,12 +410,24 @@ int main()
             pix = new sf::Uint8[1920 * 1080 * 4];
             memset(pix, 0, 1920 * 1080 * 4 * sizeof(sf::Uint8));
 
-
-            for (auto &body: space.bodies) {
+            double maxvel=-1;
+            for(auto &body : space.bodies){
                 sf::Vector2<double> pos = body.position;
-                if (!use_colors) body.shape.setFillColor(sf::Color::White);
                 if (pos.x < origin.x or pos.x > origin.x + size.x) continue;
                 if (pos.y < origin.y or pos.y > origin.y + size.y) continue;
+                double vel = std::sqrt(std::pow(body.velocity.x,2) + std::pow(body.velocity.y,2));
+                maxvel=std::max(vel,maxvel);
+                //body.shape.setFillColor(body.convert_to_rgb(0,maxvel,vel));
+            }
+            for (auto &body: space.bodies) {
+                sf::Vector2<double> pos = body.position;
+
+                if (pos.x < origin.x or pos.x > origin.x + size.x) continue;
+                if (pos.y < origin.y or pos.y > origin.y + size.y) continue;
+
+                double vel = std::sqrt(std::pow(body.velocity.x,2) + std::pow(body.velocity.y,2));
+                body.shape.setFillColor(Body::convert_to_rgb(0,maxvel,vel));
+                if (!use_colors) body.shape.setFillColor(sf::Color::White);
 
                 int gridx = (pos.x - origin.x) / (size.x / 1920.0);
                 gridx -= gridx % scale;

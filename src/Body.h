@@ -22,6 +22,7 @@ class Body {
         Body(float mass, float radius, sf::Vector2<double> position, sf::Vector2<double> velocity = sf::Vector2<double>(0.0f, 0.0f));
         void update(sf::Int64 delta, double maxForce); // updates based on acceleration and velocity
         void draw(sf::RenderWindow& window);
+        static sf::Color convert_to_rgb(double min, double max, double val);
 };
 
 

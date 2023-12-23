@@ -42,7 +42,7 @@ Body::Body(float mass, float radius, sf::Vector2<double> position, sf::Vector2<d
         b = 0
         return (r,g,b)*/
 
-sf::Color convert_to_rgb(double min, double max, double val){
+sf::Color Body::convert_to_rgb(double min, double max, double val){
 
     //min = 0;
     //max = 1;

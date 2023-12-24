@@ -126,6 +126,10 @@ int main()
     float tree_brightness = 0.04;
     std::string selected_brush = "";
 
+    bool togglecontext = false;
+    sf::Vector2f contextpos;
+    Body* contextbody = nullptr;
+
 
 
     //addGalaxy(space, 10000, 1000, 1000, 10000, 5, -00000, -00000, -0, 000,.4, 1.0);
@@ -183,6 +187,7 @@ int main()
                 paused = !paused;
 
 
+
             if(event.type == sf::Event::MouseButtonReleased and event.key.code == sf::Mouse::Left){
                 sf::Vector2<double> pos = (sf::Vector2<double>)window.mapPixelToCoords(sf::Mouse::getPosition());
                 if((float)sf::Mouse::getPosition().y/window.getSize().y > 0.9) continue;
@@ -228,6 +233,70 @@ int main()
 
         ImGui::SFML::Update(window, dt);
 
+        if(ImGui::BeginPopupContextVoid("itemcheck"))
+        {
+            sf::Vector2f pos;
+            if(!togglecontext){
+                pos = window.mapPixelToCoords(ImGui::GetWindowPos());
+                sf::Vector2f origin = sf::Vector2f(view.getCenter().x - view.getSize().x / 2,
+                                                   view.getCenter().y - view.getSize().y / 2);
+                sf::Vector2f size = sf::Vector2f(view.getSize().x, view.getSize().y);
+                std::cout << pos.x << " " << pos.y << std::endl;
+
+                if(simple_render){
+                    int gridx = (pos.x - origin.x) / (size.x / 1920.0);
+                    gridx -= gridx % scale;
+                    int gridy = (pos.y - origin.y) / (size.y / 1080.0);
+                    gridy -= gridy % scale;
+                    sf::Vector2i gridpos = {gridx, gridy};
+
+                    std::vector<Body*> results;
+                    for(auto &body : space.bodies){
+
+                        sf::Vector2f bpos = (sf::Vector2f)body.position;
+                        int bodyx = (bpos.x - origin.x) / (size.x / 1920.0);
+                        bodyx -= bodyx % scale;
+                        int bodyy = (bpos.y - origin.y) / (size.y / 1080.0);
+                        bodyy -= bodyy % scale;
+                        sf::Vector2i bodypos = {bodyx, bodyy};
+                        if(bodypos == gridpos){
+                            results.push_back(&body);
+                        }
+                    }
+
+                    float mindist = FLT_MAX;
+                    if(!results.empty()){
+                        for(int i =0 ; i < (int)results.size(); i++){
+                            float dist = std::sqrt(std::pow(results[i]->position.x-pos.x,2)+std::pow(results[i]->position.y-pos.y, 2));
+                            if(dist < mindist){
+                                contextbody = results[i];
+                                mindist = dist;
+                            }
+                        }
+                    }
+                    else{
+                        contextbody = nullptr;
+                    }
+                }
+            }
+
+
+            if(contextbody == nullptr){
+                ImGui::CloseCurrentPopup();
+            }
+            else
+            {
+                ImGui::Text("%f", contextbody->mass);
+            }
+
+
+            ImGui::Text("hello");
+            togglecontext = true;
+        }
+        else{
+            togglecontext = false;
+        }
+
         ImGui::SetNextWindowPos(ImVec2(0.0,window.getSize().y-window_height/10.0));
         ImGui::SetNextWindowSize(ImVec2(window.getSize().x,window_height/10.0));
         //ImGui::SetNextWindowContentSize(ImVec2(window_width,window_height/10.0));
@@ -237,6 +306,8 @@ int main()
         flags |= ImGuiWindowFlags_NoResize;
         flags |= ImGuiWindowFlags_NoMove;
         flags |= ImGuiWindowFlags_NoScrollbar;
+
+
         ImGui::Begin("Hello, world!", NULL, flags);
 
         if(ImGui::Button("Settings", ImVec2(window_height/10.0 - 15.0, window_height/10.0 - 15.0))){

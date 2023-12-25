@@ -524,6 +524,7 @@ int main()
                 body.shape.setFillColor(Body::convert_to_rgb(0,maxvel,vel));
                 if (!use_colors) body.shape.setFillColor(sf::Color::White);
 
+
                 int gridx = (pos.x - origin.x) / (size.x / 1920.0);
                 gridx -= gridx % scale;
                 int gridy = (pos.y - origin.y) / (size.y / 1080.0);
@@ -554,7 +555,17 @@ int main()
 
             window.draw(sprite);//, &shader);
         }
-        else{ space.draw(window); }
+        else {
+            for(auto& body : space.bodies) {
+                if (&body == contextbody) {
+                    body.shape.setOutlineColor(sf::Color::White);
+                    body.shape.setOutlineThickness(body.shape.getRadius() / 10.0);
+                } else {
+                    body.shape.setOutlineThickness(0.0);
+                }
+            }
+            space.draw(window);
+        }
 
 
         //auto start = std::chrono::high_resolution_clock::now();

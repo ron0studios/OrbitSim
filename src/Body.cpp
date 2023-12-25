@@ -16,6 +16,7 @@ Body::Body(float mass, float radius, sf::Vector2<double> position, sf::Vector2<d
     acceleration = sf::Vector2<double>(0.0, 0.0);
 
     shape.setRadius(radius);
+    shape.setOrigin(radius, radius);
 
 #if DEBUG
     this->shape = sf::CircleShape(radius);

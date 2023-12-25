@@ -259,10 +259,12 @@ int main()
                         int bodyy = (bpos.y - origin.y) / (size.y / 1080.0);
                         bodyy -= bodyy % scale;
                         sf::Vector2i bodypos = {bodyx, bodyy};
-                        if(bodypos == gridpos){
+                        if( std::abs(bodypos.x-gridpos.x) <= 100 and std::abs(bodypos.y - gridpos.y) <= 100){
                             results.push_back(&body);
                         }
                     }
+
+                    std::cout << results.size() << std::endl;
 
                     float mindist = FLT_MAX;
                     if(!results.empty()){
@@ -530,6 +532,9 @@ int main()
                 int gridy = (pos.y - origin.y) / (size.y / 1080.0);
                 gridy -= gridy % scale;
 
+                if (&body == contextbody) {
+                    body.shape.setFillColor(sf::Color::White);
+                }
 
                 //std::cout << (int)body.shape.getFillColor().r << " " << (int)body.shape.getFillColor().g << " " << (int)body.shape.getFillColor().b << std::endl;
                 for (int i = 0; i < scale; i++) {

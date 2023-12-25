@@ -278,6 +278,30 @@ int main()
                         contextbody = nullptr;
                     }
                 }
+                else {
+                    std::vector<Body*> results;
+                    for(auto &body : space.bodies) {
+                               if(std::pow(body.position.x-pos.x,2) + std::pow(body.position.y-pos.y,2) <= std::pow(body.radius,2)){
+                                   results.push_back(&body);
+                               }
+                    }
+
+                    std::cout << results.size() << std::endl;
+
+                    float mindist = FLT_MAX;
+                    if(!results.empty()){
+                        for(int i =0 ; i < (int)results.size(); i++){
+                            float dist = std::sqrt(std::pow(results[i]->position.x-pos.x,2)+std::pow(results[i]->position.y-pos.y, 2));
+                            if(dist < mindist){
+                                contextbody = results[i];
+                                mindist = dist;
+                            }
+                        }
+                    }
+                    else{
+                        contextbody = nullptr;
+                    }
+                }
             }
 
 

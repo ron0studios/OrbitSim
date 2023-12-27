@@ -233,8 +233,12 @@ int main()
 
         ImGui::SFML::Update(window, dt);
 
+        //ImGui::SetNextWindowSize(ImVec2(300,300));
         if(ImGui::BeginPopupContextVoid("itemcheck"))
         {
+            can_place = false;
+
+
             sf::Vector2f pos;
             if(!togglecontext){
                 pos = window.mapPixelToCoords(ImGui::GetWindowPos());
@@ -312,15 +316,75 @@ int main()
             }
             else
             {
-                ImGui::Text("%f", contextbody->mass);
+                ImGui::BeginTable("tmp",2,0);
+                ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthStretch);
+                ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed);
+                ImGui::TableNextRow();
+                ImGui::TableNextColumn();
+                ImGui::Text("Inspect Entity");
+                ImGui::TableNextColumn();
+                if(ImGui::Button("close"))
+                    ImGui::CloseCurrentPopup();
+                ImGui::EndTable();
+
+                ImGui::BeginChild("hi", ImVec2(100,100), true);
+                ImGui::EndChild();
+                ImGui::SameLine();
+                ImGui::BeginTable("entityops",2,0);
+                ImGui::TableSetupColumn("hi" );
+                ImGui::TableSetupColumn("hi");
+                ImGui::TableNextRow();
+                ImGui::TableNextColumn();
+                ImGui::Text("mass");
+                ImGui::TableNextColumn();
+                ImGui::SetNextItemWidth(100);
+                ImGui::InputDouble("##mass", &contextbody->mass);
+                ImGui::TableNextRow();
+                ImGui::TableNextColumn();
+                ImGui::Text("radius");
+                ImGui::TableNextColumn();
+                ImGui::SetNextItemWidth(100);
+                ImGui::InputDouble("##radius", &contextbody->radius);
+                ImGui::TableNextRow();
+                ImGui::TableNextColumn();
+                ImGui::Text("position");
+                ImGui::TableNextColumn();
+                float posinp[2] = {(float)contextbody->position.x, (float)contextbody->position.y};
+                ImGui::SetNextItemWidth(100);
+                ImGui::InputFloat2("##position", posinp);
+                contextbody->position = {posinp[0], posinp[1]}; // this reduces from double to float <:(
+
+                ImGui::TableNextRow();
+                ImGui::TableNextColumn();
+                ImGui::Text("velocity");
+                ImGui::TableNextColumn();
+                float velinp[2] = {(float)contextbody->velocity.x, (float)contextbody->velocity.y};
+                ImGui::SetNextItemWidth(100);
+                ImGui::InputFloat2("##velocity", velinp);
+                contextbody->velocity = {velinp[0], velinp[1]}; // this reduces from double to float <:(
+
+                ImGui::TableNextRow();
+                ImGui::TableNextColumn();
+                ImGui::Text("acceleration");
+                ImGui::TableNextColumn();
+                float accinp[2] = {(float)contextbody->acceleration.x, (float)contextbody->acceleration.y};
+                ImGui::SetNextItemWidth(100);
+                ImGui::InputFloat2("##acceleration", accinp);
+                contextbody->acceleration = {accinp[0], accinp[1]}; // this reduces from double to float <:(
+
+
+                ImGui::EndTable();
+
             }
 
 
-            ImGui::Text("hello");
             togglecontext = true;
         }
         else{
             togglecontext = false;
+            contextbody = nullptr;
+            can_place = true;
+            //std::cout << "hi" << std::endl;
         }
 
         ImGui::SetNextWindowPos(ImVec2(0.0,window.getSize().y-window_height/10.0));
@@ -483,9 +547,10 @@ int main()
         ImGui::End();
 
         //ImGui::EndFrame();
-        //ImGui::ShowDemoWindow();
+        ImGui::ShowDemoWindow();
 
         window.clear();
+
         //space.draw(window);
 
 

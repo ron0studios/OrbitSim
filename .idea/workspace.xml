@@ -104,10 +104,10 @@
     </configuration>
     <list>
       <item itemvalue="CMake Application.ImGui-SFML" />
+      <item itemvalue="CMake Application.imgui-sfml-example" />
       <item itemvalue="CMake Application.sfml-graphics" />
       <item itemvalue="CMake Application.sfml-system" />
       <item itemvalue="CMake Application.sfml-window" />
-      <item itemvalue="CMake Application.imgui-sfml-example" />
     </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -136,7 +136,14 @@
       <workItem from="1703421091106" duration="143000" />
       <workItem from="1703444486923" duration="9358000" />
       <workItem from="1703503336659" duration="3700000" />
-      <workItem from="1703508010136" duration="1124000" />
+      <workItem from="1703508010136" duration="7751000" />
+      <workItem from="1703536112806" duration="59000" />
+      <workItem from="1703536730168" duration="64000" />
+      <workItem from="1703538275515" duration="1880000" />
+      <workItem from="1703573148097" duration="122000" />
+      <workItem from="1703625359030" duration="277000" />
+      <workItem from="1703669343889" duration="2616000" />
+      <workItem from="1703701016463" duration="2476000" />
     </task>
     <servers />
   </component>

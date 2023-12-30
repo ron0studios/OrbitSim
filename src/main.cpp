@@ -121,6 +121,7 @@ int main()
     bool simple_render = false;
     bool render_arrows = false;
     bool can_place = true;
+    bool click_delay = false;
     int scale = 4;
     float brightness = 1;
     float tree_brightness = 0.04;
@@ -189,6 +190,7 @@ int main()
 
 
             if(event.type == sf::Event::MouseButtonReleased and event.key.code == sf::Mouse::Left){
+                click_delay = false;
                 sf::Vector2<double> pos = (sf::Vector2<double>)window.mapPixelToCoords(sf::Mouse::getPosition());
                 if((float)sf::Mouse::getPosition().y/window.getSize().y > 0.9) continue;
                 //addGalaxy(space, 100, 10000, 0, 1000, 0, pos.x, pos.y, -0, 000,.0, 1.0);
@@ -206,6 +208,7 @@ int main()
                         addGalaxy(space, 10000, 1000, 1000, 10000, 1, pos.x, pos.y, 0, 000, 0.0, 1.0);
                 }
             }
+
 
 
             if(event.type == sf::Event::Resized){
@@ -410,9 +413,13 @@ int main()
             ImGui::EndPopup();
         }
         else{
+            if(togglecontext) click_delay = true;
+
             togglecontext = false;
             contextbody = nullptr;
-            can_place = true;
+            if(!click_delay){
+                can_place = true;
+            }
             //std::cout << "hi" << std::endl;
         }
 

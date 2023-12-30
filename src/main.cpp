@@ -458,6 +458,8 @@ int main()
         else
         {
             if(ImGui::IsPopupOpen("selectionpopup") or not togglecontext) {
+
+
                 if (not ImGui::IsPopupOpen("selectionpopup")) {
                     ImGui::OpenPopup("selectionpopup");
                     can_place = false;
@@ -465,14 +467,20 @@ int main()
                 }
 
                 if (ImGui::BeginPopup("selectionpopup")) {
+                    if(ImGui::Button("close")){
+                        ImGui::CloseCurrentPopup();
+                    }
+
                     if (ImGui::Button("save as...##saveselection")) {
                         ImGui::OpenPopup("saveselectionmodal");
+                        focus = false;
                     }
                     if (ImGui::BeginPopupModal("saveselectionmodal", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
                         ImGui::SetWindowPos(ImVec2(window_width / 2 - ImGui::GetWindowSize().x / 2,
                                                    window_height / 2 - ImGui::GetWindowSize().y / 2));
                         if (ImGui::Button("save selection")) {
                             ImGui::CloseCurrentPopup();
+                            focus = true;
                         }
                         ImGui::InputTextWithHint("##selectionsavename", "enter object name...", selectionSaveName,
                                                  IM_ARRAYSIZE(selectionSaveName));
@@ -486,9 +494,6 @@ int main()
                         }
                         space.bodies = newBodies;
                         ImGui::CloseCurrentPopup();
-                        selectedBodies.clear();
-                        togglecontext = false;
-                        click_delay = false;
                     }
                     ImGui::EndPopup();
                 }
@@ -496,7 +501,8 @@ int main()
             else{
                 for(auto& body : space.bodies) body.selected = false;
                 selectedBodies.clear();
-                togglecontext = true;
+                togglecontext = false;
+                click_delay = false;
             }
         }
 

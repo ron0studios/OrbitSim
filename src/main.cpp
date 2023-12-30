@@ -118,7 +118,7 @@ int main()
     bool paused = false;
     bool render_tree = true;
     bool use_colors = true;
-    bool simple_render = true;
+    bool simple_render = false;
     bool render_arrows = false;
     bool can_place = true;
     int scale = 4;
@@ -208,6 +208,12 @@ int main()
             }
 
 
+            if(event.type == sf::Event::Resized){
+                std::cout << event.size.width << " " << event.size.height << std::endl;
+                view.setSize(view.getSize().x * (event.size.width/window_width) , view.getSize().y * (event.size.height/window_height));
+                window_width = event.size.width;
+                window_height = event.size.height;
+            }
         }
 
 
@@ -227,7 +233,12 @@ int main()
 
             //view.setCenter(view.getCenter().x + speed*view.getSize().x*dt.asSeconds(), view.getCenter().y);
         }
+
+
+
         window.setView(view);
+
+
 
 
 
@@ -235,7 +246,6 @@ int main()
 
         ImGui::SFML::Update(window, dt);
 
-        /*
         if(ImGui::BeginMainMenuBar())
         {
             if (ImGui::BeginMenu("File"))
@@ -249,7 +259,7 @@ int main()
 
             ImGui::EndMainMenuBar();
         }
-         */
+
 
         //ImGui::SetNextWindowSize(ImVec2(300,300));
         if(ImGui::BeginPopupContextVoid("itemcheck"))

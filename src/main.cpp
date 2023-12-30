@@ -358,12 +358,14 @@ int main()
                     ImGui::CloseCurrentPopup();
                 ImGui::EndTable();
 
-                ImGui::BeginChild("hi", ImVec2(100,100), true);
+                ImGui::BeginChild("entityicon", ImVec2(100,100), true);
+                ImColor contextcolor = IM_COL32(contextbody->shape.getFillColor().r, contextbody->shape.getFillColor().g, contextbody->shape.getFillColor().b, 255);
+                ImGui::GetWindowDrawList()->AddCircleFilled(ImVec2(ImGui::GetItemRectMin().x+50,ImGui::GetItemRectMin().y+50), 45, contextcolor);
                 ImGui::EndChild();
                 ImGui::SameLine();
                 ImGui::BeginTable("entityops",2,0);
-                ImGui::TableSetupColumn("hi" );
-                ImGui::TableSetupColumn("hi");
+                ImGui::TableSetupColumn("hi1" );
+                ImGui::TableSetupColumn("hi2");
                 ImGui::TableNextRow();
                 ImGui::TableNextColumn();
                 ImGui::Text("mass");

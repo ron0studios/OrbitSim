@@ -192,6 +192,13 @@ int main()
             if (event.type == sf::Event::Closed)                       window.close();
             if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Space) {
                 paused = !paused;
+
+                if(!selectedBodies.empty()){
+                    ImGui::CloseCurrentPopup();
+                    togglecontext = false;
+                    for(auto& body : space.bodies) body.selected = false;
+                    selectedBodies.clear();
+                }
             }
 
 

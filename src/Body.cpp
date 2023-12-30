@@ -75,6 +75,8 @@ void Body::update(sf::Int64 delta, double maxForce) {
 
 void Body::draw(sf::RenderWindow &window) {
     shape.setPosition((float)position.x, (float)position.y);
+    shape.setRadius(radius);
+    shape.setOrigin(radius, radius);
     //shape.setFillColor(sf::Color(  std::min(255, (int)sqrt(velocity.x*velocity.x + velocity.y*velocity.y)) ,   255- std::min(255, (int)sqrt(velocity.x*velocity.x + velocity.y*velocity.y))  ,0));
 
     //int totForce = std::min((sqrt(pow(acceleration.x,2) + pow(acceleration.y,2))/ 10) * 255, (double)255);

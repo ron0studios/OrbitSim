@@ -457,10 +457,11 @@ int main()
         }
         else
         {
-            if(ImGui::IsPopupOpen("selectionpopup") or can_place) {
+            if(ImGui::IsPopupOpen("selectionpopup") or not togglecontext) {
                 if (not ImGui::IsPopupOpen("selectionpopup")) {
                     ImGui::OpenPopup("selectionpopup");
                     can_place = false;
+                    togglecontext = true;
                 }
 
                 if (ImGui::BeginPopup("selectionpopup")) {

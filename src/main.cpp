@@ -181,7 +181,7 @@ int main()
             ImGui::SFML::ProcessEvent(window, event);
             //if(event.type == sf::Event::GainedFocus) focus = true;
             //if(event.type == sf::Event::LostFocus) focus = false;
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))  window.close();
+            //if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))  window.close();
             if (event.type == sf::Event::Closed)                       window.close();
             if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Space)
                 paused = !paused;
@@ -231,7 +231,25 @@ int main()
 
 
 
+
+
         ImGui::SFML::Update(window, dt);
+
+        /*
+        if(ImGui::BeginMainMenuBar())
+        {
+            if (ImGui::BeginMenu("File"))
+            {
+                if(ImGui::MenuItem("New"))
+                {
+                    //Do something
+                }
+                ImGui::EndMenu();
+            }
+
+            ImGui::EndMainMenuBar();
+        }
+         */
 
         //ImGui::SetNextWindowSize(ImVec2(300,300));
         if(ImGui::BeginPopupContextVoid("itemcheck"))
@@ -379,6 +397,7 @@ int main()
 
 
             togglecontext = true;
+            ImGui::EndPopup();
         }
         else{
             togglecontext = false;

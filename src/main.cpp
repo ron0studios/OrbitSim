@@ -126,6 +126,12 @@ int main()
     float brightness = 1;
     float tree_brightness = 0.04;
     std::string selected_brush = "";
+    sf::RectangleShape selectionBox;
+    bool selecting = false;
+    sf::Vector2f selectionBegin;
+    sf::Vector2f selectionEnd;
+    std::vector<Body*> selectedBodies;
+    static char selectionSaveName[50] = "";
 
     bool togglecontext = false;
     sf::Vector2f contextpos;
@@ -184,8 +190,9 @@ int main()
             //if(event.type == sf::Event::LostFocus) focus = false;
             //if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))  window.close();
             if (event.type == sf::Event::Closed)                       window.close();
-            if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Space)
+            if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Space) {
                 paused = !paused;
+            }
 
 
 
@@ -207,6 +214,28 @@ int main()
                     if (selected_brush == "cluster10k")
                         addGalaxy(space, 10000, 1000, 1000, 10000, 1, pos.x, pos.y, 0, 000, 0.0, 1.0);
                 }
+            }
+
+
+            if(event.type == sf::Event::MouseButtonPressed and event.key.code == sf::Mouse::Right){
+                selecting = true;
+                selectionBegin = window.mapPixelToCoords(sf::Mouse::getPosition());
+            }
+            if(event.type == sf::Event::MouseButtonReleased and event.key.code == sf::Mouse::Right) {
+                selecting = false;
+
+                sf::Vector2f TL(std::min(selectionBegin.x, selectionEnd.x), std::min(selectionBegin.y, selectionEnd.y));
+                sf::Vector2f BR(std::max(selectionBegin.x, selectionEnd.x), std::max(selectionBegin.y, selectionEnd.y));
+
+                for(auto& body : space.bodies){
+                    body.selected = false;
+                    if(body.position.x < BR.x and body.position.x > TL.x and body.position.y < BR.y and body.position.y > TL.y){
+                        selectedBodies.push_back(&body);
+                        body.selected = true;
+                    }
+                }
+
+                if(paused) paused = false;
             }
 
 
@@ -265,165 +294,211 @@ int main()
 
 
         //ImGui::SetNextWindowSize(ImVec2(300,300));
-        if(ImGui::BeginPopupContextVoid("itemcheck"))
-        {
-            can_place = false;
+        if(selectedBodies.empty()) {
+            if (ImGui::BeginPopupContextVoid("itemcheck", ImGuiPopupFlags_MouseButtonRight)) {
+                can_place = false;
 
 
-            sf::Vector2f pos;
-            if(!togglecontext){
-                pos = window.mapPixelToCoords(ImGui::GetWindowPos());
-                sf::Vector2f origin = sf::Vector2f(view.getCenter().x - view.getSize().x / 2,
-                                                   view.getCenter().y - view.getSize().y / 2);
-                sf::Vector2f size = sf::Vector2f(view.getSize().x, view.getSize().y);
-                std::cout << pos.x << " " << pos.y << std::endl;
+                sf::Vector2f pos;
+                if (!togglecontext) {
+                    pos = window.mapPixelToCoords(ImGui::GetWindowPos());
+                    sf::Vector2f origin = sf::Vector2f(view.getCenter().x - view.getSize().x / 2,
+                                                       view.getCenter().y - view.getSize().y / 2);
+                    sf::Vector2f size = sf::Vector2f(view.getSize().x, view.getSize().y);
+                    std::cout << pos.x << " " << pos.y << std::endl;
 
-                if(simple_render){
-                    int gridx = (pos.x - origin.x) / (size.x / 1920.0);
-                    gridx -= gridx % scale;
-                    int gridy = (pos.y - origin.y) / (size.y / 1080.0);
-                    gridy -= gridy % scale;
-                    sf::Vector2i gridpos = {gridx, gridy};
+                    if (simple_render) {
+                        int gridx = (pos.x - origin.x) / (size.x / 1920.0);
+                        gridx -= gridx % scale;
+                        int gridy = (pos.y - origin.y) / (size.y / 1080.0);
+                        gridy -= gridy % scale;
+                        sf::Vector2i gridpos = {gridx, gridy};
 
-                    std::vector<Body*> results;
-                    for(auto &body : space.bodies){
+                        std::vector<Body *> results;
+                        for (auto &body: space.bodies) {
 
-                        sf::Vector2f bpos = (sf::Vector2f)body.position;
-                        int bodyx = (bpos.x - origin.x) / (size.x / 1920.0);
-                        bodyx -= bodyx % scale;
-                        int bodyy = (bpos.y - origin.y) / (size.y / 1080.0);
-                        bodyy -= bodyy % scale;
-                        sf::Vector2i bodypos = {bodyx, bodyy};
-                        if( std::abs(bodypos.x-gridpos.x) <= 100 and std::abs(bodypos.y - gridpos.y) <= 100){
-                            results.push_back(&body);
-                        }
-                    }
-
-                    std::cout << results.size() << std::endl;
-
-                    float mindist = FLT_MAX;
-                    if(!results.empty()){
-                        for(int i =0 ; i < (int)results.size(); i++){
-                            float dist = std::sqrt(std::pow(results[i]->position.x-pos.x,2)+std::pow(results[i]->position.y-pos.y, 2));
-                            if(dist < mindist){
-                                contextbody = results[i];
-                                mindist = dist;
+                            sf::Vector2f bpos = (sf::Vector2f) body.position;
+                            int bodyx = (bpos.x - origin.x) / (size.x / 1920.0);
+                            bodyx -= bodyx % scale;
+                            int bodyy = (bpos.y - origin.y) / (size.y / 1080.0);
+                            bodyy -= bodyy % scale;
+                            sf::Vector2i bodypos = {bodyx, bodyy};
+                            if (std::abs(bodypos.x - gridpos.x) <= 100 and std::abs(bodypos.y - gridpos.y) <= 100) {
+                                results.push_back(&body);
                             }
                         }
-                    }
-                    else{
-                        contextbody = nullptr;
-                    }
-                }
-                else {
-                    std::vector<Body*> results;
-                    for(auto &body : space.bodies) {
-                               if(std::pow(body.position.x-pos.x,2) + std::pow(body.position.y-pos.y,2) <= std::pow(body.radius,2)){
-                                   results.push_back(&body);
-                               }
-                    }
 
-                    std::cout << results.size() << std::endl;
+                        std::cout << results.size() << std::endl;
 
-                    float mindist = FLT_MAX;
-                    if(!results.empty()){
-                        for(int i =0 ; i < (int)results.size(); i++){
-                            float dist = std::sqrt(std::pow(results[i]->position.x-pos.x,2)+std::pow(results[i]->position.y-pos.y, 2));
-                            if(dist < mindist){
-                                contextbody = results[i];
-                                mindist = dist;
+                        float mindist = FLT_MAX;
+                        if (!results.empty()) {
+                            for (int i = 0; i < (int) results.size(); i++) {
+                                float dist = std::sqrt(std::pow(results[i]->position.x - pos.x, 2) +
+                                                       std::pow(results[i]->position.y - pos.y, 2));
+                                if (dist < mindist) {
+                                    contextbody = results[i];
+                                    mindist = dist;
+                                }
+                            }
+                        } else {
+                            contextbody = nullptr;
+                        }
+                    } else {
+                        std::vector<Body *> results;
+                        for (auto &body: space.bodies) {
+                            if (std::pow(body.position.x - pos.x, 2) + std::pow(body.position.y - pos.y, 2) <=
+                                std::pow(body.radius, 2)) {
+                                results.push_back(&body);
                             }
                         }
-                    }
-                    else{
-                        contextbody = nullptr;
+
+                        std::cout << results.size() << std::endl;
+
+                        float mindist = FLT_MAX;
+                        if (!results.empty()) {
+                            for (int i = 0; i < (int) results.size(); i++) {
+                                float dist = std::sqrt(std::pow(results[i]->position.x - pos.x, 2) +
+                                                       std::pow(results[i]->position.y - pos.y, 2));
+                                if (dist < mindist) {
+                                    contextbody = results[i];
+                                    mindist = dist;
+                                }
+                            }
+                        } else {
+                            contextbody = nullptr;
+                        }
                     }
                 }
-            }
 
 
-            if(contextbody == nullptr){
-                ImGui::CloseCurrentPopup();
-            }
-            else
-            {
-                ImGui::BeginTable("tmp",2,0);
-                ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthStretch);
-                ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed);
-                ImGui::TableNextRow();
-                ImGui::TableNextColumn();
-                ImGui::Text("Inspect Entity");
-                ImGui::TableNextColumn();
-                if(ImGui::Button("close"))
+                if (contextbody == nullptr) {
                     ImGui::CloseCurrentPopup();
-                ImGui::EndTable();
+                } else {
+                    ImGui::BeginTable("tmp", 2, 0);
+                    ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthStretch);
+                    ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed);
+                    ImGui::TableNextRow();
+                    ImGui::TableNextColumn();
+                    ImGui::Text("Inspect Entity");
+                    ImGui::TableNextColumn();
+                    if (ImGui::Button("close")){
+                        ImGui::CloseCurrentPopup();
+                    }
+                    ImGui::EndTable();
 
-                ImGui::BeginChild("entityicon", ImVec2(100,100), true);
-                ImColor contextcolor = IM_COL32(contextbody->shape.getFillColor().r, contextbody->shape.getFillColor().g, contextbody->shape.getFillColor().b, 255);
-                ImGui::GetWindowDrawList()->AddCircleFilled(ImVec2(ImGui::GetItemRectMin().x+50,ImGui::GetItemRectMin().y+50), 45, contextcolor);
-                ImGui::EndChild();
-                ImGui::SameLine();
-                ImGui::BeginTable("entityops",2,0);
-                ImGui::TableSetupColumn("hi1" );
-                ImGui::TableSetupColumn("hi2");
-                ImGui::TableNextRow();
-                ImGui::TableNextColumn();
-                ImGui::Text("mass");
-                ImGui::TableNextColumn();
-                ImGui::SetNextItemWidth(100);
-                ImGui::InputDouble("##mass", &contextbody->mass);
-                ImGui::TableNextRow();
-                ImGui::TableNextColumn();
-                ImGui::Text("radius");
-                ImGui::TableNextColumn();
-                ImGui::SetNextItemWidth(100);
-                ImGui::InputDouble("##radius", &contextbody->radius);
-                ImGui::TableNextRow();
-                ImGui::TableNextColumn();
-                ImGui::Text("position");
-                ImGui::TableNextColumn();
-                float posinp[2] = {(float)contextbody->position.x, (float)contextbody->position.y};
-                ImGui::SetNextItemWidth(100);
-                ImGui::InputFloat2("##position", posinp);
-                contextbody->position = {posinp[0], posinp[1]}; // this reduces from double to float <:(
+                    ImGui::BeginChild("entityicon", ImVec2(100, 100), true);
+                    ImColor contextcolor = IM_COL32(contextbody->shape.getFillColor().r,
+                                                    contextbody->shape.getFillColor().g,
+                                                    contextbody->shape.getFillColor().b, 255);
+                    ImGui::GetWindowDrawList()->AddCircleFilled(
+                            ImVec2(ImGui::GetItemRectMin().x + 50, ImGui::GetItemRectMin().y + 50), 45, contextcolor);
+                    ImGui::EndChild();
+                    ImGui::SameLine();
+                    ImGui::BeginTable("entityops", 2, 0);
+                    ImGui::TableSetupColumn("hi1");
+                    ImGui::TableSetupColumn("hi2");
+                    ImGui::TableNextRow();
+                    ImGui::TableNextColumn();
+                    ImGui::Text("mass");
+                    ImGui::TableNextColumn();
+                    ImGui::SetNextItemWidth(100);
+                    ImGui::InputDouble("##mass", &contextbody->mass);
+                    ImGui::TableNextRow();
+                    ImGui::TableNextColumn();
+                    ImGui::Text("radius");
+                    ImGui::TableNextColumn();
+                    ImGui::SetNextItemWidth(100);
+                    ImGui::InputDouble("##radius", &contextbody->radius);
+                    ImGui::TableNextRow();
+                    ImGui::TableNextColumn();
+                    ImGui::Text("position");
+                    ImGui::TableNextColumn();
+                    float posinp[2] = {(float) contextbody->position.x, (float) contextbody->position.y};
+                    ImGui::SetNextItemWidth(100);
+                    ImGui::InputFloat2("##position", posinp);
+                    contextbody->position = {posinp[0], posinp[1]}; // this reduces from double to float <:(
 
-                ImGui::TableNextRow();
-                ImGui::TableNextColumn();
-                ImGui::Text("velocity");
-                ImGui::TableNextColumn();
-                float velinp[2] = {(float)contextbody->velocity.x, (float)contextbody->velocity.y};
-                ImGui::SetNextItemWidth(100);
-                ImGui::InputFloat2("##velocity", velinp);
-                contextbody->velocity = {velinp[0], velinp[1]}; // this reduces from double to float <:(
+                    ImGui::TableNextRow();
+                    ImGui::TableNextColumn();
+                    ImGui::Text("velocity");
+                    ImGui::TableNextColumn();
+                    float velinp[2] = {(float) contextbody->velocity.x, (float) contextbody->velocity.y};
+                    ImGui::SetNextItemWidth(100);
+                    ImGui::InputFloat2("##velocity", velinp);
+                    contextbody->velocity = {velinp[0], velinp[1]}; // this reduces from double to float <:(
 
-                ImGui::TableNextRow();
-                ImGui::TableNextColumn();
-                ImGui::Text("acceleration");
-                ImGui::TableNextColumn();
-                float accinp[2] = {(float)contextbody->acceleration.x, (float)contextbody->acceleration.y};
-                ImGui::SetNextItemWidth(100);
-                ImGui::InputFloat2("##acceleration", accinp);
-                contextbody->acceleration = {accinp[0], accinp[1]}; // this reduces from double to float <:(
+                    ImGui::TableNextRow();
+                    ImGui::TableNextColumn();
+                    ImGui::Text("acceleration");
+                    ImGui::TableNextColumn();
+                    float accinp[2] = {(float) contextbody->acceleration.x, (float) contextbody->acceleration.y};
+                    ImGui::SetNextItemWidth(100);
+                    ImGui::InputFloat2("##acceleration", accinp);
+                    contextbody->acceleration = {accinp[0], accinp[1]}; // this reduces from double to float <:(
 
 
-                ImGui::EndTable();
+                    ImGui::EndTable();
 
+                }
+
+
+                togglecontext = true;
+                ImGui::EndPopup();
+            } else {
+                if (togglecontext) click_delay = true;
+
+                togglecontext = false;
+                contextbody = nullptr;
+                if (!click_delay) {
+                    can_place = true;
+                }
+                //std::cout << "hi" << std::endl;
             }
-
-
-            togglecontext = true;
-            ImGui::EndPopup();
         }
-        else{
-            if(togglecontext) click_delay = true;
+        else
+        {
+            if(ImGui::IsPopupOpen("selectionpopup") or can_place) {
+                if (not ImGui::IsPopupOpen("selectionpopup")) {
+                    ImGui::OpenPopup("selectionpopup");
+                    can_place = false;
+                }
 
-            togglecontext = false;
-            contextbody = nullptr;
-            if(!click_delay){
-                can_place = true;
+                if (ImGui::BeginPopup("selectionpopup")) {
+                    if (ImGui::Button("save as...##saveselection")) {
+                        ImGui::OpenPopup("saveselectionmodal");
+                    }
+                    if (ImGui::BeginPopupModal("saveselectionmodal", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+                        ImGui::SetWindowPos(ImVec2(window_width / 2 - ImGui::GetWindowSize().x / 2,
+                                                   window_height / 2 - ImGui::GetWindowSize().y / 2));
+                        if (ImGui::Button("save selection")) {
+                            ImGui::CloseCurrentPopup();
+                        }
+                        ImGui::InputTextWithHint("##selectionsavename", "enter object name...", selectionSaveName,
+                                                 IM_ARRAYSIZE(selectionSaveName));
+                        ImGui::EndPopup();
+                    }
+
+                    if (ImGui::Button("delete##deleteselection")) {
+                        std::vector<Body> newBodies;
+                        for (auto &body: space.bodies) {
+                            if (!body.selected) newBodies.push_back(body);
+                        }
+                        space.bodies = newBodies;
+                        ImGui::CloseCurrentPopup();
+                        selectedBodies.clear();
+                        togglecontext = false;
+                        click_delay = false;
+                    }
+                    ImGui::EndPopup();
+                }
             }
-            //std::cout << "hi" << std::endl;
+            else{
+                for(auto& body : space.bodies) body.selected = false;
+                selectedBodies.clear();
+                togglecontext = true;
+            }
         }
+
 
         ImGui::SetNextWindowPos(ImVec2(0.0,window.getSize().y-window_height/10.0));
         ImGui::SetNextWindowSize(ImVec2(window.getSize().x,window_height/10.0));
@@ -592,6 +667,18 @@ int main()
         //space.draw(window);
 
 
+        if(selecting){
+            sf::Vector2f curmouse = window.mapPixelToCoords(sf::Mouse::getPosition());
+            selectionBox.setFillColor(sf::Color::Transparent);
+            selectionBox.setOutlineThickness(view.getSize().x/window_width);
+            selectionBox.setOutlineColor(sf::Color::White);
+            selectionBox.setSize(sf::Vector2f(curmouse.x-selectionBegin.x, curmouse.y-selectionBegin.y));
+            selectionBox.setPosition(selectionBegin);
+            selectionEnd = curmouse;
+        }
+        else{
+            selectionBox = sf::RectangleShape();
+        }
 
         //sf::Image img;
 
@@ -665,6 +752,8 @@ int main()
         }
         else {
             for(auto& body : space.bodies) {
+                if(body.selected)
+                    body.shape.setFillColor(sf::Color::White);
                 if (&body == contextbody) {
                     body.shape.setOutlineColor(sf::Color::White);
                     body.shape.setOutlineThickness(body.shape.getRadius() / 10.0);
@@ -685,6 +774,7 @@ int main()
         if(render_tree) space.drawTree(window);
 
 
+        window.draw(selectionBox);
         ImGui::SFML::Render(window);
         window.display();
 

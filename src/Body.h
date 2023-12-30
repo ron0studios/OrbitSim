@@ -13,6 +13,7 @@ class Body {
         sf::CircleShape shape;
         double mass, radius;
         sf::Vector2<double> acceleration, velocity, position;
+        bool selected = false;
 
         // debug
         bool debug = false;

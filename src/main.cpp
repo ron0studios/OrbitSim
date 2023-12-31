@@ -120,14 +120,13 @@ int main()
     bool use_colors = true;
     bool simple_render = false;
     bool render_arrows = false;
-    bool can_place = true;
-    bool click_delay = false;
     int scale = 4;
     float brightness = 1;
     float tree_brightness = 0.04;
     std::string selected_brush = "";
     sf::RectangleShape selectionBox;
     bool selecting = false;
+    bool triggerSelect = false;
     sf::Vector2f selectionBegin;
     sf::Vector2f selectionEnd;
     std::vector<Body*> selectedBodies;
@@ -177,18 +176,11 @@ int main()
 
     while (window.isOpen())
     {
-        //shader.setUniform("currentTexture", sf::Shader::CurrentTexture);
-        //std::cout << space.bodies.size() << std::endl;
-        //shader.setUniform("blur_radius", 0.00001f);
-
 
         sf::Event event;
         while (window.pollEvent(event))
         {
             ImGui::SFML::ProcessEvent(window, event);
-            //if(event.type == sf::Event::GainedFocus) focus = true;
-            //if(event.type == sf::Event::LostFocus) focus = false;
-            //if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))  window.close();
             if (event.type == sf::Event::Closed)                       window.close();
             if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Space) {
                 paused = !paused;
@@ -204,12 +196,10 @@ int main()
 
 
             if(event.type == sf::Event::MouseButtonReleased and event.key.code == sf::Mouse::Left){
-                click_delay = false;
                 sf::Vector2<double> pos = (sf::Vector2<double>)window.mapPixelToCoords(sf::Mouse::getPosition());
                 if((float)sf::Mouse::getPosition().y/window.getSize().y > 0.9) continue;
-                //addGalaxy(space, 100, 10000, 0, 1000, 0, pos.x, pos.y, -0, 000,.0, 1.0);
 
-                if(can_place) {
+                if(!ImGui::IsAnyItemActive()) {
                     if (selected_brush == "single")
                         addGalaxy(space, 0, 0, 1000, 1000, 0, pos.x, pos.y, -0, 000, .0, 1.0);
                     if (selected_brush == "black_hole")
@@ -230,19 +220,25 @@ int main()
             }
             if(event.type == sf::Event::MouseButtonReleased and event.key.code == sf::Mouse::Right) {
                 selecting = false;
+                if(ImGui::IsMouseDragging(ImGuiMouseButton_Right)){
+                    std::cout << "opened popup" << std::endl;
+                    sf::Vector2f TL(std::min(selectionBegin.x, selectionEnd.x), std::min(selectionBegin.y, selectionEnd.y));
+                    sf::Vector2f BR(std::max(selectionBegin.x, selectionEnd.x), std::max(selectionBegin.y, selectionEnd.y));
 
-                sf::Vector2f TL(std::min(selectionBegin.x, selectionEnd.x), std::min(selectionBegin.y, selectionEnd.y));
-                sf::Vector2f BR(std::max(selectionBegin.x, selectionEnd.x), std::max(selectionBegin.y, selectionEnd.y));
-
-                for(auto& body : space.bodies){
-                    body.selected = false;
-                    if(body.position.x < BR.x and body.position.x > TL.x and body.position.y < BR.y and body.position.y > TL.y){
-                        selectedBodies.push_back(&body);
-                        body.selected = true;
+                    for(auto& body : space.bodies){
+                        body.selected = false;
+                        if(body.position.x < BR.x and body.position.x > TL.x and body.position.y < BR.y and body.position.y > TL.y){
+                            selectedBodies.push_back(&body);
+                            body.selected = true;
+                        }
                     }
+
+                    if(!selectedBodies.empty())
+                        triggerSelect = true;
+
+                    if(paused) paused = false;
                 }
 
-                if(paused) paused = false;
             }
 
 
@@ -253,6 +249,7 @@ int main()
                 window_width = event.size.width;
                 window_height = event.size.height;
             }
+
         }
 
 
@@ -303,8 +300,6 @@ int main()
         //ImGui::SetNextWindowSize(ImVec2(300,300));
         if(selectedBodies.empty()) {
             if (ImGui::BeginPopupContextVoid("itemcheck", ImGuiPopupFlags_MouseButtonRight)) {
-                can_place = false;
-
 
                 sf::Vector2f pos;
                 if (!togglecontext) {
@@ -452,66 +447,54 @@ int main()
                 togglecontext = true;
                 ImGui::EndPopup();
             } else {
-                if (togglecontext) click_delay = true;
-
                 togglecontext = false;
                 contextbody = nullptr;
-                if (!click_delay) {
-                    can_place = true;
-                }
                 //std::cout << "hi" << std::endl;
             }
         }
-        else
-        {
-            if(ImGui::IsPopupOpen("selectionpopup") or not togglecontext) {
 
-
-                if (not ImGui::IsPopupOpen("selectionpopup")) {
-                    ImGui::OpenPopup("selectionpopup");
-                    can_place = false;
-                    togglecontext = true;
-                }
-
-                if (ImGui::BeginPopup("selectionpopup")) {
-                    if(ImGui::Button("close")){
-                        ImGui::CloseCurrentPopup();
-                    }
-
-                    if (ImGui::Button("save as...##saveselection")) {
-                        ImGui::OpenPopup("saveselectionmodal");
-                        focus = false;
-                    }
-                    if (ImGui::BeginPopupModal("saveselectionmodal", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
-                        ImGui::SetWindowPos(ImVec2(window_width / 2 - ImGui::GetWindowSize().x / 2,
-                                                   window_height / 2 - ImGui::GetWindowSize().y / 2));
-                        if (ImGui::Button("save selection")) {
-                            ImGui::CloseCurrentPopup();
-                            focus = true;
-                        }
-                        ImGui::InputTextWithHint("##selectionsavename", "enter object name...", selectionSaveName,
-                                                 IM_ARRAYSIZE(selectionSaveName));
-                        ImGui::EndPopup();
-                    }
-
-                    if (ImGui::Button("delete##deleteselection")) {
-                        std::vector<Body> newBodies;
-                        for (auto &body: space.bodies) {
-                            if (!body.selected) newBodies.push_back(body);
-                        }
-                        space.bodies = newBodies;
-                        ImGui::CloseCurrentPopup();
-                    }
-                    ImGui::EndPopup();
-                }
-            }
-            else{
-                for(auto& body : space.bodies) body.selected = false;
-                selectedBodies.clear();
-                togglecontext = false;
-                click_delay = false;
-            }
+        if(triggerSelect){
+            ImGui::OpenPopup("selectionpopup");
+            triggerSelect = false;
         }
+
+        if (ImGui::BeginPopup("selectionpopup")) {
+            if(ImGui::Button("close")){
+                ImGui::CloseCurrentPopup();
+            }
+
+            if (ImGui::Button("save as...##saveselection")) {
+                ImGui::OpenPopup("saveselectionmodal");
+                focus = false;
+            }
+            if (ImGui::BeginPopupModal("saveselectionmodal", NULL, ImGuiWindowFlags_AlwaysAutoResize)) {
+                ImGui::SetWindowPos(ImVec2(window_width / 2 - ImGui::GetWindowSize().x / 2,
+                                           window_height / 2 - ImGui::GetWindowSize().y / 2));
+                if (ImGui::Button("save selection")) {
+                    ImGui::CloseCurrentPopup();
+                    focus = true;
+                }
+                ImGui::InputTextWithHint("##selectionsavename", "enter object name...", selectionSaveName,
+                                         IM_ARRAYSIZE(selectionSaveName));
+                ImGui::EndPopup();
+            }
+
+            if (ImGui::Button("delete##deleteselection")) {
+                std::vector<Body> newBodies;
+                for (auto &body: space.bodies) {
+                    if (!body.selected) newBodies.push_back(body);
+                }
+                space.bodies = newBodies;
+                ImGui::CloseCurrentPopup();
+            }
+            ImGui::EndPopup();
+        }
+    else{
+        if(!selectedBodies.empty()){
+            for(auto& body : space.bodies) body.selected = false;
+            selectedBodies.clear();
+        }
+    }
 
 
         ImGui::SetNextWindowPos(ImVec2(0.0,window.getSize().y-window_height/10.0));
@@ -529,14 +512,12 @@ int main()
 
         if(ImGui::Button("Settings", ImVec2(window_height/10.0 - 15.0, window_height/10.0 - 15.0))){
             ImGui::OpenPopup("settings");
-            can_place = false;
         }
 
         if(ImGui::BeginPopupModal("settings", NULL, ImGuiWindowFlags_Tooltip)){
             if(ImGui::Button("close")){
                 //ImGui::
                 ImGui::CloseCurrentPopup();
-                can_place = true;
             }
             ImGui::EndPopup();
         }

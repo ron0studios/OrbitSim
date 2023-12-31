@@ -184,13 +184,6 @@ int main()
             if (event.type == sf::Event::Closed)                       window.close();
             if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Space) {
                 paused = !paused;
-
-                if(!selectedBodies.empty()){
-                    ImGui::CloseCurrentPopup();
-                    togglecontext = false;
-                    for(auto& body : space.bodies) body.selected = false;
-                    selectedBodies.clear();
-                }
             }
 
 
@@ -386,6 +379,9 @@ int main()
                     if (ImGui::Button("close")){
                         ImGui::CloseCurrentPopup();
                     }
+                    if(ImGui::IsKeyReleased(ImGuiKey_Escape)){
+                        ImGui::CloseCurrentPopup();
+                    }
                     ImGui::EndTable();
 
                     ImGui::BeginChild("entityicon", ImVec2(100, 100), true);
@@ -460,6 +456,9 @@ int main()
 
         if (ImGui::BeginPopup("selectionpopup")) {
             if(ImGui::Button("close")){
+                ImGui::CloseCurrentPopup();
+            }
+            if(ImGui::IsKeyReleased(ImGuiKey_Escape)){
                 ImGui::CloseCurrentPopup();
             }
 
@@ -676,6 +675,18 @@ int main()
         }
 
         //sf::Image img;
+
+        sf::Texture tex1920; tex1920.create(1920,1080);
+        sf::Texture tex0960; tex0960.create(1920/2,1080/2);
+        sf::Texture tex0640; tex0640.create(1920/3,1080/3);
+        sf::Texture tex0480; tex0480.create(1920/4,1080/4);
+        sf::Texture tex0384; tex0384.create(1920/5,1080/5);
+        sf::Texture tex0320; tex0320.create(1920/6,1080/6);
+        sf::Texture tex0240; tex0240.create(1920/8,1080/8);
+        sf::Texture tex0192; tex0192.create(1920/10,1080/10);
+        sf::Texture tex0160; tex0160.create(1920/12,1080/12);
+        sf::Texture tex0128; tex0128.create(1920/15,1080/15);
+
 
         sf::Texture tex;
         tex.create(1920,1080);

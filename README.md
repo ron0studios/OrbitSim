@@ -5,8 +5,8 @@
 ---
 ![image](https://github.com/ron0studios/OrbitSim/assets/47331292/1a1744bf-2e9e-43e4-ae2e-97e5a8628c39)
 > A spiral galaxy rendered with 100k particles at 10fps on a laptop. notice the bar in the middle, similar to the milky way.
-
-![image](https://github.com/ron0studios/OrbitSim/assets/47331292/b478cbbe-bdf1-48d3-9662-c14a2f273831)
+> 
+![image](https://github.com/ron0studios/OrbitSim/assets/47331292/4db64a94-f916-4441-9b53-3ae53086a71e)
 > The GUI
 
 

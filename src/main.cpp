@@ -739,6 +739,9 @@ int main()
                 if (&body == contextbody) {
                     body.shape.setFillColor(sf::Color::White);
                 }
+                if(body.selected){
+                    body.shape.setFillColor(sf::Color::White);
+                }
 
                 //std::cout << (int)body.shape.getFillColor().r << " " << (int)body.shape.getFillColor().g << " " << (int)body.shape.getFillColor().b << std::endl;
                 for (int i = 0; i < scale; i++) {

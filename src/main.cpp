@@ -192,7 +192,7 @@ int main()
                 sf::Vector2<double> pos = (sf::Vector2<double>)window.mapPixelToCoords(sf::Mouse::getPosition());
                 if((float)sf::Mouse::getPosition().y/window.getSize().y > 0.9) continue;
 
-                if(!ImGui::IsAnyItemActive()) {
+                if(!ImGui::IsAnyItemActive() and !ImGui::IsAnyItemFocused() and !ImGui::IsAnyItemHovered()) {
                     if (selected_brush == "single")
                         addGalaxy(space, 0, 0, 1000, 1000, 0, pos.x, pos.y, -0, 000, .0, 1.0);
                     if (selected_brush == "black_hole")
@@ -279,9 +279,9 @@ int main()
         {
             if (ImGui::BeginMenu("File"))
             {
-                if(ImGui::MenuItem("New"))
+                if(ImGui::MenuItem("Quit"))
                 {
-                    //Do something
+                    window.close();
                 }
                 ImGui::EndMenu();
             }
@@ -645,7 +645,7 @@ int main()
         flags2 |= ImGuiWindowFlags_AlwaysAutoResize;
         ImGui::Begin("debug corner", NULL, flags2);
         //ImGui::SetWindowSize(ImVec2(window_width,window_height/10.0));
-        ImGui::SetWindowPos(ImVec2(0.0,0.0));
+        ImGui::SetWindowPos(ImVec2(0.0,15.0));
         ImGui::Text("FPS %.2f", 1/dt.asSeconds() );
         ImGui::Text("Entity Count %i", (int)space.bodies.size());
         ImGui::Text("Iterations: %i", iterations);
@@ -670,7 +670,7 @@ int main()
             selectionBox.setPosition(selectionBegin);
             selectionEnd = curmouse;
         }
-        else{
+        else if(selectedBodies.empty()){
             selectionBox = sf::RectangleShape();
         }
 

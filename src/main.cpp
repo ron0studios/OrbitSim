@@ -7,29 +7,31 @@
 #include "imgui-SFML.h"
 #include "imgui.h"
 
+// a function to create a custom galaxy or cluster shape based on certain arguments
+// sim: the simulator object in which to instantiate the bodies
+// starnum: the total number of stars to create
+// starmass: the mass of each star on average
+// c_mass: the mass of a central star, e.g. the sun or a black hole. If set to 0, this object wont be created
+// rad: the radius of the galaxy or cluster
+// rotspeed: the tangential velocity of each planet
+// cx: the x position of the center of the cluster
+// cy: the y position of the center of the cluster
+// c_velx: the velocity of the cluster in the x direction relative to other galaxies
+// c_vely: the velocity of the cluster in the y direction relative to other galaxies
+// radial: the outward radial velocity of the stars
+// massvar: the range of values that the starmass could take.
 void addGalaxy(Simulator& sim, double starnum, double starmass, double c_mass, double rad, double rotspeed, double cx, double cy, double c_velx, double c_vely, double radial=0, double massvar = 10.0){
-
-
     int num_threads = 16;
     std::vector<std::thread> threads(num_threads);
     std::vector<Body*> ptrarr((int)starnum,nullptr);
 
-
-    /*
-     * NOTE OF BUG
-     * YOU CANT USE A REGULAR FOR LOOP BECAUSE THE "i" VALUE IS DELETED AT THE END OF THE LOOP DUMB
-     */
-
+    // 16 threads are created to iterate through 1/16th of the starnum
     for(int i = 0; i < num_threads; i++){
-        //std::cout << i << std::endl;
         threads[i] = std::thread([&](int i, int n){
-            //std::cout << "\t\t" << i << " " << num_threads << std::endl;
             for(int j = i*n; j < ((i+1)*n); j++) {
                 if(j >= starnum) break;
 
-                //double dx = (((double)rand()/ RAND_MAX) * 28284) -14142;
-                //double dy = (((double)rand()/ RAND_MAX) * 28284) -14142;
-
+                // the following maths uses polar coordinates to position each of the stars randomly in space
                 double radius = rad;
                 double rnd = rand();
                 double r = radius * sqrt( pow((double)rand()/RAND_MAX, 2));
@@ -37,125 +39,91 @@ void addGalaxy(Simulator& sim, double starnum, double starmass, double c_mass, d
                 double x = r * cos(theta);
                 double y = r * sin(theta);
 
+                // the following maths calculates the velocity of each star based on its angle to the center
                 double rnd2 = (((double)rand()/ RAND_MAX)*massvar);
                 double velx = -cos(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  200 * (2- r/radius) * rotspeed;
                 double vely =  sin(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  200 * (2- r/radius) * rotspeed;
 
+                // the following applies the radial velocity to each star
                 double velradx = radial*x;
                 double velrady = radial*y;
                 ptrarr[j] = new Body(starmass * rnd2 * 10,20 * rnd2,sf::Vector2<double>(x+cx, y+cy), sf::Vector2<double>(velx + c_velx + velradx,vely + c_vely + velrady));
-                //sim.addBody(Body(starmass * rnd2 * 10,20 * rnd2,sf::Vector2<double>(x+cx, y+cy), sf::Vector2<double>(velx + c_velx + velradx,vely + c_vely + velrady)));
             }
 
-            //calcForce(bodies[j]);
         },i,std::ceil((double)starnum/num_threads));
     }
-    //std::cout << threads[0] << std::endl;
 
+    // the 16 threads are before exiting scope to prevent memory issues
     for(int i = 0; i < num_threads; i++) {
         threads[i].join();
     }
 
+    // nullcount is recorded as a precautionary measure of how many threads failed to execute
     int nullcount = 0;
     for(int i = 0; i < starnum; i++){
-        //std::cout << "do" << std::endl;
         if(ptrarr[i] == nullptr){
-            //std::cout << "\t" << i << std::endl;
             nullcount++;
         }
         sim.addBody(*ptrarr[i]);
     }
     std::cout << nullcount << std::endl;
 
+    // since all bodies are now added to the simulation, the original pointers can be deleted to avoid memory leaks
     for(Body* b : ptrarr)
         delete b;
     ptrarr.clear();
 
-
-    /*
-
-    for(int i = 0; i < starnum; i++) {
-        //double dx = (((double)rand()/ RAND_MAX) * 28284) -14142;
-        //double dy = (((double)rand()/ RAND_MAX) * 28284) -14142;
-
-        double radius = rad;
-        double rnd = rand();
-        double r = radius * sqrt( pow((double)rand()/RAND_MAX, 2));
-        double theta = ((double)rnd/RAND_MAX) * 2 * M_PI;
-        double x = r * cos(theta);
-        double y = r * sin(theta);
-
-        double rnd2 = (((double)rand()/ RAND_MAX)*massvar);
-        double velx = -cos(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  200 * (2- r/radius) * rotspeed;
-        double vely =  sin(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  200 * (2- r/radius) * rotspeed;
-
-        double velradx = radial*x;
-        double velrady = radial*y;
-        sim.addBody(Body(starmass * rnd2 * 10,20 * rnd2,sf::Vector2<double>(x+cx, y+cy), sf::Vector2<double>(velx + c_velx + velradx,vely + c_vely + velrady)));
-    }
-     */
     if(c_mass) sim.addBody(Body(c_mass,10,sf::Vector2<double>(cx, cy), sf::Vector2<double>(c_velx, c_vely)));
 }
 
 
 int main()
 {
-    //srand(time(0));
-    double speed = 0.5;
+    double speed = 0.5;    // the speed multiplier of moving around the simulation
     double window_width  = 1920;
     double window_height = 1080;
+
+    // the render window is instantiated
     sf::RenderWindow window(sf::VideoMode(window_width, window_height), "OrbitSim");
     window.setPosition(sf::Vector2i(0,0));
     ImGui::SFML::Init(window);
     window.setFramerateLimit(60);
     int sizex = 1920*1;
     int sizey = 1080*1;
+
+    // a view is instantiated to navigate the simulation space
     sf::View view(sf::FloatRect(-sizex/2.0f, -sizey/2.0f, sizex, sizey));
     window.setView(view);
 
+
+    // the simulator is instantiated with a large bounding box, but not too large
+    // to avoid creating a recursion depth error
     Simulator space(10000000);
-    float timescale  = 1;
-    bool paused = false;
-    bool render_tree = true;
-    bool use_colors = true;
-    bool simple_render = false;
-    bool render_arrows = false;
-    int scale = 4;
-    float brightness = 1;
-    float tree_brightness = 0.04;
-    std::string selected_brush = "";
-    sf::RectangleShape selectionBox;
-    bool selecting = false;
-    bool triggerSelect = false;
-    sf::Vector2f selectionBegin;
-    sf::Vector2f selectionEnd;
-    std::vector<Body*> selectedBodies;
-    static char selectionSaveName[50] = "";
+    float timescale  = 1; // a multiplier to the deltatime to alter the simulation speed
+    bool paused = false; // to pause or unpause the simulation
+    bool render_tree = true; // to activate the rendering of the quad tree
+    bool use_colors = true; // whether to use color highlighting or black and white
+    bool simple_render = false; // whether to render with pixels or polygons
+    bool render_arrows = false; // whether to render arrows for velocity and acceleration on each object
+    int scale = 4; // the scale of pixels in simple rendering mode
+    float brightness = 1; // the brightness of the simulation colours (includes blending)
+    float tree_brightness = 0.04; // the brightness of the quadtree (includes blending)
+    std::string selected_brush = ""; // the currently selected brush, set to "" for no brush selected
+    sf::RectangleShape selectionBox; // the selection box object for drag selecting multiple bodies
+    bool selecting = false; // to check whether objects are being actively selected or not
+    bool triggerSelect = false; // to notify when a change has been made in the selection
+    sf::Vector2f selectionBegin; // the top left coordinate of the selection box
+    sf::Vector2f selectionEnd; // the bottom right coordinate of the selection box
+    std::vector<Body*> selectedBodies; // a list of pointers to all bodies that have been selected
+    static char selectionSaveName[50] = ""; // the name to save a selection as in storage
 
-    bool togglecontext = false;
-    sf::Vector2f contextpos;
-    Body* contextbody = nullptr;
-
-
-
-    //addGalaxy(space, 10000, 1000, 1000, 10000, 5, -00000, -00000, -0, 000,.4, 1.0);
-    //addGalaxy(space, 10000, 1000, 1000, 10000, 5, -50000, -50000, 1000, 000,.4, 1.0);
-    //addGalaxy(space, 10000, 1000, 1000, 10000, 0, -00000, -00000, -0, 000,.0, 1.0);
-
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, -00000, -00000, 0, 000,0.0, 1.0);
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, -1000, 1000, 000,0.0, 1.0);
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, 1000, 1000, 0, 000,0.0, 1.0);
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, 1000, -1000, 0, 000,0.0, 1.0);
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, -1000, 1000, 0, 000,0.0, 1.0);
-
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000, -00000, 0, 000,0.0, 1.0);
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000-1000, -1000, 1000, 000,0.0, 1.0);
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000+1000, 1000, 0, 000,0.0, 1.0);
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000+1000, -1000, 0, 000,0.0, 1.0);
-    //addGalaxy(space, 100, 1000, 1000, 100, 1, 10000-1000, 1000, 0, 000,0.0, 1.0);
+    bool togglecontext = false; // to check whether a single selection popup is open
+    sf::Vector2f contextpos; // the position of the topmost context popup
+    Body* contextbody = nullptr; // the selected single body
 
 
-
+    // a preliminary check to see whether any bodies are directly coinciding with each other. 
+    // if this is the case we notify the user, since the simulation cannot proceed with direct collision
     for(int i = 0; i < space.bodies.size(); i++)
     {
         for(int j = i+1; j < space.bodies.size(); j++)  {
@@ -166,33 +134,37 @@ int main()
     }
     std::cout << "OBJECTS LOADED" << std::endl;
 
+    // to check whether the whole program is being focused or not. to be used later when registering key presses
     bool focus = true;
 
-    sf::Clock deltaClock;
-    sf::Time dt;
-    sf::Uint8* pix;
-    int iterations = 0;
+    sf::Clock deltaClock; // a timer to measure the length of each physics frame
+    sf::Time dt; // the variable to store each frame's measured time in 
+    sf::Uint8* pix; // a vector of pixels to render during simple mode
+    int iterations = 0; // a count of how many iterations the simulation has gone through
 
-
+    // begin the main game loop
     while (window.isOpen())
     {
 
-        sf::Event event;
-        while (window.pollEvent(event))
+        sf::Event event; // an sfml event to detect user input
+        while (window.pollEvent(event)) // while the event queue is non empty each frame
         {
             ImGui::SFML::ProcessEvent(window, event);
-            if (event.type == sf::Event::Closed)                       window.close();
+            // if the X key on the window is pressed we close the window
+            if (event.type == sf::Event::Closed)                       window.close(); 
+            // if the space key is pressed we toggle the pause state of the simulation
             if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Space) {
                 paused = !paused;
             }
 
-
-
+            // handling left mouse button presses
             if(event.type == sf::Event::MouseButtonReleased and event.key.code == sf::Mouse::Left){
+                // this gets the position of the mouse IN SIMULATION COORDINATES instead of window coordinates
                 sf::Vector2<double> pos = (sf::Vector2<double>)window.mapPixelToCoords(sf::Mouse::getPosition());
-                if((float)sf::Mouse::getPosition().y/window.getSize().y > 0.9) continue;
 
+                // if the mouse is not interacting with any ImGui objects we can proceed to simulation interaction
                 if(!ImGui::IsAnyItemActive() and !ImGui::IsAnyItemFocused() and !ImGui::IsAnyItemHovered()) {
+                    // checks each possible brush type and creates the associated cluster
                     if (selected_brush == "single")
                         addGalaxy(space, 0, 0, 1000, 1000, 0, pos.x, pos.y, -0, 000, .0, 1.0);
                     if (selected_brush == "black_hole")
@@ -206,18 +178,23 @@ int main()
                 }
             }
 
-
+            // handling right mouse button presses and assumes multibody selection
             if(event.type == sf::Event::MouseButtonPressed and event.key.code == sf::Mouse::Right){
                 selecting = true;
                 selectionBegin = window.mapPixelToCoords(sf::Mouse::getPosition());
             }
+
+            // handling right mouse button releases to check whether selection is multi or single
             if(event.type == sf::Event::MouseButtonReleased and event.key.code == sf::Mouse::Right) {
                 selecting = false;
+
+                // checks whether the mouse has dragged and therefore multiselect
                 if(ImGui::IsMouseDragging(ImGuiMouseButton_Right)){
                     std::cout << "opened popup" << std::endl;
                     sf::Vector2f TL(std::min(selectionBegin.x, selectionEnd.x), std::min(selectionBegin.y, selectionEnd.y));
                     sf::Vector2f BR(std::max(selectionBegin.x, selectionEnd.x), std::max(selectionBegin.y, selectionEnd.y));
 
+                    // loops through each body and checks whether its position is within the bounding box of the selection
                     for(auto& body : space.bodies){
                         body.selected = false;
                         if(body.position.x < BR.x and body.position.x > TL.x and body.position.y < BR.y and body.position.y > TL.y){
@@ -226,6 +203,7 @@ int main()
                         }
                     }
 
+                    // checks whether the multiselect made any successful selections at all
                     if(!selectedBodies.empty())
                         triggerSelect = true;
 
@@ -236,6 +214,7 @@ int main()
 
 
 
+            // handling window resizing by changing the simulation view width to the new size
             if(event.type == sf::Event::Resized){
                 std::cout << event.size.width << " " << event.size.height << std::endl;
                 view.setSize(view.getSize().x * (event.size.width/window_width) , view.getSize().y * (event.size.height/window_height));
@@ -246,25 +225,30 @@ int main()
         }
 
 
+        // handling keyboard input for simulation space navigation ONLY if the window is focused
         if(focus) {
+            // Q to zoom in
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
                 view.setSize(view.getSize().x * (1 - 1 * dt.asSeconds()), view.getSize().y * (1 - 1 * dt.asSeconds()));
+            // E to zoom out
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::E))
                 view.setSize(view.getSize().x * (1 + 1 * dt.asSeconds()), view.getSize().y * (1 + 1 * dt.asSeconds()));
+            // W to move up
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
                 view.setCenter(view.getCenter().x, view.getCenter().y - speed * view.getSize().y * dt.asSeconds());
+            // A to move left
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
                 view.setCenter(view.getCenter().x - speed * view.getSize().x * dt.asSeconds(), view.getCenter().y);
+            // S to move down
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
                 view.setCenter(view.getCenter().x, view.getCenter().y + speed * view.getSize().y * dt.asSeconds());
+            // D to move right
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
                 view.setCenter(view.getCenter().x + speed * view.getSize().x * dt.asSeconds(), view.getCenter().y);
-
-            //view.setCenter(view.getCenter().x + speed*view.getSize().x*dt.asSeconds(), view.getCenter().y);
         }
 
 
-
+        // refreshes the view each frame as it might have changed due to simulation navigation
         window.setView(view);
 
 
@@ -275,6 +259,7 @@ int main()
 
         ImGui::SFML::Update(window, dt);
 
+        // creates the main menu bar in the top of the screen
         if(ImGui::BeginMainMenuBar())
         {
             if (ImGui::BeginMenu("File"))
@@ -290,25 +275,37 @@ int main()
         }
 
 
-        //ImGui::SetNextWindowSize(ImVec2(300,300));
+        // handles the context menu for the single body selection
+        // the single body popup only opens if the selectedBodies list is empty and therefore
+        // indicates that there was no mouse dragging involved
         if(selectedBodies.empty()) {
+
+            // creates the imgui popup
             if (ImGui::BeginPopupContextVoid("itemcheck", ImGuiPopupFlags_MouseButtonRight)) {
 
+                // the following code locates the body to select based on the mouse position
                 sf::Vector2f pos;
                 if (!togglecontext) {
+                    // the mouse position
                     pos = window.mapPixelToCoords(ImGui::GetWindowPos());
+
+                    // window attributes
                     sf::Vector2f origin = sf::Vector2f(view.getCenter().x - view.getSize().x / 2,
                                                        view.getCenter().y - view.getSize().y / 2);
                     sf::Vector2f size = sf::Vector2f(view.getSize().x, view.getSize().y);
                     std::cout << pos.x << " " << pos.y << std::endl;
 
+                    // simple render mode has a different selection method than the polygon mode
                     if (simple_render) {
+
+                        // get the pixel in the simple render grid where the mouse is pointing
                         int gridx = (pos.x - origin.x) / (size.x / 1920.0);
                         gridx -= gridx % scale;
                         int gridy = (pos.y - origin.y) / (size.y / 1080.0);
                         gridy -= gridy % scale;
                         sf::Vector2i gridpos = {gridx, gridy};
 
+                        // record any bodies that are within 10 pixels of the mouse coordinate
                         std::vector<Body *> results;
                         for (auto &body: space.bodies) {
 
@@ -325,6 +322,7 @@ int main()
 
                         std::cout << results.size() << std::endl;
 
+                        // find the closest body of these recorded selections within 10 pixels
                         float mindist = FLT_MAX;
                         if (!results.empty()) {
                             for (int i = 0; i < (int) results.size(); i++) {
@@ -339,6 +337,9 @@ int main()
                             contextbody = nullptr;
                         }
                     } else {
+
+                        // records any bodies which are close enough to the mouse position to be within 
+                        // that body's polygon radius
                         std::vector<Body *> results;
                         for (auto &body: space.bodies) {
                             if (std::pow(body.position.x - pos.x, 2) + std::pow(body.position.y - pos.y, 2) <=
@@ -349,6 +350,7 @@ int main()
 
                         std::cout << results.size() << std::endl;
 
+                        // calculates the closest body of these recorded bodies
                         float mindist = FLT_MAX;
                         if (!results.empty()) {
                             for (int i = 0; i < (int) results.size(); i++) {
@@ -365,13 +367,17 @@ int main()
                     }
                 }
 
-
+                // initialises the properties of the context menu 
+                // if a body was not found during the selection process, we skip this step
                 if (contextbody == nullptr) {
                     ImGui::CloseCurrentPopup();
                 } else {
+                    // set up the table to fit the space of the context width
                     ImGui::BeginTable("tmp", 2, 0);
                     ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthStretch);
                     ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed);
+                    
+                    // begin the first row of the table as a title header and a close button
                     ImGui::TableNextRow();
                     ImGui::TableNextColumn();
                     ImGui::Text("Inspect Entity");
@@ -379,12 +385,15 @@ int main()
                     if (ImGui::Button("close")){
                         ImGui::CloseCurrentPopup();
                     }
+                    // include the escape key as an option to exit the popup
                     if(ImGui::IsKeyReleased(ImGuiKey_Escape)){
                         ImGui::CloseCurrentPopup();
                     }
                     ImGui::EndTable();
-
+                    
+                    // set up a table to edit the main properties of the body
                     ImGui::BeginChild("entityicon", ImVec2(100, 100), true);
+                    // a status icon to see the highlight color of the current body
                     ImColor contextcolor = IM_COL32(contextbody->shape.getFillColor().r,
                                                     contextbody->shape.getFillColor().g,
                                                     contextbody->shape.getFillColor().b, 255);
@@ -392,30 +401,35 @@ int main()
                             ImVec2(ImGui::GetItemRectMin().x + 50, ImGui::GetItemRectMin().y + 50), 45, contextcolor);
                     ImGui::EndChild();
                     ImGui::SameLine();
+
+                    // a table to modify the body attributes
                     ImGui::BeginTable("entityops", 2, 0);
                     ImGui::TableSetupColumn("hi1");
                     ImGui::TableSetupColumn("hi2");
                     ImGui::TableNextRow();
                     ImGui::TableNextColumn();
-                    ImGui::Text("mass");
+                    ImGui::Text("mass"); // modify the mass attribute
                     ImGui::TableNextColumn();
                     ImGui::SetNextItemWidth(100);
                     ImGui::InputDouble("##mass", &contextbody->mass);
                     ImGui::TableNextRow();
                     ImGui::TableNextColumn();
-                    ImGui::Text("radius");
+                    ImGui::Text("radius"); // modify the body radius
                     ImGui::TableNextColumn();
                     ImGui::SetNextItemWidth(100);
                     ImGui::InputDouble("##radius", &contextbody->radius);
                     ImGui::TableNextRow();
                     ImGui::TableNextColumn();
-                    ImGui::Text("position");
+
+                    // modifies the position of the body
+                    ImGui::Text("position"); 
                     ImGui::TableNextColumn();
                     float posinp[2] = {(float) contextbody->position.x, (float) contextbody->position.y};
                     ImGui::SetNextItemWidth(100);
                     ImGui::InputFloat2("##position", posinp);
                     contextbody->position = {posinp[0], posinp[1]}; // this reduces from double to float <:(
 
+                    // modifies the velocity of the body
                     ImGui::TableNextRow();
                     ImGui::TableNextColumn();
                     ImGui::Text("velocity");
@@ -425,6 +439,7 @@ int main()
                     ImGui::InputFloat2("##velocity", velinp);
                     contextbody->velocity = {velinp[0], velinp[1]}; // this reduces from double to float <:(
 
+                    // modifies the acceleration of the body
                     ImGui::TableNextRow();
                     ImGui::TableNextColumn();
                     ImGui::Text("acceleration");
@@ -449,12 +464,16 @@ int main()
             }
         }
 
+        // if a drag selection has been completed, we open the multiselect context popup
         if(triggerSelect){
             ImGui::OpenPopup("selectionpopup");
             triggerSelect = false;
         }
 
+        // defines the multiselect context popup
         if (ImGui::BeginPopup("selectionpopup")) {
+
+            // the popup can either be closed manually or with the escape key
             if(ImGui::Button("close")){
                 ImGui::CloseCurrentPopup();
             }
@@ -462,6 +481,8 @@ int main()
                 ImGui::CloseCurrentPopup();
             }
 
+            // an option to save the selection
+            // opens a modal to save the body with a name
             if (ImGui::Button("save as...##saveselection")) {
                 ImGui::OpenPopup("saveselectionmodal");
                 focus = false;
@@ -478,6 +499,7 @@ int main()
                 ImGui::EndPopup();
             }
 
+            // an option to delete the selected bodies
             if (ImGui::Button("delete##deleteselection")) {
                 std::vector<Body> newBodies;
                 for (auto &body: space.bodies) {
@@ -495,10 +517,9 @@ int main()
         }
     }
 
-
+        // initialising the bottom bar of the simulation
         ImGui::SetNextWindowPos(ImVec2(0.0,window.getSize().y-window_height/10.0));
         ImGui::SetNextWindowSize(ImVec2(window.getSize().x,window_height/10.0));
-        //ImGui::SetNextWindowContentSize(ImVec2(window_width,window_height/10.0));
 
         ImGuiWindowFlags flags=0;
         flags |= ImGuiWindowFlags_NoTitleBar;

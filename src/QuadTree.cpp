@@ -19,30 +19,39 @@ QuadTree::QuadTree() {
  */
 QuadTree::QuadTree(double bound, std::vector<Body> *bodies, float brightness)
 {
-    this->brightness = brightness;
+    this->brightness = brightness; 
+
+    // creates the boundary rectangle of the quad tree
     r.setFillColor(sf::Color::Transparent);
     r.setOutlineThickness(2.0);
     this->bound = bound;
 
+    // push back the root of the tree
     tree.push_back({0,0.0,bound*2.0,0, 0.0, 0.0, nullptr}); // root
 
     // center x, center y
     double cx, cy;
-    int i = 0;
-    for(auto & body : *bodies){
+    int i = 0; // iterator counter
+    for(auto & body : *bodies){ 
         i++;
+
+        // for each body we create a stack with a single element
+        // we use this to begin traversing the quadtree to create or amend nodes
         std::stack<int> stack; stack.push(0);
         cx = cy = 0.0;
 
+        // we stop proceeding further if the node is outside the quadtree's bounds
         if(abs(body.position.x) > bound)    continue;
         if(abs(body.position.y) > bound) continue;
 
-        //std::cout << i << " " << body.position.x << " " << body.position.y << std::endl;
 
-
+        // while there are still elements in the stack we pop the topmost element and 
+        // process that stack item
         while(!stack.empty()) {
             int idx = stack.top(); stack.pop();
 
+            // if the current tree node has no mass, it must be both empty and have no
+            // singleChild, so we instantiate the relevant values and escape
             if(tree[idx].mass == 0) {
                 tree[idx].mass = body.mass;
                 tree[idx].singleChild = &body;
@@ -55,6 +64,9 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies, float brightness)
                 break;
             }
 
+            // if the current tree node has some mass, we may have to traverse deeper into the
+            // quadtree so we update the values of the current node such as the total mass, or 
+            // total body count
             tree[idx].mass += body.mass;
             double totalx = tree[idx].massx * tree[idx].total;
             double totaly = tree[idx].massy * tree[idx].total;
@@ -65,6 +77,8 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies, float brightness)
             tree[idx].massx = totalx/tree[idx].total;
             tree[idx].massy = totaly/tree[idx].total;
 
+            // if the current node has children we find out which child the body should be in
+            // based on quadrant and traverse to that node by placing it to the top of the stack
             if(tree[idx].child > 0) {
                 int quad = getQuadrant(cx,cy,body.position.x, body.position.y);
 
@@ -82,6 +96,8 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies, float brightness)
                 stack.push(tree[idx].child+quad);
             }
             else {
+
+                // if the current node has no children we create 4 empty children
                 tree[idx].child = (int)tree.size();
                 for(int i = 0; i < 4; i++) {
                     double cx2 = cx;
@@ -100,12 +116,15 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies, float brightness)
                 }
 
 
-
+                // if the current node's singleChild coincides with the body we're trying to add
+                // we throw an error
                 if(std::abs(tree[idx].singleChild->position.x-body.position.x) < 0.00000001
                 or std::abs(tree[idx].singleChild->position.y-body.position.y) < 0.00000001){
                     throw std::logic_error("Two bodies cannot have the exact same position!");
                 }
 
+                // we calculate the quadrant that the singleChild should be in and update the relevant
+                // child node with a new singleChild
                 int quadA = getQuadrant(sf::Vector2<double>(cx,cy), tree[idx].singleChild->position);
 
                 tree[tree[idx].child+quadA].mass = tree[idx].singleChild->mass;
@@ -117,6 +136,10 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies, float brightness)
 
 
 
+                // we find out the quadrant of the body we're trying to add and traverse to that node.
+                // It may be that this quadrant is the same one as the singleChild, in which we may have to 
+                // repeat this process several times to differentiate the two into their own respective
+                // quadrants
                 int quadB = getQuadrant(sf::Vector2<double>(cx,cy), body.position);
 
                 if(quadB%2)
@@ -134,9 +157,9 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies, float brightness)
         }
     }
 
-    //std::cout << tree.size() << std::endl;
 }
 
+// calcluates the quadrant 0,1,2,4 => NW,NE,SW,SE of a node relative to a provided center
 int QuadTree::getQuadrant(sf::Vector2<double> center, sf::Vector2<double> s) {
     if(s.x <= center.x){
         if(s.y <= center.y){
@@ -179,17 +202,26 @@ int QuadTree::getQuadrant(double cx, double cy, double sx, double sy) {
     }
 }
 
+// recursively updates the force of a given body 
+// using the quadtree and an approximation factor, theta
 void QuadTree::updateForce(Body *body, double theta) {
 
+    // since we need to traverse the quadtree we create a stack to backtrack and
+    // move deeper into the tree
     std::stack<int> stack; stack.push(0);
-    body->acceleration = {0.0,0.0};
+    body->acceleration = {0.0,0.0}; // reset the previous acceleration of the body
 
+    // while the stack still contains items we pop
+    // from the top of the stack and process it
     while(!stack.empty()) {
         int idx = stack.top(); stack.pop();
         node n = tree[idx];
 
-        if(n.mass == 0) continue;
+        if(n.mass == 0) continue; // if the node is empty we will have reached an empty node and quit
 
+        // if the current node has children we calculate the ratio between the node's width and distance
+        // from the body to the node's center of mass. If this ratio is less than theta, we can approximate
+        // the whole node as a single heavy body and cull the tree.
         if(n.child > 0){
             double distance = sqrt(pow(n.massx-body->position.x,2) + pow(n.massy-body->position.y, 2));
             double ratio = n.width/(distance);
@@ -213,6 +245,8 @@ void QuadTree::updateForce(Body *body, double theta) {
         }
         else
         {
+            // if the node has no children then it must have a singleBody.
+            // We simply calculate the force between body and singleBody.
             if(n.singleChild == body) continue;
 
             sf::Vector2<double> accel = forcePair(body->mass,
@@ -250,53 +284,16 @@ sf::Vector2<double> QuadTree::forcePair(double massA, double massB, sf::Vector2<
     double mag = std::min((massA*massB)/(pow(distance,2) + pow(softening,2)), 300000000.0);
 
 
-
-    /*
-    if(mag >= 30000000){
-        return {0.0,0.0};
-    }
-     */
-
     sf::Vector2<double> force = (posB-posA) * (mag/distance);
 
     return force;
 }
 
+// draws the quadtree by iterating through each node and drawing a rectangle shape
 void QuadTree::draw(sf::RenderWindow &window) {
     for(size_t i = 0; i < tree.size(); i++){
         sf::RectangleShape r(sf::Vector2f(tree[i].width, tree[i].width));
         r.setOrigin(tree[i].width/2, tree[i].width/2);
-        /*sf::Vector2f position(0,0);
-        int node = 0;
-        int width = bound*2;
-        while(node != i){
-            std::cout << node << " " << i << std::endl;
-            int quad = getQuadrant(position.x, position.y, tree[i].massx, tree[i].massy);
-            if(i != 0 and tree[i].massx == 0 and tree[i].massy == 0)
-                quad = getQuadrant(position.x, position.y, tree[i].singleChild->position.x, tree[i].singleChild->position.y);
-            node = tree[i].child+quad;
-            switch (quad){
-                case 0:
-                    position.x -= width/4;
-                    position.y -= width/4;
-                    break;
-                case 1:
-                    position.x += width/4;
-                    position.y -= width/4;
-                    break;
-                case 2:
-                    position.x -= width/4;
-                    position.y += width/4;
-                    break;
-                case 3:
-                    position.x += width/4;
-                    position.y += width/4;
-                    break;
-            }
-            width /= 2;
-        }
-        r.setPosition(position);*/
-
         r.setOutlineThickness(window.getView().getSize().x/1920);
         r.setFillColor(sf::Color::Transparent);
         r.setOutlineColor(sf::Color(255,255,255,(sf::Uint8)(255*brightness) ));

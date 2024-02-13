@@ -521,6 +521,8 @@ int main()
         ImGui::SetNextWindowPos(ImVec2(0.0,window.getSize().y-window_height/10.0));
         ImGui::SetNextWindowSize(ImVec2(window.getSize().x,window_height/10.0));
 
+        // the following flags indicate that the bottom bar should have no titlebar
+        // not be resizable or moveable, and not have a scrollbar
         ImGuiWindowFlags flags=0;
         flags |= ImGuiWindowFlags_NoTitleBar;
         flags |= ImGuiWindowFlags_NoResize;
@@ -528,29 +530,28 @@ int main()
         flags |= ImGuiWindowFlags_NoScrollbar;
 
 
-        ImGui::Begin("Hello, world!", NULL, flags);
+        // begin declaring the bottom bar
+        ImGui::Begin("Bottom Bar", NULL, flags);
 
+        // the settings button opens the popup modal for settings
         if(ImGui::Button("Settings", ImVec2(window_height/10.0 - 15.0, window_height/10.0 - 15.0))){
             ImGui::OpenPopup("settings");
         }
 
+        // declare the settings modal
         if(ImGui::BeginPopupModal("settings", NULL, ImGuiWindowFlags_Tooltip)){
             if(ImGui::Button("close")){
-                //ImGui::
                 ImGui::CloseCurrentPopup();
             }
             ImGui::EndPopup();
         }
-        //ImGui::Mod;
 
         ImGui::SameLine();
 
         ImGui::BeginGroup();
-        /*
-        if(ImGui::Button("Pause", ImVec2(window_height/20.0 -15.0, window_height/20.0 -15.0))){
-            paused = !paused;
-        }
-         */
+
+        // begin declaring each of the button options
+        // each slider option has its respective tooltip embedded describing what the button does
         ImGui::SameLine();
         ImGui::BeginGroup();
             ImGui::Checkbox("render Quad Tree?", &render_tree);
@@ -581,13 +582,15 @@ int main()
             }
         ImGui::EndGroup();
         ImGui::SameLine();
-        ImGui::BeginChild("sliders", ImVec2(window_width/4.0, window_height/10.0), false);
 
+        // begin declaring each of the slider options
+        // each slider option has its respective tooltip embedded describing what the slider does
+        ImGui::BeginChild("sliders", ImVec2(window_width/4.0, window_height/10.0), false);
             ImGui::SliderInt("resolution", &scale,1,40);
             if(ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal)) {
                 ImGui::BeginTooltip();
                 ImGui::Text("sets the resolution of simple rendering, higher -> lower resolution");
-                ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0,200,2002,255));
+                ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0,200,2002,255)); // changes the color of the text
                 ImGui::Text("It is recommended that you use common factors of 1920x1080, such as:");
                 ImGui::Text("(1,2,3,4,5,6,8,10,12,15,20,24,30,40)");
                 ImGui::PopStyleColor();
@@ -617,6 +620,9 @@ int main()
         ImGui::EndGroup();
         ImGui::SameLine();
 
+        // begins the brushes menu
+        // each brush button changes the 'selected_brush' variable
+        // the menu may overflow, but the scrollbars have still been disabled for aesthetic
         ImGui::BeginChild("brushes", ImVec2(window_width/4.0, window_height/10.0 -15.0), true, ImGuiWindowFlags_NoScrollbar);
         ImGui::BeginDisabled(!selected_brush.empty() and selected_brush != "single");
         if(ImGui::Button("single", ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0)))
@@ -661,11 +667,14 @@ int main()
 
         ImGui::End();
 
+        // begin declaring the HUD menu for settings
+        // this window has the additional flags of being transparent and autosizing to its contents
+        // the window will contain the fps count, number of entities, iterations, the mouse position 
+        // and the current brush
         ImGuiWindowFlags flags2 = flags;
         flags2 |= ImGuiWindowFlags_NoBackground;
         flags2 |= ImGuiWindowFlags_AlwaysAutoResize;
         ImGui::Begin("debug corner", NULL, flags2);
-        //ImGui::SetWindowSize(ImVec2(window_width,window_height/10.0));
         ImGui::SetWindowPos(ImVec2(0.0,15.0));
         ImGui::Text("FPS %.2f", 1/dt.asSeconds() );
         ImGui::Text("Entity Count %i", (int)space.bodies.size());
@@ -674,14 +683,12 @@ int main()
         ImGui::Text("Current brush: (%s)", selected_brush.c_str());
         ImGui::End();
 
-        //ImGui::EndFrame();
-        ImGui::ShowDemoWindow();
-
+        
         window.clear();
 
-        //space.draw(window);
 
-
+        // creates the selection box if the 'selecting' variable is active
+        // the selectionbox is a white rectangular box with zero fill
         if(selecting){
             sf::Vector2f curmouse = window.mapPixelToCoords(sf::Mouse::getPosition());
             selectionBox.setFillColor(sf::Color::Transparent);
@@ -695,8 +702,9 @@ int main()
             selectionBox = sf::RectangleShape();
         }
 
-        //sf::Image img;
-
+        // SIMPLE RENDERING CODE
+        // since arrays are static, we need to create a separate array
+        // for each resolution
         sf::Texture tex1920; tex1920.create(1920,1080);
         sf::Texture tex0960; tex0960.create(1920/2,1080/2);
         sf::Texture tex0640; tex0640.create(1920/3,1080/3);
@@ -709,14 +717,15 @@ int main()
         sf::Texture tex0128; tex0128.create(1920/15,1080/15);
 
 
+        // creates the main texture
         sf::Texture tex;
         tex.create(1920,1080);
         sf::Sprite sprite;
         sprite.setTexture(tex);
 
-        //std::vector<sf::Uint8> pix(1920*1080*4, 0);
-
-
+        // the simple rendering algorithm iterates through each planet, and converts its
+        // coordinates to a location on a pixel grid by floor division of the coordinates
+        // any planets with positions outside the grid are ignored
         if(simple_render) {
             sf::Vector2f origin = sf::Vector2f(view.getCenter().x - view.getSize().x / 2,
                                                view.getCenter().y - view.getSize().y / 2);
@@ -731,7 +740,6 @@ int main()
                 if (pos.y < origin.y or pos.y > origin.y + size.y) continue;
                 double vel = std::sqrt(std::pow(body.velocity.x,2) + std::pow(body.velocity.y,2));
                 maxvel=std::max(vel,maxvel);
-                //body.shape.setFillColor(body.convert_to_rgb(0,maxvel,vel));
             }
             for (auto &body: space.bodies) {
                 sf::Vector2<double> pos = body.position;
@@ -756,7 +764,6 @@ int main()
                     body.shape.setFillColor(sf::Color::White);
                 }
 
-                //std::cout << (int)body.shape.getFillColor().r << " " << (int)body.shape.getFillColor().g << " " << (int)body.shape.getFillColor().b << std::endl;
                 for (int i = 0; i < scale; i++) {
                     for (int j = 0; j < scale; j++) {
                         pix[4 * (((gridy + i) * 1920) + gridx + j) + 0] = body.shape.getFillColor().r;
@@ -765,22 +772,19 @@ int main()
                         pix[4 * (((gridy + i) * 1920) + gridx + j) + 3] = std::min(255,(int)pix[4 * (((gridy + i) * 1920) + gridx + j) + 3]+ (int)(255 * brightness));
                     }
                 }
-                //for(int i = 0; i < 4; i++)
-                //   pix[4*((gridy*1920) + gridx) + i] = std::min(pix[4*((gridy*1920) + gridx) + i]+255, 255);
             }
 
-            //img.create(1920,1080,pix.data());
-
-            //tex.loadFromImage(img);
             tex.update(pix);
 
             sprite.setOrigin(960, 540);
             sprite.setPosition(view.getCenter().x, view.getCenter().y);
             sprite.setScale((float) view.getSize().x / 1920.0f, (float) view.getSize().y / 1080.0f);
 
-            window.draw(sprite);//, &shader);
+            window.draw(sprite);
         }
         else {
+            // regular rendering mode simply loops through each object and 
+            // renders its respective circleobject
             for(auto& body : space.bodies) {
                 if(body.selected)
                     body.shape.setFillColor(sf::Color::White);
@@ -795,21 +799,25 @@ int main()
         }
 
 
-        //auto start = std::chrono::high_resolution_clock::now();
-        //std::chrono::high_resolution_clock::time_point timeA, timeB;
+        // update the quadTree, increment every force
+        // and increment every position/velocity of the bodies
         space.updateTree(tree_brightness);
         space.updateForces(false);
         space.updateBodies(dt.asMicroseconds() * timescale * paused);
-        //space.draw(window);
+
+        // optionally also render the quadTree
         if(render_tree) space.drawTree(window);
 
-
+        // render the selectionbox 
         window.draw(selectionBox);
         ImGui::SFML::Render(window);
         window.display();
 
+        // since the array is static and may contain pointers and therefore need to be 
+        // freed from memory each frame of the program 
         if(simple_render) delete[] pix;
 
+        // restart the deltaclock
         dt = deltaClock.restart();
         if(paused) iterations++;
     }

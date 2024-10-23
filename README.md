@@ -1,5 +1,5 @@
 # OrbitSim
- An N-body orbit simulator, optimised with the Barnes-Hut treecode algorithm.
+ An N-body multithreaded orbit simulator, optimised with the Barnes-Hut treecode algorithm.
 
 ## in action
 ---

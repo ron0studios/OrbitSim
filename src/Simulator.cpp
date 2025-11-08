@@ -7,7 +7,7 @@
 #include <stack>
 #include <thread>
 #include <cfloat>
-#include "ctpl.h"
+#include <omp.h>
 
 
 // initialises the simulation by creating a bounding box rectangle
@@ -37,14 +37,14 @@ void Simulator::updateTree(float brightness) {
 // updates all the forces for every body in the simulation
 // a mutex lock is present because there is some multithreading
 // operating on the bodies list which may lead to a race condition
-// crashing the program 
+// crashing the program
 void Simulator::updateForces(bool bruteForce) {
     std::lock_guard<std::mutex> guard(mut);
     maxForce = -1;
 
     // if the bruteforce parameter is set we still use multithreading.
-    // However, we update the forces without the barnes hut algorithm 
-    // but rather by looping through every body for each body, in an 
+    // However, we update the forces without the barnes hut algorithm
+    // but rather by looping through every body for each body, in an
     // O(N^2) algorithm. It is more accurate but painfully slow
     if(bruteForce) {
         int num_threads = 16;
@@ -75,24 +75,14 @@ void Simulator::updateForces(bool bruteForce) {
 
     // if the bruteforce parameter is not set we use the quadtree to update
     // each of the bodies using tree.updateForce
-    int num_threads = 16;
-    std::vector<std::thread> threads(num_threads);
 
-    for(int i = 0; i < num_threads; i++){
-        threads[i] = std::thread([this](int i, int n){
 
-            for(int j = i*n; j < ((i+1)*n) and j < bodies.size(); j++) {
-                tree.updateForce(&bodies[j], 0.5);
-                maxForce = std::max(maxForce, std::sqrt(std::pow(bodies[j].velocity.x,2) + std::pow(bodies[j].velocity.y,2)));
-            }
-
-                //calcForce(bodies[j]);
-        },i, std::ceil((double)bodies.size()/num_threads));
+    #pragma omp parallel for num_threads(32)
+    for(int j = 0; j < bodies.size(); j++) {
+        tree.updateForce(&bodies[j], 0.5);
+        maxForce = std::max(maxForce, std::sqrt(std::pow(bodies[j].velocity.x,2) + std::pow(bodies[j].velocity.y,2)));
     }
 
-
-    for(int i = 0; i < num_threads; i++)
-        threads[i].join();
 }
 
 // draws each body by iterating through the bodies list
@@ -113,10 +103,3 @@ void Simulator::drawTree(sf::RenderWindow &window) {
     std::lock_guard<std::mutex> guard(mut);
     tree.draw(window);
 }
-
-
-
-
-
-
-

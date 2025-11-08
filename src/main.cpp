@@ -2,8 +2,8 @@
 #include <random>
 #include <iostream>
 #include "Simulator.h"
-#include <thread>
 #include <chrono>
+#include <omp.h>
 #include "imgui-SFML.h"
 #include "imgui.h"
 
@@ -22,40 +22,27 @@
 // massvar: the range of values that the starmass could take.
 void addGalaxy(Simulator& sim, double starnum, double starmass, double c_mass, double rad, double rotspeed, double cx, double cy, double c_velx, double c_vely, double radial=0, double massvar = 10.0){
     int num_threads = 16;
-    std::vector<std::thread> threads(num_threads);
     std::vector<Body*> ptrarr((int)starnum,nullptr);
 
-    // 16 threads are created to iterate through 1/16th of the starnum
-    for(int i = 0; i < num_threads; i++){
-        threads[i] = std::thread([&](int i, int n){
-            for(int j = i*n; j < ((i+1)*n); j++) {
-                if(j >= starnum) break;
+    #pragma omp parallel for num_threads(num_threads)
+    for(int i = 0; i < (int)starnum; i++) {
+        // the following maths uses polar coordinates to position each of the stars randomly in space
+        double radius = rad;
+        double rnd = rand();
+        double r = radius * sqrt( pow((double)rand()/RAND_MAX, 2));
+        double theta = ((double)rnd/RAND_MAX) * 2 * M_PI;
+        double x = r * cos(theta);
+        double y = r * sin(theta);
 
-                // the following maths uses polar coordinates to position each of the stars randomly in space
-                double radius = rad;
-                double rnd = rand();
-                double r = radius * sqrt( pow((double)rand()/RAND_MAX, 2));
-                double theta = ((double)rnd/RAND_MAX) * 2 * M_PI;
-                double x = r * cos(theta);
-                double y = r * sin(theta);
+        // the following maths calculates the velocity of each star based on its angle to the center
+        double rnd2 = (((double)rand()/ RAND_MAX)*massvar);
+        double velx = -cos(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  200 * (2- r/radius) * rotspeed;
+        double vely =  sin(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  200 * (2- r/radius) * rotspeed;
 
-                // the following maths calculates the velocity of each star based on its angle to the center
-                double rnd2 = (((double)rand()/ RAND_MAX)*massvar);
-                double velx = -cos(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  200 * (2- r/radius) * rotspeed;
-                double vely =  sin(M_PI*0.5 - ( ((double)rnd/ RAND_MAX) * 2*M_PI )) *  200 * (2- r/radius) * rotspeed;
-
-                // the following applies the radial velocity to each star
-                double velradx = radial*x;
-                double velrady = radial*y;
-                ptrarr[j] = new Body(starmass * rnd2 * 10,20 * rnd2,sf::Vector2<double>(x+cx, y+cy), sf::Vector2<double>(velx + c_velx + velradx,vely + c_vely + velrady));
-            }
-
-        },i,std::ceil((double)starnum/num_threads));
-    }
-
-    // the 16 threads are before exiting scope to prevent memory issues
-    for(int i = 0; i < num_threads; i++) {
-        threads[i].join();
+        // the following applies the radial velocity to each star
+        double velradx = radial*x;
+        double velrady = radial*y;
+        ptrarr[i] = new Body(starmass * rnd2 * 10,20 * rnd2,sf::Vector2<double>(x+cx, y+cy), sf::Vector2<double>(velx + c_velx + velradx,vely + c_vely + velrady));
     }
 
     // nullcount is recorded as a precautionary measure of how many threads failed to execute
@@ -122,7 +109,7 @@ int main()
     Body* contextbody = nullptr; // the selected single body
 
 
-    // a preliminary check to see whether any bodies are directly coinciding with each other. 
+    // a preliminary check to see whether any bodies are directly coinciding with each other.
     // if this is the case we notify the user, since the simulation cannot proceed with direct collision
     for(int i = 0; i < space.bodies.size(); i++)
     {
@@ -138,7 +125,7 @@ int main()
     bool focus = true;
 
     sf::Clock deltaClock; // a timer to measure the length of each physics frame
-    sf::Time dt; // the variable to store each frame's measured time in 
+    sf::Time dt; // the variable to store each frame's measured time in
     sf::Uint8* pix; // a vector of pixels to render during simple mode
     int iterations = 0; // a count of how many iterations the simulation has gone through
 
@@ -151,7 +138,7 @@ int main()
         {
             ImGui::SFML::ProcessEvent(window, event);
             // if the X key on the window is pressed we close the window
-            if (event.type == sf::Event::Closed)                       window.close(); 
+            if (event.type == sf::Event::Closed)                       window.close();
             // if the space key is pressed we toggle the pause state of the simulation
             if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Space) {
                 paused = !paused;
@@ -338,7 +325,7 @@ int main()
                         }
                     } else {
 
-                        // records any bodies which are close enough to the mouse position to be within 
+                        // records any bodies which are close enough to the mouse position to be within
                         // that body's polygon radius
                         std::vector<Body *> results;
                         for (auto &body: space.bodies) {
@@ -367,7 +354,7 @@ int main()
                     }
                 }
 
-                // initialises the properties of the context menu 
+                // initialises the properties of the context menu
                 // if a body was not found during the selection process, we skip this step
                 if (contextbody == nullptr) {
                     ImGui::CloseCurrentPopup();
@@ -376,7 +363,7 @@ int main()
                     ImGui::BeginTable("tmp", 2, 0);
                     ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthStretch);
                     ImGui::TableSetupColumn("", ImGuiTableColumnFlags_WidthFixed);
-                    
+
                     // begin the first row of the table as a title header and a close button
                     ImGui::TableNextRow();
                     ImGui::TableNextColumn();
@@ -390,7 +377,7 @@ int main()
                         ImGui::CloseCurrentPopup();
                     }
                     ImGui::EndTable();
-                    
+
                     // set up a table to edit the main properties of the body
                     ImGui::BeginChild("entityicon", ImVec2(100, 100), true);
                     // a status icon to see the highlight color of the current body
@@ -422,7 +409,7 @@ int main()
                     ImGui::TableNextColumn();
 
                     // modifies the position of the body
-                    ImGui::Text("position"); 
+                    ImGui::Text("position");
                     ImGui::TableNextColumn();
                     float posinp[2] = {(float) contextbody->position.x, (float) contextbody->position.y};
                     ImGui::SetNextItemWidth(100);
@@ -669,7 +656,7 @@ int main()
 
         // begin declaring the HUD menu for settings
         // this window has the additional flags of being transparent and autosizing to its contents
-        // the window will contain the fps count, number of entities, iterations, the mouse position 
+        // the window will contain the fps count, number of entities, iterations, the mouse position
         // and the current brush
         ImGuiWindowFlags flags2 = flags;
         flags2 |= ImGuiWindowFlags_NoBackground;
@@ -683,7 +670,7 @@ int main()
         ImGui::Text("Current brush: (%s)", selected_brush.c_str());
         ImGui::End();
 
-        
+
         window.clear();
 
 
@@ -734,22 +721,26 @@ int main()
             memset(pix, 0, 1920 * 1080 * 4 * sizeof(sf::Uint8));
 
             double maxvel=-1;
-            for(auto &body : space.bodies){
-                sf::Vector2<double> pos = body.position;
+
+            #pragma omp parallel for
+            for(int i = 0; i < space.bodies.size(); i++){
+                sf::Vector2<double> pos = space.bodies[i].position;
                 if (pos.x < origin.x or pos.x > origin.x + size.x) continue;
                 if (pos.y < origin.y or pos.y > origin.y + size.y) continue;
-                double vel = std::sqrt(std::pow(body.velocity.x,2) + std::pow(body.velocity.y,2));
+                double vel = std::sqrt(std::pow(space.bodies[i].velocity.x,2) + std::pow(space.bodies[i].velocity.y,2));
                 maxvel=std::max(vel,maxvel);
             }
-            for (auto &body: space.bodies) {
-                sf::Vector2<double> pos = body.position;
+
+            #pragma omp parallel for
+            for (int i = 0; i < space.bodies.size(); i++) {
+                sf::Vector2<double> pos = space.bodies[i].position;
 
                 if (pos.x < origin.x or pos.x > origin.x + size.x) continue;
                 if (pos.y < origin.y or pos.y > origin.y + size.y) continue;
 
-                double vel = std::sqrt(std::pow(body.velocity.x,2) + std::pow(body.velocity.y,2));
-                body.shape.setFillColor(Body::convert_to_rgb(0,maxvel,vel));
-                if (!use_colors) body.shape.setFillColor(sf::Color::White);
+                double vel = std::sqrt(std::pow(space.bodies[i].velocity.x,2) + std::pow(space.bodies[i].velocity.y,2));
+                space.bodies[i].shape.setFillColor(Body::convert_to_rgb(0,maxvel,vel));
+                if (!use_colors) space.bodies[i].shape.setFillColor(sf::Color::White);
 
 
                 int gridx = (pos.x - origin.x) / (size.x / 1920.0);
@@ -757,18 +748,18 @@ int main()
                 int gridy = (pos.y - origin.y) / (size.y / 1080.0);
                 gridy -= gridy % scale;
 
-                if (&body == contextbody) {
-                    body.shape.setFillColor(sf::Color::White);
+                if (&space.bodies[i] == contextbody) {
+                    space.bodies[i].shape.setFillColor(sf::Color::White);
                 }
-                if(body.selected){
-                    body.shape.setFillColor(sf::Color::White);
+                if(space.bodies[i].selected){
+                    space.bodies[i].shape.setFillColor(sf::Color::White);
                 }
 
                 for (int i = 0; i < scale; i++) {
                     for (int j = 0; j < scale; j++) {
-                        pix[4 * (((gridy + i) * 1920) + gridx + j) + 0] = body.shape.getFillColor().r;
-                        pix[4 * (((gridy + i) * 1920) + gridx + j) + 1] = body.shape.getFillColor().g;
-                        pix[4 * (((gridy + i) * 1920) + gridx + j) + 2] = body.shape.getFillColor().b;
+                        pix[4 * (((gridy + i) * 1920) + gridx + j) + 0] = space.bodies[i].shape.getFillColor().r;
+                        pix[4 * (((gridy + i) * 1920) + gridx + j) + 1] = space.bodies[i].shape.getFillColor().g;
+                        pix[4 * (((gridy + i) * 1920) + gridx + j) + 2] = space.bodies[i].shape.getFillColor().b;
                         pix[4 * (((gridy + i) * 1920) + gridx + j) + 3] = std::min(255,(int)pix[4 * (((gridy + i) * 1920) + gridx + j) + 3]+ (int)(255 * brightness));
                     }
                 }
@@ -783,7 +774,7 @@ int main()
             window.draw(sprite);
         }
         else {
-            // regular rendering mode simply loops through each object and 
+            // regular rendering mode simply loops through each object and
             // renders its respective circleobject
             for(auto& body : space.bodies) {
                 if(body.selected)
@@ -808,13 +799,13 @@ int main()
         // optionally also render the quadTree
         if(render_tree) space.drawTree(window);
 
-        // render the selectionbox 
+        // render the selectionbox
         window.draw(selectionBox);
         ImGui::SFML::Render(window);
         window.display();
 
-        // since the array is static and may contain pointers and therefore need to be 
-        // freed from memory each frame of the program 
+        // since the array is static and may contain pointers and therefore need to be
+        // freed from memory each frame of the program
         if(simple_render) delete[] pix;
 
         // restart the deltaclock

@@ -8,6 +8,8 @@
 # * USE_SYSTEM_DEPS - try to find dependencies using find_package (OFF by default)
 # * LINK_DEPS_STATIC - link to dependencies statically (ON by default)
 cmake_minimum_required(VERSION 3.12)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 
 project(imgui-sfml-example
   VERSION 1.0
@@ -15,6 +17,6 @@ project(imgui-sfml-example
 )
 
 add_subdirectory(dependencies)
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/fragment.frag
-        DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/src)
+#file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/fragment.frag
+#DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/src)
 add_subdirectory(src)

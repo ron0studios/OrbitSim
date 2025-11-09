@@ -2,6 +2,6 @@
 # The patch step will be re-executed if anything in this file changes.
 # No other meaning or use of this file is supported.
 
-command (connected)=/usr/bin/cmake;-Dcan_fetch=YES;-P;/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-sfml-subbuild/imgui-sfml-populate-prefix/tmp/imgui-sfml-populate-gitupdate.cmake
-command (disconnected)=/usr/bin/cmake;-Dcan_fetch=NO;-P;/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-sfml-subbuild/imgui-sfml-populate-prefix/tmp/imgui-sfml-populate-gitupdate.cmake
-work_dir=/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-sfml-src
+command (connected)=/usr/bin/cmake;-Dcan_fetch=YES;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-sfml-subbuild/imgui-sfml-populate-prefix/tmp/imgui-sfml-populate-gitupdate.cmake
+command (disconnected)=/usr/bin/cmake;-Dcan_fetch=NO;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-sfml-subbuild/imgui-sfml-populate-prefix/tmp/imgui-sfml-populate-gitupdate.cmake
+work_dir=/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-sfml-src

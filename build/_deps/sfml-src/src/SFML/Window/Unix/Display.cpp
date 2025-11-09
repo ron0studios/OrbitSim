@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -40,6 +40,8 @@ namespace
     // The shared display and its reference counter
     Display* sharedDisplay = NULL;
     unsigned int referenceCount = 0;
+    XIM sharedXIM = NULL;
+    unsigned int referenceCountXIM = 0;
     sf::Mutex mutex;
 
     typedef std::map<std::string, Atom> AtomMap;
@@ -85,6 +87,56 @@ void CloseDisplay(Display* display)
         XCloseDisplay(display);
 }
 
+////////////////////////////////////////////////////////////
+XIM OpenXIM()
+{
+    Lock lock(mutex);
+
+    assert(sharedDisplay != NULL);
+
+    if (referenceCountXIM == 0)
+    {
+        // Create a new XIM instance
+
+        // We need the default (environment) locale and X locale for opening
+        // the IM and properly receiving text
+        // First save the previous ones (this might be able to be written more elegantly?)
+        const char* p;
+        std::string prevLoc((p = setlocale(LC_ALL, NULL)) ? p : "");
+        std::string prevXLoc((p = XSetLocaleModifiers(NULL)) ? p : "");
+
+        // Set the locales from environment
+        setlocale(LC_ALL, "");
+        XSetLocaleModifiers("");
+
+        // Create the input context
+        sharedXIM = XOpenIM(sharedDisplay, NULL, NULL, NULL);
+
+        // Restore the previous locale
+        if (prevLoc.length() != 0)
+            setlocale(LC_ALL, prevLoc.c_str());
+
+        if (prevXLoc.length() != 0)
+            XSetLocaleModifiers(prevXLoc.c_str());
+    }
+
+    referenceCountXIM++;
+
+    return sharedXIM;
+}
+
+////////////////////////////////////////////////////////////
+void CloseXIM(XIM xim)
+{
+    Lock lock(mutex);
+
+    assert(xim == sharedXIM);
+
+    referenceCountXIM--;
+
+    if ((referenceCountXIM == 0) && (xim != NULL))
+        XCloseIM(xim);
+}
 
 ////////////////////////////////////////////////////////////
 Atom getAtom(const std::string& name, bool onlyIfExists)

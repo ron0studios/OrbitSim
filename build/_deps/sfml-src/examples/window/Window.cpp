@@ -2,8 +2,13 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Window.hpp>
-#include <SFML/OpenGL.hpp>
 
+#define GLAD_GL_IMPLEMENTATION
+#include <gl.h>
+
+#ifdef SFML_SYSTEM_IOS
+#include <SFML/Main.hpp>
+#endif
 
 ////////////////////////////////////////////////////////////
 /// Entry point of application
@@ -23,8 +28,19 @@ int main()
     // Make it the active window for OpenGL calls
     window.setActive();
 
+    // Load OpenGL or OpenGL ES entry points using glad
+#ifdef SFML_OPENGL_ES
+    gladLoadGLES1(reinterpret_cast<GLADloadfunc>(sf::Context::getFunction));
+#else
+    gladLoadGL(reinterpret_cast<GLADloadfunc>(sf::Context::getFunction));
+#endif
+
     // Set the color and depth clear values
+#ifdef SFML_OPENGL_ES
+    glClearDepthf(1.f);
+#else
     glClearDepth(1.f);
+#endif
     glClearColor(0.f, 0.f, 0.f, 1.f);
 
     // Enable Z-buffer read and write
@@ -36,13 +52,17 @@ int main()
     glDisable(GL_TEXTURE_2D);
 
     // Configure the viewport (the same size as the window)
-    glViewport(0, 0, window.getSize().x, window.getSize().y);
+    glViewport(0, 0, static_cast<GLsizei>(window.getSize().x), static_cast<GLsizei>(window.getSize().y));
 
     // Setup a perspective projection
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    GLfloat ratio = static_cast<float>(window.getSize().x) / window.getSize().y;
+    GLfloat ratio = static_cast<float>(window.getSize().x) / static_cast<float>(window.getSize().y);
+#ifdef SFML_OPENGL_ES
+    glFrustumf(-ratio, ratio, -1.f, 1.f, 1.f, 500.f);
+#else
     glFrustum(-ratio, ratio, -1.f, 1.f, 1.f, 500.f);
+#endif
 
     // Define a 3D cube (6 faces made of 2 triangles composed by 3 vertices)
     GLfloat cube[] =
@@ -121,7 +141,17 @@ int main()
 
             // Resize event: adjust the viewport
             if (event.type == sf::Event::Resized)
-                glViewport(0, 0, event.size.width, event.size.height);
+            {
+                glViewport(0, 0, static_cast<GLsizei>(event.size.width), static_cast<GLsizei>(event.size.height));
+                glMatrixMode(GL_PROJECTION);
+                glLoadIdentity();
+                GLfloat newRatio = static_cast<float>(event.size.width) / static_cast<float>(event.size.height);
+#ifdef SFML_OPENGL_ES
+                glFrustumf(-newRatio, newRatio, -1.f, 1.f, 1.f, 500.f);
+#else
+                glFrustum(-newRatio, newRatio, -1.f, 1.f, 1.f, 500.f);
+#endif
+            }
         }
 
         // Clear the color and depth buffers

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -36,6 +36,13 @@
     #pragma warning(disable: 4355) // 'this' used in base member initializer list
 #endif
 
+#if defined(__APPLE__)
+    #if defined(__clang__)
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    #elif defined(__GNUC__)
+        #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    #endif
+#endif
 
 namespace sf
 {
@@ -51,7 +58,8 @@ m_sampleRate      (0),
 m_format          (0),
 m_loop            (false),
 m_samplesProcessed(0),
-m_bufferSeeks     ()
+m_bufferSeeks     (),
+m_processingInterval(milliseconds(10))
 {
 
 }
@@ -127,6 +135,15 @@ void SoundStream::play()
     {
         // If the sound is playing, stop it and continue as if it was stopped
         stop();
+    }
+    else if (!isStreaming)
+    {
+        // Either the streaming thread has never been launched or it has been launched and has reached its end.
+        // - If it has reached its end, we have to restart the sound from the beginning.
+        // - If it has never been launched, it is not necessary to move to the beginning, but it is not harmful.
+        // To check if the sound has never been launched would require additional complexity
+        // which we can avoid by moving to the beginning in both cases.
+        onSeek(Time::Zero);
     }
 
     // Start updating the stream in a separate thread to avoid blocking the application
@@ -215,7 +232,7 @@ void SoundStream::setPlayingOffset(Time timeOffset)
     onSeek(timeOffset);
 
     // Restart streaming
-    m_samplesProcessed = static_cast<Uint64>(timeOffset.asSeconds() * m_sampleRate * m_channelCount);
+    m_samplesProcessed = static_cast<Uint64>(timeOffset.asSeconds() * static_cast<float>(m_sampleRate)) * m_channelCount;
 
     if (oldStatus == Stopped)
         return;
@@ -234,7 +251,7 @@ Time SoundStream::getPlayingOffset() const
         ALfloat secs = 0.f;
         alCheck(alGetSourcef(m_source, AL_SEC_OFFSET, &secs));
 
-        return seconds(secs + static_cast<float>(m_samplesProcessed) / m_sampleRate / m_channelCount);
+        return seconds(secs + static_cast<float>(m_samplesProcessed) / static_cast<float>(m_sampleRate) / static_cast<float>(m_channelCount));
     }
     else
     {
@@ -264,6 +281,11 @@ Int64 SoundStream::onLoop()
     return 0;
 }
 
+////////////////////////////////////////////////////////////
+void SoundStream::setProcessingInterval(Time interval)
+{
+    m_processingInterval = interval;
+}
 
 ////////////////////////////////////////////////////////////
 void SoundStream::streamData()
@@ -336,7 +358,7 @@ void SoundStream::streamData()
 
             // Find its number
             unsigned int bufferNum = 0;
-            for (int i = 0; i < BufferCount; ++i)
+            for (unsigned int i = 0; i < BufferCount; ++i)
                 if (m_buffers[i] == buffer)
                 {
                     bufferNum = i;
@@ -347,7 +369,7 @@ void SoundStream::streamData()
             if (m_bufferSeeks[bufferNum] != NoLoop)
             {
                 // This was the last buffer before EOF or Loop End: reset the sample count
-                m_samplesProcessed = m_bufferSeeks[bufferNum];
+                m_samplesProcessed = static_cast<Uint64>(m_bufferSeeks[bufferNum]);
                 m_bufferSeeks[bufferNum] = NoLoop;
             }
             else
@@ -370,7 +392,7 @@ void SoundStream::streamData()
                 }
                 else
                 {
-                    m_samplesProcessed += size / (bits / 8);
+                    m_samplesProcessed += static_cast<Uint64>(size / (bits / 8));
                 }
             }
 
@@ -384,7 +406,7 @@ void SoundStream::streamData()
 
         // Leave some time for the other threads if the stream is still playing
         if (SoundSource::getStatus() != Stopped)
-            sleep(milliseconds(10));
+            sleep(m_processingInterval);
     }
 
     // Stop the playback
@@ -433,7 +455,7 @@ bool SoundStream::fillAndPushBuffer(unsigned int bufferNum, bool immediateLoop)
         if (immediateLoop && (m_bufferSeeks[bufferNum] != NoLoop))
         {
             // We just tried to begin preloading at EOF or Loop End: reset the sample count
-            m_samplesProcessed = m_bufferSeeks[bufferNum];
+            m_samplesProcessed = static_cast<Uint64>(m_bufferSeeks[bufferNum]);
             m_bufferSeeks[bufferNum] = NoLoop;
         }
 
@@ -446,8 +468,8 @@ bool SoundStream::fillAndPushBuffer(unsigned int bufferNum, bool immediateLoop)
         unsigned int buffer = m_buffers[bufferNum];
 
         // Fill the buffer
-        ALsizei size = static_cast<ALsizei>(data.sampleCount) * sizeof(Int16);
-        alCheck(alBufferData(buffer, m_format, data.samples, size, m_sampleRate));
+        ALsizei size = static_cast<ALsizei>(data.sampleCount * sizeof(Int16));
+        alCheck(alBufferData(buffer, m_format, data.samples, size, static_cast<ALsizei>(m_sampleRate)));
 
         // Push it into the sound queue
         alCheck(alSourceQueueBuffers(m_source, 1, &buffer));
@@ -467,7 +489,7 @@ bool SoundStream::fillQueue()
 {
     // Fill and enqueue all the available buffers
     bool requestStop = false;
-    for (int i = 0; (i < BufferCount) && !requestStop; ++i)
+    for (unsigned int i = 0; (i < BufferCount) && !requestStop; ++i)
     {
         // Since no sound has been loaded yet, we can't schedule loop seeks preemptively,
         // So if we start on EOF or Loop End, we let fillAndPushBuffer() adjust the sample count

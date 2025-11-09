@@ -1,6 +1,6 @@
 # SFML
 
-SFML - Copyright (C) 2007-2018 Laurent Gomila - laurent@sfml-dev.org
+SFML - Copyright (C) 2007-2023 Laurent Gomila - laurent@sfml-dev.org
 
 This software is provided 'as-is', without any express or implied warranty. In no event will the authors be held liable for any damages arising from the use of this software.
 
@@ -18,3 +18,4 @@ Permission is granted to anyone to use this software for any purpose, including 
   * _libogg_ is under the BSD license
   * _libvorbis_ is under the BSD license
   * _libflac_ is under the BSD license
+  * _minimp3_ is under the CC0 license

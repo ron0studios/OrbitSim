@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -29,7 +29,7 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Window/GlContext.hpp>
-#include <SFML/Window/Win32/WglExtensions.hpp>
+#include <glad/wgl.h>
 
 
 namespace sf
@@ -179,11 +179,11 @@ private:
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    HWND        m_window;        ///< Window to which the context is attached
-    HPBUFFERARB m_pbuffer;       ///< Handle to a pbuffer if one was created
-    HDC         m_deviceContext; ///< Device context associated to the context
-    HGLRC       m_context;       ///< OpenGL context
-    bool        m_ownsWindow;    ///< Do we own the target window?
+    HWND        m_window;        //!< Window to which the context is attached
+    HPBUFFERARB m_pbuffer;       //!< Handle to a pbuffer if one was created
+    HDC         m_deviceContext; //!< Device context associated to the context
+    HGLRC       m_context;       //!< OpenGL context
+    bool        m_ownsWindow;    //!< Do we own the target window?
 };
 
 } // namespace priv

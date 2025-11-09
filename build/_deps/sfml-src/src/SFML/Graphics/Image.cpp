@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -153,6 +153,12 @@ bool Image::saveToFile(const std::string& filename) const
     return priv::ImageLoader::getInstance().saveImageToFile(filename, m_pixels, m_size);
 }
 
+////////////////////////////////////////////////////////////
+bool Image::saveToMemory(std::vector<sf::Uint8>& output, const std::string& format) const
+{
+    return priv::ImageLoader::getInstance().saveImageToMemory(format, output, m_pixels, m_size);
+}
+
 
 ////////////////////////////////////////////////////////////
 Vector2u Image::getSize() const
@@ -193,20 +199,20 @@ void Image::copy(const Image& source, unsigned int destX, unsigned int destY, co
     {
         srcRect.left   = 0;
         srcRect.top    = 0;
-        srcRect.width  = source.m_size.x;
-        srcRect.height = source.m_size.y;
+        srcRect.width  = static_cast<int>(source.m_size.x);
+        srcRect.height = static_cast<int>(source.m_size.y);
     }
     else
     {
         if (srcRect.left   < 0) srcRect.left = 0;
         if (srcRect.top    < 0) srcRect.top  = 0;
-        if (srcRect.width  > static_cast<int>(source.m_size.x)) srcRect.width  = source.m_size.x;
-        if (srcRect.height > static_cast<int>(source.m_size.y)) srcRect.height = source.m_size.y;
+        if (srcRect.width  > static_cast<int>(source.m_size.x)) srcRect.width  = static_cast<int>(source.m_size.x);
+        if (srcRect.height > static_cast<int>(source.m_size.y)) srcRect.height = static_cast<int>(source.m_size.y);
     }
 
     // Then find the valid bounds of the destination rectangle
-    int width  = srcRect.width;
-    int height = srcRect.height;
+    unsigned int width  = static_cast<unsigned int>(srcRect.width);
+    unsigned int height = static_cast<unsigned int>(srcRect.height);
     if (destX + width  > m_size.x) width  = m_size.x - destX;
     if (destY + height > m_size.y) height = m_size.y - destY;
 
@@ -215,31 +221,38 @@ void Image::copy(const Image& source, unsigned int destX, unsigned int destY, co
         return;
 
     // Precompute as much as possible
-    int          pitch     = width * 4;
-    int          rows      = height;
-    int          srcStride = source.m_size.x * 4;
-    int          dstStride = m_size.x * 4;
-    const Uint8* srcPixels = &source.m_pixels[0] + (srcRect.left + srcRect.top * source.m_size.x) * 4;
+    std::size_t  pitch     = static_cast<std::size_t>(width) * 4;
+    unsigned int rows      = height;
+    int          srcStride = static_cast<int>(source.m_size.x) * 4;
+    int          dstStride = static_cast<int>(m_size.x) * 4;
+    const Uint8* srcPixels = &source.m_pixels[0] + (static_cast<unsigned int>(srcRect.left) + static_cast<unsigned int>(srcRect.top) * source.m_size.x) * 4;
     Uint8*       dstPixels = &m_pixels[0] + (destX + destY * m_size.x) * 4;
 
     // Copy the pixels
     if (applyAlpha)
     {
         // Interpolation using alpha values, pixel by pixel (slower)
-        for (int i = 0; i < rows; ++i)
+        for (unsigned int i = 0; i < rows; ++i)
         {
-            for (int j = 0; j < width; ++j)
+            for (unsigned int j = 0; j < width; ++j)
             {
                 // Get a direct pointer to the components of the current pixel
                 const Uint8* src = srcPixels + j * 4;
                 Uint8*       dst = dstPixels + j * 4;
 
-                // Interpolate RGBA components using the alpha value of the source pixel
-                Uint8 alpha = src[3];
-                dst[0] = (src[0] * alpha + dst[0] * (255 - alpha)) / 255;
-                dst[1] = (src[1] * alpha + dst[1] * (255 - alpha)) / 255;
-                dst[2] = (src[2] * alpha + dst[2] * (255 - alpha)) / 255;
-                dst[3] = alpha + dst[3] * (255 - alpha) / 255;
+                // Interpolate RGBA components using the alpha values of the destination and source pixels
+                Uint8 src_alpha = src[3];
+                Uint8 dst_alpha = dst[3];
+                Uint8 out_alpha = static_cast<Uint8>(src_alpha + dst_alpha - src_alpha * dst_alpha / 255);
+
+                dst[3] = out_alpha;
+
+                if (out_alpha)
+                    for (int k = 0; k < 3; k++)
+                        dst[k] = static_cast<Uint8>((src[k] * src_alpha + dst[k] * (out_alpha - src_alpha)) / out_alpha);
+                else
+                    for (int k = 0; k < 3; k++)
+                        dst[k] = src[k];
             }
 
             srcPixels += srcStride;
@@ -249,7 +262,7 @@ void Image::copy(const Image& source, unsigned int destX, unsigned int destY, co
     else
     {
         // Optimized copy ignoring alpha values, row by row (faster)
-        for (int i = 0; i < rows; ++i)
+        for (unsigned int i = 0; i < rows; ++i)
         {
             std::memcpy(dstPixels, srcPixels, pitch);
             srcPixels += srcStride;
@@ -302,8 +315,8 @@ void Image::flipHorizontally()
 
         for (std::size_t y = 0; y < m_size.y; ++y)
         {
-            std::vector<Uint8>::iterator left = m_pixels.begin() + y * rowSize;
-            std::vector<Uint8>::iterator right = m_pixels.begin() + (y + 1) * rowSize - 4;
+            std::vector<Uint8>::iterator left = m_pixels.begin() + static_cast<std::vector<Uint8>::iterator::difference_type>(y * rowSize);
+            std::vector<Uint8>::iterator right = m_pixels.begin() + static_cast<std::vector<Uint8>::iterator::difference_type>((y + 1) * rowSize - 4);
 
             for (std::size_t x = 0; x < m_size.x / 2; ++x)
             {
@@ -322,7 +335,7 @@ void Image::flipVertically()
 {
     if (!m_pixels.empty())
     {
-        std::size_t rowSize = m_size.x * 4;
+        std::vector<Uint8>::iterator::difference_type rowSize = static_cast<std::vector<Uint8>::iterator::difference_type>(m_size.x * 4);
 
         std::vector<Uint8>::iterator top = m_pixels.begin();
         std::vector<Uint8>::iterator bottom = m_pixels.end() - rowSize;

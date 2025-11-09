@@ -3,8 +3,10 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Window.hpp>
-#include <SFML/System/Err.hpp>
-#include <SFML/OpenGL.hpp>
+
+#define GLAD_GL_IMPLEMENTATION
+#include <gl.h>
+
 #include <X11/Xlib.h>
 #include <iostream>
 #include <cmath>
@@ -23,7 +25,13 @@ void initialize(sf::Window& window)
 
     // Setup OpenGL states
     // Set color and depth clear value
+
+#ifdef SFML_OPENGL_ES
+    glClearDepthf(1.f);
+#else
     glClearDepth(1.f);
+#endif
+
     glClearColor(0.f, 0.5f, 0.5f, 0.f);
 
     // Enable Z-buffer read and write
@@ -33,9 +41,14 @@ void initialize(sf::Window& window)
     // Setup a perspective projection
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    static const double pi = 3.141592654;
-    GLdouble extent = std::tan(90.0 * pi / 360.0);
-    glFrustum(-extent, extent, -extent, extent, 1.0, 500.0);
+    static const float pi = 3.141592654f;
+    float extent = std::tan(90.0f * pi / 360.0f);
+
+#ifdef SFML_OPENGL_ES
+    glFrustumf(-extent, extent, -extent, extent, 1.0f, 500.0f);
+#else
+    glFrustum(-extent, extent, -extent, extent, 1.0f, 500.0f);
+#endif
 
     // Enable position and texture coordinates vertex components
     glEnableClientState(GL_VERTEX_ARRAY);
@@ -177,6 +190,15 @@ int main()
     // Create a clock for measuring elapsed time
     sf::Clock clock;
 
+    // Load OpenGL or OpenGL ES entry points using glad
+    sfmlView1.setActive();
+
+#ifdef SFML_OPENGL_ES
+    gladLoadGLES1(reinterpret_cast<GLADloadfunc>(sf::Context::getFunction));
+#else
+    gladLoadGL(reinterpret_cast<GLADloadfunc>(sf::Context::getFunction));
+#endif
+
     // Initialize our views
     initialize(sfmlView1);
     initialize(sfmlView2);
@@ -209,6 +231,13 @@ int main()
         sfmlView1.display();
         sfmlView2.display();
     }
+
+    // Close our SFML views before destroying the underlying window
+    sfmlView1.close();
+    sfmlView2.close();
+
+    // Destroy the window
+    XDestroyWindow(display, window);
 
     // Close the display
     XCloseDisplay(display);

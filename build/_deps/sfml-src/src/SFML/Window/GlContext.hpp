@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -158,6 +158,14 @@ public:
     static GlFunctionPointer getFunction(const char* name);
 
     ////////////////////////////////////////////////////////////
+    /// \brief Get the currently active context
+    ///
+    /// \return The currently active context or NULL if none is active
+    ///
+    ////////////////////////////////////////////////////////////
+    static const GlContext* getActiveContext();
+
+    ////////////////////////////////////////////////////////////
     /// \brief Get the currently active context's ID
     ///
     /// The context ID is used to identify contexts when
@@ -273,7 +281,7 @@ protected:
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    ContextSettings m_settings; ///< Creation settings of the context
+    ContextSettings m_settings; //!< Creation settings of the context
 
 private:
 
@@ -294,7 +302,7 @@ private:
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    const Uint64 m_id; ///< Unique number that identifies the context
+    const Uint64 m_id; //!< Unique number that identifies the context
 };
 
 } // namespace priv

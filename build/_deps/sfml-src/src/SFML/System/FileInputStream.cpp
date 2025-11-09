@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -80,7 +80,7 @@ Int64 FileInputStream::read(void* data, Int64 size)
     return m_file->read(data, size);
 #else
     if (m_file)
-        return std::fread(data, 1, static_cast<std::size_t>(size), m_file);
+        return static_cast<Int64>(std::fread(data, 1, static_cast<std::size_t>(size), m_file));
     else
         return -1;
 #endif

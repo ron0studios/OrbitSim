@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -68,6 +68,11 @@ namespace
         };
         stream.write(reinterpret_cast<const char*>(bytes), sizeof(bytes));
     }
+
+    unsigned char toLower(unsigned char character)
+    {
+        return static_cast<unsigned char>(std::tolower(character));
+    }
 }
 
 namespace sf
@@ -77,8 +82,8 @@ namespace priv
 ////////////////////////////////////////////////////////////
 bool SoundFileWriterWav::check(const std::string& filename)
 {
-    std::string extension = filename.substr(filename.find_last_of(".") + 1);
-    std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower);
+    std::string extension = filename.substr(filename.find_last_of('.') + 1);
+    std::transform(extension.begin(), extension.end(), extension.begin(), toLower);
 
     return extension == "wav";
 }
@@ -157,10 +162,10 @@ bool SoundFileWriterWav::writeHeader(unsigned int sampleRate, unsigned int chann
 
     // Write the sound attributes
     encode(m_file, static_cast<Uint16>(channelCount));
-    encode(m_file, static_cast<Uint32>(sampleRate));
+    encode(m_file, sampleRate);
     Uint32 byteRate = sampleRate * channelCount * 2;
     encode(m_file, byteRate);
-    Uint16 blockAlign = channelCount * 2;
+    Uint16 blockAlign = static_cast<Uint16>(channelCount * 2);
     encode(m_file, blockAlign);
     Uint16 bitsPerSample = 16;
     encode(m_file, bitsPerSample);

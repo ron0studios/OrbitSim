@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -68,14 +68,14 @@ namespace
     }
 
     // Retrieve the maximum number of texture units available
-    GLint getMaxTextureUnits()
+    std::size_t getMaxTextureUnits()
     {
         // TODO: Remove this lock when it becomes unnecessary in C++11
         sf::Lock lock(maxTextureUnitsMutex);
 
         static GLint maxUnits = checkMaxTextureUnits();
 
-        return maxUnits;
+        return static_cast<std::size_t>(maxUnits);
     }
 
     // Read the contents of a file into an array of char
@@ -85,12 +85,12 @@ namespace
         if (file)
         {
             file.seekg(0, std::ios_base::end);
-            std::streamsize size = file.tellg();
+            std::ifstream::pos_type size = file.tellg();
             if (size > 0)
             {
                 file.seekg(0, std::ios_base::beg);
                 buffer.resize(static_cast<std::size_t>(size));
-                file.read(&buffer[0], size);
+                file.read(&buffer[0], static_cast<std::streamsize>(size));
             }
             buffer.push_back('\0');
             return true;
@@ -211,10 +211,10 @@ struct Shader::UniformBinder : private NonCopyable
             glCheck(GLEXT_glUseProgramObject(savedProgram));
     }
 
-    TransientContextLock lock;           ///< Lock to keep context active while uniform is bound
-    GLEXT_GLhandle       savedProgram;   ///< Handle to the previously active program object
-    GLEXT_GLhandle       currentProgram; ///< Handle to the program object of the modified sf::Shader instance
-    GLint                location;       ///< Uniform location, used by the surrounding sf::Shader code
+    TransientContextLock lock;           //!< Lock to keep context active while uniform is bound
+    GLEXT_GLhandle       savedProgram;   //!< Handle to the previously active program object
+    GLEXT_GLhandle       currentProgram; //!< Handle to the program object of the modified sf::Shader instance
+    GLint                location;       //!< Uniform location, used by the surrounding sf::Shader code
 };
 
 
@@ -556,8 +556,7 @@ void Shader::setUniform(const std::string& name, const Texture& texture)
             if (it == m_textures.end())
             {
                 // New entry, make sure there are enough texture units
-                GLint maxUnits = getMaxTextureUnits();
-                if (m_textures.size() + 1 >= static_cast<std::size_t>(maxUnits))
+                if (m_textures.size() + 1 >= getMaxTextureUnits())
                 {
                     err() << "Impossible to use texture \"" << name << "\" for shader: all available texture units are used" << std::endl;
                     return;
@@ -815,7 +814,7 @@ bool Shader::isGeometryAvailable()
         // Make sure that extensions are initialized
         sf::priv::ensureExtensionsInit();
 
-        available = isAvailable() && GLEXT_geometry_shader4;
+        available = isAvailable() && (GLEXT_geometry_shader4 || GLEXT_GL_VERSION_3_2);
     }
 
     return available;
@@ -976,7 +975,7 @@ void Shader::bindTextures() const
     {
         GLint index = static_cast<GLsizei>(i + 1);
         glCheck(GLEXT_glUniform1i(it->first, index));
-        glCheck(GLEXT_glActiveTexture(GLEXT_GL_TEXTURE0 + index));
+        glCheck(GLEXT_glActiveTexture(GLEXT_GL_TEXTURE0 + static_cast<GLenum>(index)));
         Texture::bind(it->second);
         ++it;
     }
@@ -1036,256 +1035,256 @@ Shader::~Shader()
 
 
 ////////////////////////////////////////////////////////////
-bool Shader::loadFromFile(const std::string& filename, Type type)
+bool Shader::loadFromFile(const std::string& /* filename */, Type /* type */)
 {
     return false;
 }
 
 
 ////////////////////////////////////////////////////////////
-bool Shader::loadFromFile(const std::string& vertexShaderFilename, const std::string& fragmentShaderFilename)
+bool Shader::loadFromFile(const std::string& /* vertexShaderFilename */, const std::string& /* fragmentShaderFilename */)
 {
     return false;
 }
 
 
 ////////////////////////////////////////////////////////////
-bool Shader::loadFromFile(const std::string& vertexShaderFilename, const std::string& geometryShaderFilename, const std::string& fragmentShaderFilename)
+bool Shader::loadFromFile(const std::string& /* vertexShaderFilename */, const std::string& /* geometryShaderFilename */, const std::string& /* fragmentShaderFilename */)
 {
     return false;
 }
 
 
 ////////////////////////////////////////////////////////////
-bool Shader::loadFromMemory(const std::string& shader, Type type)
+bool Shader::loadFromMemory(const std::string& /* shader */, Type /* type */)
 {
     return false;
 }
 
 
 ////////////////////////////////////////////////////////////
-bool Shader::loadFromMemory(const std::string& vertexShader, const std::string& fragmentShader)
+bool Shader::loadFromMemory(const std::string& /* vertexShader */, const std::string& /* fragmentShader */)
 {
     return false;
 }
 
 
 ////////////////////////////////////////////////////////////
-bool Shader::loadFromMemory(const std::string& vertexShader, const std::string& geometryShader, const std::string& fragmentShader)
+bool Shader::loadFromMemory(const std::string& /* vertexShader */, const std::string& /* geometryShader */, const std::string& /* fragmentShader */)
 {
     return false;
 }
 
 
 ////////////////////////////////////////////////////////////
-bool Shader::loadFromStream(InputStream& stream, Type type)
+bool Shader::loadFromStream(InputStream& /* stream */, Type /* type */)
 {
     return false;
 }
 
 
 ////////////////////////////////////////////////////////////
-bool Shader::loadFromStream(InputStream& vertexShaderStream, InputStream& fragmentShaderStream)
+bool Shader::loadFromStream(InputStream& /* vertexShaderStream */, InputStream& /* fragmentShaderStream */)
 {
     return false;
 }
 
 
 ////////////////////////////////////////////////////////////
-bool Shader::loadFromStream(InputStream& vertexShaderStream, InputStream& geometryShaderStream, InputStream& fragmentShaderStream)
+bool Shader::loadFromStream(InputStream& /* vertexShaderStream */, InputStream& /* geometryShaderStream */, InputStream& /* fragmentShaderStream */)
 {
     return false;
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniform(const std::string& name, float x)
+void Shader::setUniform(const std::string& /* name */, float)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniform(const std::string& name, const Glsl::Vec2& v)
+void Shader::setUniform(const std::string& /* name */, const Glsl::Vec2&)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniform(const std::string& name, const Glsl::Vec3& v)
+void Shader::setUniform(const std::string& /* name */, const Glsl::Vec3&)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniform(const std::string& name, const Glsl::Vec4& v)
+void Shader::setUniform(const std::string& /* name */, const Glsl::Vec4&)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniform(const std::string& name, int x)
+void Shader::setUniform(const std::string& /* name */, int)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniform(const std::string& name, const Glsl::Ivec2& v)
+void Shader::setUniform(const std::string& /* name */, const Glsl::Ivec2&)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniform(const std::string& name, const Glsl::Ivec3& v)
+void Shader::setUniform(const std::string& /* name */, const Glsl::Ivec3&)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniform(const std::string& name, const Glsl::Ivec4& v)
+void Shader::setUniform(const std::string& /* name */, const Glsl::Ivec4&)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniform(const std::string& name, bool x)
+void Shader::setUniform(const std::string& /* name */, bool)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniform(const std::string& name, const Glsl::Bvec2& v)
+void Shader::setUniform(const std::string& /* name */, const Glsl::Bvec2&)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniform(const std::string& name, const Glsl::Bvec3& v)
+void Shader::setUniform(const std::string& /* name */, const Glsl::Bvec3&)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniform(const std::string& name, const Glsl::Bvec4& v)
+void Shader::setUniform(const std::string& /* name */, const Glsl::Bvec4&)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniform(const std::string& name, const Glsl::Mat3& matrix)
+void Shader::setUniform(const std::string& /* name */, const Glsl::Mat3& /* matrix */)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniform(const std::string& name, const Glsl::Mat4& matrix)
+void Shader::setUniform(const std::string& /* name */, const Glsl::Mat4& /* matrix */)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniform(const std::string& name, const Texture& texture)
+void Shader::setUniform(const std::string& /* name */, const Texture& /* texture */)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniform(const std::string& name, CurrentTextureType)
+void Shader::setUniform(const std::string& /* name */, CurrentTextureType)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniformArray(const std::string& name, const float* scalarArray, std::size_t length)
+void Shader::setUniformArray(const std::string& /* name */, const float* /* scalarArray */, std::size_t /* length */)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniformArray(const std::string& name, const Glsl::Vec2* vectorArray, std::size_t length)
+void Shader::setUniformArray(const std::string& /* name */, const Glsl::Vec2* /* vectorArray */, std::size_t /* length */)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniformArray(const std::string& name, const Glsl::Vec3* vectorArray, std::size_t length)
+void Shader::setUniformArray(const std::string& /* name */, const Glsl::Vec3* /* vectorArray */, std::size_t /* length */)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniformArray(const std::string& name, const Glsl::Vec4* vectorArray, std::size_t length)
+void Shader::setUniformArray(const std::string& /* name */, const Glsl::Vec4* /* vectorArray */, std::size_t /* length */)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniformArray(const std::string& name, const Glsl::Mat3* matrixArray, std::size_t length)
+void Shader::setUniformArray(const std::string& /* name */, const Glsl::Mat3* /* matrixArray */, std::size_t /* length */)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setUniformArray(const std::string& name, const Glsl::Mat4* matrixArray, std::size_t length)
+void Shader::setUniformArray(const std::string& /* name */, const Glsl::Mat4* /* matrixArray */, std::size_t /* length */)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setParameter(const std::string& name, float x)
+void Shader::setParameter(const std::string& /* name */, float)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setParameter(const std::string& name, float x, float y)
+void Shader::setParameter(const std::string& /* name */, float, float)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setParameter(const std::string& name, float x, float y, float z)
+void Shader::setParameter(const std::string& /* name */, float, float, float)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setParameter(const std::string& name, float x, float y, float z, float w)
+void Shader::setParameter(const std::string& /* name */, float, float, float, float)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setParameter(const std::string& name, const Vector2f& v)
+void Shader::setParameter(const std::string& /* name */, const Vector2f&)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setParameter(const std::string& name, const Vector3f& v)
+void Shader::setParameter(const std::string& /* name */, const Vector3f&)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setParameter(const std::string& name, const Color& color)
+void Shader::setParameter(const std::string& /* name */, const Color& /* color */)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setParameter(const std::string& name, const Transform& transform)
+void Shader::setParameter(const std::string& /* name */, const Transform& /* transform */)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setParameter(const std::string& name, const Texture& texture)
+void Shader::setParameter(const std::string& /* name */, const Texture& /* texture */)
 {
 }
 
 
 ////////////////////////////////////////////////////////////
-void Shader::setParameter(const std::string& name, CurrentTextureType)
+void Shader::setParameter(const std::string& /* name */, CurrentTextureType)
 {
 }
 
@@ -1298,7 +1297,7 @@ unsigned int Shader::getNativeHandle() const
 
 
 ////////////////////////////////////////////////////////////
-void Shader::bind(const Shader* shader)
+void Shader::bind(const Shader* /* shader */)
 {
 }
 
@@ -1318,7 +1317,7 @@ bool Shader::isGeometryAvailable()
 
 
 ////////////////////////////////////////////////////////////
-bool Shader::compile(const char* vertexShaderCode, const char* geometryShaderCode, const char* fragmentShaderCode)
+bool Shader::compile(const char* /* vertexShaderCode */, const char* /* geometryShaderCode */, const char* /* fragmentShaderCode */)
 {
     return false;
 }

@@ -5,7 +5,7 @@ include(${PROJECT_SOURCE_DIR}/cmake/Macros.cmake)
 # let CMake know about our additional libraries paths
 if (SFML_OS_WINDOWS)
     set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "${PROJECT_SOURCE_DIR}/extlibs/headers")
-    if(SFML_COMPILER_GCC)
+    if(SFML_COMPILER_GCC OR (SFML_COMPILER_CLANG AND MINGW))
         if(ARCH_32BITS)
             set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "${PROJECT_SOURCE_DIR}/extlibs/libs-mingw/x86")
             set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "${PROJECT_SOURCE_DIR}/extlibs/bin/x86")
@@ -13,7 +13,7 @@ if (SFML_OS_WINDOWS)
             set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "${PROJECT_SOURCE_DIR}/extlibs/libs-mingw/x64")
             set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "${PROJECT_SOURCE_DIR}/extlibs/bin/x64")
         endif()
-    elseif(SFML_COMPILER_MSVC)
+    elseif(SFML_COMPILER_MSVC OR (SFML_COMPILER_CLANG AND NOT MINGW))
         if(SFML_MSVC_VERSION LESS 14)
             if(ARCH_32BITS)
                 set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "${PROJECT_SOURCE_DIR}/extlibs/libs-msvc/x86")
@@ -40,7 +40,7 @@ elseif(SFML_OS_ANDROID)
 endif()
 
 # define the path of our additional CMake modules
-set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/Modules/")
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake/Modules/")
 
 # set the output directory for SFML libraries
 set(LIBRARY_OUTPUT_PATH "${PROJECT_BINARY_DIR}/lib")

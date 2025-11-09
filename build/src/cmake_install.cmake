@@ -1,4 +1,4 @@
-# Install script for directory: /home/ron0/imgui-sfml-fetchcontent/src
+# Install script for directory: /home/ron0/Documents/GitHub/OrbitSim/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -37,7 +37,7 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
   set(CMAKE_CROSSCOMPILING "FALSE")
 endif()
 
-# Set default install directory permissions.
+# Set path to fallback-tool for dependency-resolution.
 if(NOT DEFINED CMAKE_OBJDUMP)
   set(CMAKE_OBJDUMP "/usr/bin/objdump")
 endif()
@@ -49,12 +49,12 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/imgui-sfml-example"
          RPATH "$ORIGIN/../lib")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/home/ron0/imgui-sfml-fetchcontent/build/src/imgui-sfml-example")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/bin" TYPE EXECUTABLE FILES "/home/ron0/Documents/GitHub/OrbitSim/build/src/imgui-sfml-example")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/imgui-sfml-example" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/imgui-sfml-example")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/imgui-sfml-example"
-         OLD_RPATH "/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-sfml-build:/home/ron0/imgui-sfml-fetchcontent/build/_deps/sfml-build/lib:"
+         OLD_RPATH "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-sfml-build:/home/ron0/Documents/GitHub/OrbitSim/build/src/tracy:/home/ron0/Documents/GitHub/OrbitSim/build/_deps/sfml-build/lib:"
          NEW_RPATH "$ORIGIN/../lib")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/bin/imgui-sfml-example")
@@ -69,12 +69,12 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libImGui-SFML.so"
          RPATH "$ORIGIN")
   endif()
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-sfml-build/libImGui-SFML.so")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-sfml-build/libImGui-SFML.so")
   if(EXISTS "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libImGui-SFML.so" AND
      NOT IS_SYMLINK "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libImGui-SFML.so")
     file(RPATH_CHANGE
          FILE "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libImGui-SFML.so"
-         OLD_RPATH "/home/ron0/imgui-sfml-fetchcontent/build/_deps/sfml-build/lib:"
+         OLD_RPATH "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/sfml-build/lib:"
          NEW_RPATH "$ORIGIN")
     if(CMAKE_INSTALL_DO_STRIP)
       execute_process(COMMAND "/usr/bin/strip" "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libImGui-SFML.so")
@@ -84,23 +84,23 @@ endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE FILE FILES
-    "/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-sfml-src/imgui-SFML.h"
-    "/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-sfml-src/imgui-SFML_export.h"
-    "/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-src/imconfig.h"
-    "/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-src/imgui.h"
-    "/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-src/imgui_internal.h"
-    "/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-src/imstb_rectpack.h"
-    "/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-src/imstb_textedit.h"
-    "/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-src/imstb_truetype.h"
-    "/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-src/misc/cpp/imgui_stdlib.h"
-    "/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-sfml-src/imconfig-SFML.h"
+    "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-sfml-src/imgui-SFML.h"
+    "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-sfml-src/imgui-SFML_export.h"
+    "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-src/imconfig.h"
+    "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-src/imgui.h"
+    "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-src/imgui_internal.h"
+    "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-src/imstb_rectpack.h"
+    "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-src/imstb_textedit.h"
+    "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-src/imstb_truetype.h"
+    "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-src/misc/cpp/imgui_stdlib.h"
+    "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-sfml-src/imconfig-SFML.h"
     )
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   foreach(file
-      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-graphics.so.2.5.1"
-      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-graphics.so.2.5"
+      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-graphics.so.2.6.1"
+      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-graphics.so.2.6"
       )
     if(EXISTS "${file}" AND
        NOT IS_SYMLINK "${file}")
@@ -110,18 +110,18 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
     endif()
   endforeach()
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES
-    "/home/ron0/imgui-sfml-fetchcontent/build/_deps/sfml-build/lib/libsfml-graphics.so.2.5.1"
-    "/home/ron0/imgui-sfml-fetchcontent/build/_deps/sfml-build/lib/libsfml-graphics.so.2.5"
+    "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/sfml-build/lib/libsfml-graphics.so.2.6.1"
+    "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/sfml-build/lib/libsfml-graphics.so.2.6"
     )
   foreach(file
-      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-graphics.so.2.5.1"
-      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-graphics.so.2.5"
+      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-graphics.so.2.6.1"
+      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-graphics.so.2.6"
       )
     if(EXISTS "${file}" AND
        NOT IS_SYMLINK "${file}")
       file(RPATH_CHANGE
            FILE "${file}"
-           OLD_RPATH "/home/ron0/imgui-sfml-fetchcontent/build/_deps/sfml-build/lib:"
+           OLD_RPATH "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/sfml-build/lib:"
            NEW_RPATH "$ORIGIN")
       if(CMAKE_INSTALL_DO_STRIP)
         execute_process(COMMAND "/usr/bin/strip" "${file}")
@@ -132,8 +132,8 @@ endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   foreach(file
-      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-system.so.2.5.1"
-      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-system.so.2.5"
+      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-system.so.2.6.1"
+      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-system.so.2.6"
       )
     if(EXISTS "${file}" AND
        NOT IS_SYMLINK "${file}")
@@ -143,12 +143,12 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
     endif()
   endforeach()
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES
-    "/home/ron0/imgui-sfml-fetchcontent/build/_deps/sfml-build/lib/libsfml-system.so.2.5.1"
-    "/home/ron0/imgui-sfml-fetchcontent/build/_deps/sfml-build/lib/libsfml-system.so.2.5"
+    "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/sfml-build/lib/libsfml-system.so.2.6.1"
+    "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/sfml-build/lib/libsfml-system.so.2.6"
     )
   foreach(file
-      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-system.so.2.5.1"
-      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-system.so.2.5"
+      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-system.so.2.6.1"
+      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-system.so.2.6"
       )
     if(EXISTS "${file}" AND
        NOT IS_SYMLINK "${file}")
@@ -165,8 +165,8 @@ endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
   foreach(file
-      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-window.so.2.5.1"
-      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-window.so.2.5"
+      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-window.so.2.6.1"
+      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-window.so.2.6"
       )
     if(EXISTS "${file}" AND
        NOT IS_SYMLINK "${file}")
@@ -176,18 +176,18 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
     endif()
   endforeach()
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE SHARED_LIBRARY FILES
-    "/home/ron0/imgui-sfml-fetchcontent/build/_deps/sfml-build/lib/libsfml-window.so.2.5.1"
-    "/home/ron0/imgui-sfml-fetchcontent/build/_deps/sfml-build/lib/libsfml-window.so.2.5"
+    "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/sfml-build/lib/libsfml-window.so.2.6.1"
+    "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/sfml-build/lib/libsfml-window.so.2.6"
     )
   foreach(file
-      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-window.so.2.5.1"
-      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-window.so.2.5"
+      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-window.so.2.6.1"
+      "$ENV{DESTDIR}${CMAKE_INSTALL_PREFIX}/lib/libsfml-window.so.2.6"
       )
     if(EXISTS "${file}" AND
        NOT IS_SYMLINK "${file}")
       file(RPATH_CHANGE
            FILE "${file}"
-           OLD_RPATH "/home/ron0/imgui-sfml-fetchcontent/build/_deps/sfml-build/lib:"
+           OLD_RPATH "/home/ron0/Documents/GitHub/OrbitSim/build/_deps/sfml-build/lib:"
            NEW_RPATH "$ORIGIN")
       if(CMAKE_INSTALL_DO_STRIP)
         execute_process(COMMAND "/usr/bin/strip" "${file}")
@@ -197,6 +197,18 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  include("/home/ron0/imgui-sfml-fetchcontent/src/PostInstall.cmake")
+  include("/home/ron0/Documents/GitHub/OrbitSim/src/PostInstall.cmake")
 endif()
 
+if(NOT CMAKE_INSTALL_LOCAL_ONLY)
+  # Include the install script for each subdirectory.
+  include("/home/ron0/Documents/GitHub/OrbitSim/build/src/tracy/cmake_install.cmake")
+
+endif()
+
+string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
+       "${CMAKE_INSTALL_MANIFEST_FILES}")
+if(CMAKE_INSTALL_LOCAL_ONLY)
+  file(WRITE "/home/ron0/Documents/GitHub/OrbitSim/build/src/install_local_manifest.txt"
+     "${CMAKE_INSTALL_MANIFEST_CONTENT}")
+endif()

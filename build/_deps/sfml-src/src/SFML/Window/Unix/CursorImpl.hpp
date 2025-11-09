@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -82,6 +82,28 @@ public:
 private:
 
     friend class WindowImplX11;
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Checks if colored cursors are supported for this display.
+    ///
+    ////////////////////////////////////////////////////////////
+    bool isColorCursorSupported();
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Create a cursor with the provided image (ARGB support)
+    ///
+    /// Refer to sf::Cursor::loadFromPixels().
+    ///
+    ////////////////////////////////////////////////////////////
+    bool loadFromPixelsARGB(const Uint8* pixels, Vector2u size, Vector2u hotspot);
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Create a cursor with the provided image (monochrome)
+    ///
+    /// Refer to sf::Cursor::loadFromPixels().
+    ///
+    ////////////////////////////////////////////////////////////
+    bool loadFromPixelsMonochrome(const Uint8* pixels, Vector2u size, Vector2u hotspot);
 
     ////////////////////////////////////////////////////////////
     /// \brief Release the cursor, if we have loaded one.

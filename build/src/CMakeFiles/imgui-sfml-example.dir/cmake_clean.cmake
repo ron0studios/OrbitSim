@@ -1,6 +1,15 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/imgui-sfml-example.dir/link.d"
+  "CMakeFiles/imgui-sfml-example.dir/Body.cpp.o"
+  "CMakeFiles/imgui-sfml-example.dir/Body.cpp.o.d"
+  "CMakeFiles/imgui-sfml-example.dir/QuadTree.cpp.o"
+  "CMakeFiles/imgui-sfml-example.dir/QuadTree.cpp.o.d"
+  "CMakeFiles/imgui-sfml-example.dir/Simulator.cpp.o"
+  "CMakeFiles/imgui-sfml-example.dir/Simulator.cpp.o.d"
   "CMakeFiles/imgui-sfml-example.dir/main.cpp.o"
   "CMakeFiles/imgui-sfml-example.dir/main.cpp.o.d"
+  "CMakeFiles/imgui-sfml-example.dir/tracy/public/TracyClient.cpp.o"
+  "CMakeFiles/imgui-sfml-example.dir/tracy/public/TracyClient.cpp.o.d"
   "imgui-sfml-example"
   "imgui-sfml-example.pdb"
 )

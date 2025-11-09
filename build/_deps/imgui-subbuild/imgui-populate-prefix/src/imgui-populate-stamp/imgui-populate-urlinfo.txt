@@ -3,10 +3,10 @@
 # No other meaning or use of this file is supported.
 
 method=url
-command=/usr/bin/cmake;-P;/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-subbuild/imgui-populate-prefix/src/imgui-populate-stamp/download-imgui-populate.cmake;COMMAND;/usr/bin/cmake;-P;/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-subbuild/imgui-populate-prefix/src/imgui-populate-stamp/verify-imgui-populate.cmake;COMMAND;/usr/bin/cmake;-P;/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-subbuild/imgui-populate-prefix/src/imgui-populate-stamp/extract-imgui-populate.cmake
-source_dir=/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-src
-work_dir=/home/ron0/imgui-sfml-fetchcontent/build/_deps
-url(s)=https://github.com/ocornut/imgui/archive/v1.89.zip
+command=/usr/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-subbuild/imgui-populate-prefix/src/imgui-populate-stamp/download-imgui-populate.cmake;COMMAND;/usr/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-subbuild/imgui-populate-prefix/src/imgui-populate-stamp/verify-imgui-populate.cmake;COMMAND;/usr/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-subbuild/imgui-populate-prefix/src/imgui-populate-stamp/extract-imgui-populate.cmake
+source_dir=/home/ron0/Documents/GitHub/OrbitSim/build/_deps/imgui-src
+work_dir=/home/ron0/Documents/GitHub/OrbitSim/build/_deps
+url(s)=https://github.com/ocornut/imgui/archive/v1.90.4.zip
 hash=
-no_extract=
+      no_extract=
 

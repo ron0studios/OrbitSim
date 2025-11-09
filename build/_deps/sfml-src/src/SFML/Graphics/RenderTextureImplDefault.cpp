@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -29,7 +29,6 @@
 #include <SFML/Graphics/GLCheck.hpp>
 #include <SFML/Graphics/TextureSaver.hpp>
 #include <SFML/Window/Context.hpp>
-#include <SFML/System/Err.hpp>
 
 
 namespace sf
@@ -86,6 +85,13 @@ bool RenderTextureImplDefault::activate(bool active)
 
 
 ////////////////////////////////////////////////////////////
+bool RenderTextureImplDefault::isSrgb() const
+{
+    return m_context->getSettings().sRgbCapable;
+}
+
+
+////////////////////////////////////////////////////////////
 void RenderTextureImplDefault::updateTexture(unsigned int textureId)
 {
     // Make sure that the current texture binding will be preserved
@@ -93,7 +99,7 @@ void RenderTextureImplDefault::updateTexture(unsigned int textureId)
 
     // Copy the rendered pixels to the texture
     glCheck(glBindTexture(GL_TEXTURE_2D, textureId));
-    glCheck(glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, m_width, m_height));
+    glCheck(glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 0, 0, static_cast<GLsizei>(m_width), static_cast<GLsizei>(m_height)));
 }
 
 } // namespace priv

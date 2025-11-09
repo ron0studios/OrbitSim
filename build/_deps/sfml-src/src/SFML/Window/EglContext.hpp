@@ -32,8 +32,12 @@
 #include <SFML/Window/ContextSettings.hpp>
 #include <SFML/Window/EGLCheck.hpp>
 #include <SFML/Window/GlContext.hpp>
-#include <SFML/OpenGL.hpp>
-
+#include <SFML/Window/WindowStyle.hpp> // Prevent conflict with macro None from Xlib
+#include <glad/egl.h>
+#if defined(SFML_SYSTEM_LINUX) && !defined(SFML_USE_DRM)
+    #include <X11/Xlib.h>
+    #include <X11/Xutil.h>
+#endif
 
 namespace sf
 {
@@ -64,6 +68,7 @@ public:
 
     ////////////////////////////////////////////////////////////
     /// \brief Create a new context that embeds its own rendering target
+    /// \warning This constructor is currently not implemented; use a different overload.
     ///
     /// \param shared   Context to share the new one with
     /// \param settings Creation parameters
@@ -78,6 +83,16 @@ public:
     ///
     ////////////////////////////////////////////////////////////
     ~EglContext();
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Get the address of an OpenGL function
+    ///
+    /// \param name Name of the function to get the address of
+    ///
+    /// \return Address of the OpenGL function, 0 on failure
+    ///
+    ////////////////////////////////////////////////////////////
+    static GlFunctionPointer getFunction(const char* name);
 
     ////////////////////////////////////////////////////////////
     /// \brief Activate the context as the current target
@@ -151,7 +166,7 @@ public:
     ////////////////////////////////////////////////////////////
     static EGLConfig getBestConfig(EGLDisplay display, unsigned int bitsPerPixel, const ContextSettings& settings);
 
-#ifdef SFML_SYSTEM_LINUX
+#if defined(SFML_SYSTEM_LINUX) && !defined(SFML_USE_DRM)
     ////////////////////////////////////////////////////////////
     /// \brief Select the best EGL visual for a given set of settings
     ///
@@ -168,17 +183,17 @@ public:
 private:
 
     ////////////////////////////////////////////////////////////
-    /// \brief Helper to copy the picked EGL configuration 
+    /// \brief Helper to copy the picked EGL configuration
     ////////////////////////////////////////////////////////////
     void updateSettings();
 
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    EGLDisplay  m_display; ///< The internal EGL display
-    EGLContext  m_context; ///< The internal EGL context
-    EGLSurface  m_surface; ///< The internal EGL surface
-    EGLConfig   m_config;  ///< The internal EGL config
+    EGLDisplay  m_display; //!< The internal EGL display
+    EGLContext  m_context; //!< The internal EGL context
+    EGLSurface  m_surface; //!< The internal EGL surface
+    EGLConfig   m_config;  //!< The internal EGL config
 
 };
 

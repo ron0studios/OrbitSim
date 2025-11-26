@@ -1,5 +1,5 @@
 # OrbitSim
-An N-body orbit simulator, optimised with the Barnes-Hut treecode algorithm.
+An N-body multithreaded orbit simulator, optimised with the Barnes-Hut treecode algorithm.
 
 ## Building
 
@@ -49,4 +49,6 @@ https://github.com/ron0studios/OrbitSim/assets/47331292/e0dd1de7-8974-4398-ad0a-
   - the tree is generated with iteratively (recursion is slower and more memory intensive)
   - the tree is stored linearly in an array (faster access, less pointer access)
   - the tree nodes only save one pointer and 2-3 doubles for better performance
- 
+
+
+

@@ -1,7 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/home/ron0/development/cpp-projects/OrbitSim/_deps/sfml-subbuild/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

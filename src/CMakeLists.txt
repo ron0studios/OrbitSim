@@ -1,13 +1,13 @@
 add_executable(OrbitSim
     main.cpp
-    Body.h
     Body.cpp
-    QuadTree.h
     QuadTree.cpp
-    Simulator.h
     Simulator.cpp
-    globals.h
-    ctpl.h
+)
+
+target_include_directories(OrbitSim
+    PRIVATE
+        ${CMAKE_SOURCE_DIR}/include
 )
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -O3")

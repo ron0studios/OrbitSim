@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -32,6 +32,8 @@
 #include <SFML/System/FileInputStream.hpp>
 #include <SFML/System/MemoryInputStream.hpp>
 #include <SFML/System/Err.hpp>
+#include <iostream>
+#include <algorithm>
 
 
 namespace sf
@@ -200,7 +202,7 @@ Time InputSoundFile::getDuration() const
     if (m_channelCount == 0 || m_sampleRate == 0)
         return Time::Zero;
 
-    return seconds(static_cast<float>(m_sampleCount) / m_channelCount / m_sampleRate);
+    return seconds(static_cast<float>(m_sampleCount) / static_cast<float>(m_channelCount) / static_cast<float>(m_sampleRate));
 }
 
 
@@ -211,7 +213,7 @@ Time InputSoundFile::getTimeOffset() const
     if (m_channelCount == 0 || m_sampleRate == 0)
         return Time::Zero;
 
-    return seconds(static_cast<float>(m_sampleOffset) / m_channelCount / m_sampleRate);
+    return seconds(static_cast<float>(m_sampleOffset) / static_cast<float>(m_channelCount) / static_cast<float>(m_sampleRate));
 }
 
 
@@ -225,11 +227,11 @@ Uint64 InputSoundFile::getSampleOffset() const
 ////////////////////////////////////////////////////////////
 void InputSoundFile::seek(Uint64 sampleOffset)
 {
-    if (m_reader)
+    if (m_reader && m_channelCount != 0)
     {
         // The reader handles an overrun gracefully, but we
         // pre-check to keep our known position consistent
-        m_sampleOffset = std::min(sampleOffset, m_sampleCount);
+        m_sampleOffset = std::min(sampleOffset / m_channelCount * m_channelCount, m_sampleCount);
         m_reader->seek(m_sampleOffset);
     }
 }
@@ -238,7 +240,7 @@ void InputSoundFile::seek(Uint64 sampleOffset)
 ////////////////////////////////////////////////////////////
 void InputSoundFile::seek(Time timeOffset)
 {
-    seek(static_cast<Uint64>(timeOffset.asSeconds() * m_sampleRate * m_channelCount));
+    seek(static_cast<Uint64>(timeOffset.asSeconds() * static_cast<float>(m_sampleRate)) * m_channelCount);
 }
 
 

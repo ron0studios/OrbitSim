@@ -1,21 +1,9 @@
-# This is an example of how to use FetchContent to easily
-# manage 3rd-party dependencies
-# First, check out src/CMakeLists.txt - it's really simple!
-# Then, check out dependencies directory, it get a bit more complex
-# there, but you'll see how it goes
-#
-# Options:
-# * USE_SYSTEM_DEPS - try to find dependencies using find_package (OFF by default)
-# * LINK_DEPS_STATIC - link to dependencies statically (ON by default)
-#
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.16)
 
-project(imgui-sfml-example
+project(OrbitSim
   VERSION 1.0
   LANGUAGES CXX
 )
 
 add_subdirectory(dependencies)
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/src/fragment.frag
-        DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/src)
 add_subdirectory(src)

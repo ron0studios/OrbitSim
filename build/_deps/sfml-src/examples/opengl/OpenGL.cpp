@@ -3,12 +3,26 @@
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Graphics.hpp>
-#include <SFML/OpenGL.hpp>
+
+#define GLAD_GL_IMPLEMENTATION
+#include <gl.h>
+
+#ifdef SFML_SYSTEM_IOS
+#include <SFML/Main.hpp>
+#endif
 
 #ifndef GL_SRGB8_ALPHA8
 #define GL_SRGB8_ALPHA8 0x8C43
 #endif
 
+std::string resourcesDir()
+{
+#ifdef SFML_SYSTEM_IOS
+    return "";
+#else
+    return "resources/";
+#endif
+}
 
 ////////////////////////////////////////////////////////////
 /// Entry point of application
@@ -35,13 +49,13 @@ int main()
         // Create a sprite for the background
         sf::Texture backgroundTexture;
         backgroundTexture.setSrgb(sRgb);
-        if (!backgroundTexture.loadFromFile("resources/background.jpg"))
+        if (!backgroundTexture.loadFromFile(resourcesDir() + "background.jpg"))
             return EXIT_FAILURE;
         sf::Sprite background(backgroundTexture);
 
         // Create some text to draw on top of our OpenGL object
         sf::Font font;
-        if (!font.loadFromFile("resources/sansation.ttf"))
+        if (!font.loadFromFile(resourcesDir() + "tuffy.ttf"))
             return EXIT_FAILURE;
         sf::Text text("SFML / OpenGL demo", font);
         sf::Text sRgbInstructions("Press space to toggle sRGB conversion", font);
@@ -49,13 +63,13 @@ int main()
         text.setFillColor(sf::Color(255, 255, 255, 170));
         sRgbInstructions.setFillColor(sf::Color(255, 255, 255, 170));
         mipmapInstructions.setFillColor(sf::Color(255, 255, 255, 170));
-        text.setPosition(250.f, 450.f);
-        sRgbInstructions.setPosition(150.f, 500.f);
-        mipmapInstructions.setPosition(180.f, 550.f);
+        text.setPosition(280.f, 450.f);
+        sRgbInstructions.setPosition(175.f, 500.f);
+        mipmapInstructions.setPosition(200.f, 550.f);
 
         // Load a texture to apply to our 3D cube
         sf::Texture texture;
-        if (!texture.loadFromFile("resources/texture.jpg"))
+        if (!texture.loadFromFile(resourcesDir() + "logo.png"))
             return EXIT_FAILURE;
 
         // Attempt to generate a mipmap for our cube texture
@@ -66,22 +80,37 @@ int main()
         // Make the window the active window for OpenGL calls
         window.setActive(true);
 
+        // Load OpenGL or OpenGL ES entry points using glad
+#ifdef SFML_OPENGL_ES
+        gladLoadGLES1(reinterpret_cast<GLADloadfunc>(sf::Context::getFunction));
+#else
+        gladLoadGL(reinterpret_cast<GLADloadfunc>(sf::Context::getFunction));
+#endif
+
         // Enable Z-buffer read and write
         glEnable(GL_DEPTH_TEST);
         glDepthMask(GL_TRUE);
+#ifdef SFML_OPENGL_ES
+        glClearDepthf(1.f);
+#else
         glClearDepth(1.f);
+#endif
 
         // Disable lighting
         glDisable(GL_LIGHTING);
 
         // Configure the viewport (the same size as the window)
-        glViewport(0, 0, window.getSize().x, window.getSize().y);
+        glViewport(0, 0, static_cast<GLsizei>(window.getSize().x), static_cast<GLsizei>(window.getSize().y));
 
         // Setup a perspective projection
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-        GLfloat ratio = static_cast<float>(window.getSize().x) / window.getSize().y;
+        GLfloat ratio = static_cast<float>(window.getSize().x) / static_cast<float>(window.getSize().y);
+#ifdef SFML_OPENGL_ES
+        glFrustumf(-ratio, ratio, -1.f, 1.f, 1.f, 500.f);
+#else
         glFrustum(-ratio, ratio, -1.f, 1.f, 1.f, 500.f);
+#endif
 
         // Bind the texture
         glEnable(GL_TEXTURE_2D);
@@ -180,7 +209,7 @@ int main()
                     if (mipmapEnabled)
                     {
                         // We simply reload the texture to disable mipmapping
-                        if (!texture.loadFromFile("resources/texture.jpg"))
+                        if (!texture.loadFromFile(resourcesDir() + "logo.png"))
                             return EXIT_FAILURE;
 
                         mipmapEnabled = false;
@@ -203,13 +232,28 @@ int main()
                 // Adjust the viewport when the window is resized
                 if (event.type == sf::Event::Resized)
                 {
+                    sf::Vector2u textureSize = backgroundTexture.getSize();
+
                     // Make the window the active window for OpenGL calls
                     window.setActive(true);
 
-                    glViewport(0, 0, event.size.width, event.size.height);
+                    glViewport(0, 0, static_cast<GLsizei>(event.size.width), static_cast<GLsizei>(event.size.height));
+                    glMatrixMode(GL_PROJECTION);
+                    glLoadIdentity();
+                    GLfloat newRatio = static_cast<float>(event.size.width) / static_cast<float>(event.size.height);
+#ifdef SFML_OPENGL_ES
+                    glFrustumf(-newRatio, newRatio, -1.f, 1.f, 1.f, 500.f);
+#else
+                    glFrustum(-newRatio, newRatio, -1.f, 1.f, 1.f, 500.f);
+#endif
 
                     // Make the window no longer the active window for OpenGL calls
                     window.setActive(false);
+
+                    sf::View view;
+                    view.setSize(sf::Vector2f(textureSize));
+                    view.setCenter(sf::Vector2f(textureSize) / 2.f);
+                    window.setView(view);
                 }
             }
 
@@ -224,9 +268,17 @@ int main()
             // Clear the depth buffer
             glClear(GL_DEPTH_BUFFER_BIT);
 
-            // We get the position of the mouse cursor, so that we can move the box accordingly
-            float x =  sf::Mouse::getPosition(window).x * 200.f / window.getSize().x - 100.f;
-            float y = -sf::Mouse::getPosition(window).y * 200.f / window.getSize().y + 100.f;
+            // We get the position of the mouse cursor (or touch), so that we can move the box accordingly
+            sf::Vector2i pos;
+
+            #ifdef SFML_SYSTEM_IOS
+            pos = sf::Touch::getPosition(0);
+            #else
+            pos = sf::Mouse::getPosition(window);
+            #endif
+
+            float x = static_cast<float>(pos.x) * 200.f / static_cast<float>(window.getSize().x) - 100.f;
+            float y = -static_cast<float>(pos.y) * 200.f / static_cast<float>(window.getSize().y) + 100.f;
 
             // Apply some transformations
             glMatrixMode(GL_MODELVIEW);

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -71,7 +71,7 @@ void Transformable::setPosition(const Vector2f& position)
 ////////////////////////////////////////////////////////////
 void Transformable::setRotation(float angle)
 {
-    m_rotation = static_cast<float>(fmod(angle, 360));
+    m_rotation = std::fmod(angle, 360.f);
     if (m_rotation < 0)
         m_rotation += 360.f;
 
@@ -184,8 +184,8 @@ const Transform& Transformable::getTransform() const
     if (m_transformNeedUpdate)
     {
         float angle  = -m_rotation * 3.141592654f / 180.f;
-        float cosine = static_cast<float>(std::cos(angle));
-        float sine   = static_cast<float>(std::sin(angle));
+        float cosine = std::cos(angle);
+        float sine   = std::sin(angle);
         float sxc    = m_scale.x * cosine;
         float syc    = m_scale.y * cosine;
         float sxs    = m_scale.x * sine;

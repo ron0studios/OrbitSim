@@ -1,5 +1,13 @@
 # OrbitSim
- An N-body orbit simulator, optimised with the Barnes-Hut treecode algorithm.
+An N-body orbit simulator, optimised with the Barnes-Hut treecode algorithm.
+
+## Building
+
+```bash
+cmake -B build
+cmake --build build
+./build/src/OrbitSim
+```
 
 ## in action
 ---

@@ -4,13 +4,14 @@
 ////////////////////////////////////////////////////////////
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
+#include <cstring>
 #include <iomanip>
 #include <iostream>
 #include <iterator>
 
 
-const sf::Uint8 audioData   = 1;
-const sf::Uint8 endOfStream = 2;
+const sf::Uint8 serverAudioData   = 1;
+const sf::Uint8 serverEndOfStream = 2;
 
 
 ////////////////////////////////////////////////////////////
@@ -84,7 +85,7 @@ private:
         // (don't forget that we run in two separate threads)
         {
             sf::Lock lock(m_mutex);
-            m_tempBuffer.assign(m_samples.begin() + m_offset, m_samples.end());
+            m_tempBuffer.assign(m_samples.begin() + static_cast<std::vector<sf::Int16>::difference_type>(m_offset), m_samples.end());
         }
 
         // Fill audio data to pass to the stream
@@ -103,7 +104,7 @@ private:
     ////////////////////////////////////////////////////////////
     virtual void onSeek(sf::Time timeOffset)
     {
-        m_offset = timeOffset.asMilliseconds() * getSampleRate() * getChannelCount() / 1000;
+        m_offset = static_cast<std::size_t>(timeOffset.asMilliseconds()) * getSampleRate() * getChannelCount() / 1000;
     }
 
     ////////////////////////////////////////////////////////////
@@ -123,20 +124,21 @@ private:
             sf::Uint8 id;
             packet >> id;
 
-            if (id == audioData)
+            if (id == serverAudioData)
             {
                 // Extract audio samples from the packet, and append it to our samples buffer
-                const sf::Int16* samples     = reinterpret_cast<const sf::Int16*>(static_cast<const char*>(packet.getData()) + 1);
-                std::size_t      sampleCount = (packet.getDataSize() - 1) / sizeof(sf::Int16);
+                std::size_t sampleCount = (packet.getDataSize() - 1) / sizeof(sf::Int16);
 
                 // Don't forget that the other thread can access the sample array at any time
                 // (so we protect any operation on it with the mutex)
                 {
                     sf::Lock lock(m_mutex);
-                    std::copy(samples, samples + sampleCount, std::back_inserter(m_samples));
+                    std::size_t oldSize = m_samples.size();
+                    m_samples.resize(oldSize + sampleCount);
+                    std::memcpy(&(m_samples[oldSize]), static_cast<const char*>(packet.getData()) + 1, sampleCount * sizeof(sf::Int16));
                 }
             }
-            else if (id == endOfStream)
+            else if (id == serverEndOfStream)
             {
                 // End of stream reached: we stop receiving audio data
                 std::cout << "Audio data has been 100% received!" << std::endl;

@@ -47,7 +47,7 @@ void Simulator::updateForces(bool bruteForce) {
     // but rather by looping through every body for each body, in an 
     // O(N^2) algorithm. It is more accurate but painfully slow
     if(bruteForce) {
-        int num_threads = 16;
+        int num_threads = 40;
         std::vector<std::thread> threads(num_threads);
 
         for(int i = 0; i < num_threads; i++){
@@ -76,8 +76,16 @@ void Simulator::updateForces(bool bruteForce) {
     // if the bruteforce parameter is not set we use the quadtree to update
     // each of the bodies using tree.updateForce
     int num_threads = 16;
-    std::vector<std::thread> threads(num_threads);
+    //std::vector<std::thread> threads(num_threads);
 
+	#pragma omp parallel for
+	for(int i = 0;i < bodies.size(); i++){
+		tree.updateForce(&bodies[i], 0.5);
+		maxForce = std::max(maxForce, std::sqrt(std::pow(bodies[i].velocity.x,2) + std::pow(bodies[i].velocity.y,2)));
+	}
+
+	
+	/*
     for(int i = 0; i < num_threads; i++){
         threads[i] = std::thread([this](int i, int n){
 
@@ -89,10 +97,11 @@ void Simulator::updateForces(bool bruteForce) {
                 //calcForce(bodies[j]);
         },i, std::ceil((double)bodies.size()/num_threads));
     }
+	*/
 
 
-    for(int i = 0; i < num_threads; i++)
-        threads[i].join();
+    //for(int i = 0; i < num_threads; i++)
+        //threads[i].join();
 }
 
 // draws each body by iterating through the bodies list

@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -46,7 +46,7 @@ Sprite::Sprite(const Texture& texture) :
 m_texture    (NULL),
 m_textureRect()
 {
-    setTexture(texture);
+    setTexture(texture, true);
 }
 
 
@@ -55,8 +55,10 @@ Sprite::Sprite(const Texture& texture, const IntRect& rectangle) :
 m_texture    (NULL),
 m_textureRect()
 {
-    setTexture(texture);
+    // Compute the texture area
     setTextureRect(rectangle);
+    // Assign texture
+    setTexture(texture, false);
 }
 
 
@@ -65,7 +67,10 @@ void Sprite::setTexture(const Texture& texture, bool resetRect)
 {
     // Recompute the texture area if requested, or if there was no valid texture & rect before
     if (resetRect || (!m_texture && (m_textureRect == sf::IntRect())))
-        setTextureRect(IntRect(0, 0, texture.getSize().x, texture.getSize().y));
+    {
+        Vector2i size = Vector2i(texture.getSize());
+        setTextureRect(IntRect(0, 0, size.x, size.y));
+    }
 
     // Assign the new texture
     m_texture = &texture;
@@ -160,10 +165,12 @@ void Sprite::updatePositions()
 ////////////////////////////////////////////////////////////
 void Sprite::updateTexCoords()
 {
-    float left   = static_cast<float>(m_textureRect.left);
-    float right  = left + m_textureRect.width;
-    float top    = static_cast<float>(m_textureRect.top);
-    float bottom = top + m_textureRect.height;
+    FloatRect convertedTextureRect = FloatRect(m_textureRect);
+
+    float left   = convertedTextureRect.left;
+    float right  = left + convertedTextureRect.width;
+    float top    = convertedTextureRect.top;
+    float bottom = top + convertedTextureRect.height;
 
     m_vertices[0].texCoords = Vector2f(left, top);
     m_vertices[1].texCoords = Vector2f(left, bottom);

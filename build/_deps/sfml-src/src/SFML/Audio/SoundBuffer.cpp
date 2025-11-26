@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -34,6 +34,13 @@
 #include <SFML/System/Err.hpp>
 #include <memory>
 
+#if defined(__APPLE__)
+    #if defined(__clang__)
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    #elif defined(__GNUC__)
+        #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    #endif
+#endif
 
 namespace sf
 {
@@ -179,7 +186,7 @@ unsigned int SoundBuffer::getSampleRate() const
     ALint sampleRate;
     alCheck(alGetBufferi(m_buffer, AL_FREQUENCY, &sampleRate));
 
-    return sampleRate;
+    return static_cast<unsigned int>(sampleRate);
 }
 
 
@@ -189,7 +196,7 @@ unsigned int SoundBuffer::getChannelCount() const
     ALint channelCount;
     alCheck(alGetBufferi(m_buffer, AL_CHANNELS, &channelCount));
 
-    return channelCount;
+    return static_cast<unsigned int>(channelCount);
 }
 
 
@@ -261,11 +268,11 @@ bool SoundBuffer::update(unsigned int channelCount, unsigned int sampleRate)
         (*it)->resetBuffer();
 
     // Fill the buffer
-    ALsizei size = static_cast<ALsizei>(m_samples.size()) * sizeof(Int16);
-    alCheck(alBufferData(m_buffer, format, &m_samples[0], size, sampleRate));
+    ALsizei size = static_cast<ALsizei>(m_samples.size() * sizeof(Int16));
+    alCheck(alBufferData(m_buffer, format, &m_samples[0], size, static_cast<ALsizei>(sampleRate)));
 
     // Compute the duration
-    m_duration = seconds(static_cast<float>(m_samples.size()) / sampleRate / channelCount);
+    m_duration = seconds(static_cast<float>(m_samples.size()) / static_cast<float>(sampleRate) / static_cast<float>(channelCount));
 
     // Now reattach the buffer to the sounds that use it
     for (SoundList::const_iterator it = sounds.begin(); it != sounds.end(); ++it)

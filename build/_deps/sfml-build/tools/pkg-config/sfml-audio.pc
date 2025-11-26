@@ -6,7 +6,7 @@ includedir=${prefix}/include
 Name: SFML-audio
 Description: The Simple and Fast Multimedia Library, audio module.
 URL: http://www.sfml-dev.org
-Version: 2.5.1
+Version: 2.6.1
 Requires: sfml-system
 Requires.private: openal, vorbisenc, vorbisfile, vorbis, ogg, flac
 Libs: -L${libdir} -lsfml-audio

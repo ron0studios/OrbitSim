@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -69,8 +69,8 @@ a(alpha)
 
 ////////////////////////////////////////////////////////////
 Color::Color(Uint32 color) :
-r((color & 0xff000000) >> 24),
-g((color & 0x00ff0000) >> 16),
+r(static_cast<Uint8>((color & 0xff000000) >> 24)),
+g(static_cast<Uint8>((color & 0x00ff0000) >> 16)),
 b((color & 0x0000ff00) >> 8 ),
 a((color & 0x000000ff) >> 0 )
 {
@@ -81,7 +81,7 @@ a((color & 0x000000ff) >> 0 )
 ////////////////////////////////////////////////////////////
 Uint32 Color::toInteger() const
 {
-    return (r << 24) | (g << 16) | (b << 8) | a;
+    return static_cast<Uint32>((r << 24) | (g << 16) | (b << 8) | a);
 }
 
 

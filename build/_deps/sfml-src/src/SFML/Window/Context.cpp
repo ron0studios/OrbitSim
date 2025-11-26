@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -32,8 +32,12 @@
 
 namespace
 {
-    // This per-thread variable holds the current context for each thread
-    sf::ThreadLocalPtr<sf::Context> currentContext(NULL);
+    // A nested named namespace is used here to allow unity builds of SFML.
+    namespace ContextImpl
+    {
+        // This per-thread variable holds the current context for each thread
+        sf::ThreadLocalPtr<sf::Context> currentContext(NULL);
+    }
 }
 
 namespace sf
@@ -60,7 +64,7 @@ bool Context::setActive(bool active)
     bool result = m_context->setActive(active);
 
     if (result)
-        currentContext = (active ? this : NULL);
+        ContextImpl::currentContext = (active ? this : NULL);
 
     return result;
 }
@@ -76,7 +80,13 @@ const ContextSettings& Context::getSettings() const
 ////////////////////////////////////////////////////////////
 const Context* Context::getActiveContext()
 {
-    return currentContext;
+    using ContextImpl::currentContext;
+
+    // We have to check that the last activated sf::Context is still active (a RenderTarget activation may have deactivated it)
+    if (currentContext && currentContext->m_context == priv::GlContext::getActiveContext())
+        return currentContext;
+    else
+        return NULL;
 }
 
 

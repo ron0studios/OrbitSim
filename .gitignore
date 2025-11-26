@@ -31,5 +31,9 @@
 *.out
 *.app
 
+build/
 cmake-build-debug/
 cmake-build-release/
+.idea/
+imgui.ini
+*.tar.gz

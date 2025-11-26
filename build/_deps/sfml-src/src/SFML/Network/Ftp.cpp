@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -60,8 +60,8 @@ private:
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    Ftp&      m_ftp;        ///< Reference to the owner Ftp instance
-    TcpSocket m_dataSocket; ///< Socket used for data transfers
+    Ftp&      m_ftp;        //!< Reference to the owner Ftp instance
+    TcpSocket m_dataSocket; //!< Socket used for data transfers
 };
 
 
@@ -366,7 +366,7 @@ Ftp::Response Ftp::sendCommand(const std::string& command, const std::string& pa
 {
     // Build the command string
     std::string commandStr;
-    if (parameter != "")
+    if (!parameter.empty())
         commandStr = command + " " + parameter + "\r\n";
     else
         commandStr = command + "\r\n";
@@ -549,7 +549,7 @@ Ftp::Response Ftp::DataChannel::open(Ftp::TransferMode mode)
                 // Extract the current number
                 while (isdigit(str[index]))
                 {
-                    data[i] = data[i] * 10 + (str[index] - '0');
+                    data[i] = static_cast<Uint8>(static_cast<Uint8>(data[i] * 10) + static_cast<Uint8>(str[index] - '0'));
                     index++;
                 }
 
@@ -558,11 +558,11 @@ Ftp::Response Ftp::DataChannel::open(Ftp::TransferMode mode)
             }
 
             // Reconstruct connection port and address
-            unsigned short port = data[4] * 256 + data[5];
-            IpAddress address(static_cast<Uint8>(data[0]),
-                              static_cast<Uint8>(data[1]),
-                              static_cast<Uint8>(data[2]),
-                              static_cast<Uint8>(data[3]));
+            unsigned short port = static_cast<Uint16>(data[4] * 256 + data[5]);
+            IpAddress address(data[0],
+                              data[1],
+                              data[2],
+                              data[3]);
 
             // Connect the data channel to the server
             if (m_dataSocket.connect(address, port) == Socket::Done)

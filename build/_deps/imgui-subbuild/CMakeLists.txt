@@ -1,7 +1,7 @@
 # Distributed under the OSI-approved BSD 3-Clause License.  See accompanying
-# file Copyright.txt or https://cmake.org/licensing for details.
+# file LICENSE.rst or https://cmake.org/licensing for details.
 
-cmake_minimum_required(VERSION 3.27.7)
+cmake_minimum_required(VERSION 4.1.0)
 
 # Reject any attempt to use a toolchain file. We must not use one because
 # we could be downloading it here. If the CMAKE_TOOLCHAIN_FILE environment
@@ -20,8 +20,8 @@ project(imgui-populate NONE)
 include(ExternalProject)
 ExternalProject_Add(imgui-populate
                      "UPDATE_DISCONNECTED" "False" "DOWNLOAD_EXTRACT_TIMESTAMP" "TRUE" "EXTERNALPROJECT_INTERNAL_ARGUMENT_SEPARATOR" "URL" "https://github.com/ocornut/imgui/archive/v1.89.zip"
-                    SOURCE_DIR          "/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-src"
-                    BINARY_DIR          "/home/ron0/imgui-sfml-fetchcontent/build/_deps/imgui-build"
+                    SOURCE_DIR          "/home/ron0/development/cpp-projects/OrbitSim/build/_deps/imgui-src"
+                    BINARY_DIR          "/home/ron0/development/cpp-projects/OrbitSim/build/_deps/imgui-build"
                     CONFIGURE_COMMAND   ""
                     BUILD_COMMAND       ""
                     INSTALL_COMMAND     ""

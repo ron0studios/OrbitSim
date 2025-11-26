@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -73,7 +73,9 @@ std::vector<VideoMode> VideoModeImpl::getFullscreenModes()
                             for (int j = 0; j < nbSizes; ++j)
                             {
                                 // Convert to VideoMode
-                                VideoMode mode(sizes[j].width, sizes[j].height, depths[i]);
+                                VideoMode mode(static_cast<unsigned int>(sizes[j].width),
+                                               static_cast<unsigned int>(sizes[j].height),
+                                               static_cast<unsigned int>(depths[i]));
 
                                 Rotation currentRotation;
                                 XRRConfigRotations(config, &currentRotation);
@@ -149,12 +151,14 @@ VideoMode VideoModeImpl::getDesktopMode()
                 XRRScreenSize* sizes = XRRConfigSizes(config, &nbSizes);
                 if (sizes && (nbSizes > 0))
                 {
-                    desktopMode = VideoMode(sizes[currentMode].width, sizes[currentMode].height, DefaultDepth(display, screen));
+                    desktopMode = VideoMode(static_cast<unsigned int>(sizes[currentMode].width),
+                                            static_cast<unsigned int>(sizes[currentMode].height),
+                                            static_cast<unsigned int>(DefaultDepth(display, screen)));
 
-                    Rotation currentRotation;
-                    XRRConfigRotations(config, &currentRotation);
+                    Rotation modeRotation;
+                    XRRConfigRotations(config, &modeRotation);
 
-                    if (currentRotation == RR_Rotate_90 || currentRotation == RR_Rotate_270)
+                    if (modeRotation == RR_Rotate_90 || modeRotation == RR_Rotate_270)
                         std::swap(desktopMode.width, desktopMode.height);
                 }
 

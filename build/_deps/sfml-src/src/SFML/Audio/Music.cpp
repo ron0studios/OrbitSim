@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -30,7 +30,15 @@
 #include <SFML/System/Lock.hpp>
 #include <SFML/System/Err.hpp>
 #include <fstream>
+#include <algorithm>
 
+#if defined(__APPLE__)
+    #if defined(__clang__)
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    #elif defined(__GNUC__)
+        #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    #endif
+#endif
 
 namespace sf
 {
@@ -219,7 +227,7 @@ Int64 Music::onLoop()
         // Looping is enabled, and either we're at the loop end, or we're at the EOF
         // when it's equivalent to the loop end (loop end takes priority). Send us to loop begin
         m_file.seek(m_loopSpan.offset);
-        return m_file.getSampleOffset();
+        return static_cast<Int64>(m_file.getSampleOffset());
     }
     else if (getLoop() && (currentOffset >= m_file.getSampleCount()))
     {
@@ -252,7 +260,7 @@ Uint64 Music::timeToSamples(Time position) const
     // This avoids most precision errors arising from "samples => Time => samples" conversions
     // Original rounding calculation is ((Micros * Freq * Channels) / 1000000) + 0.5
     // We refactor it to keep Int64 as the data type throughout the whole operation.
-    return ((position.asMicroseconds() * getSampleRate() * getChannelCount()) + 500000) / 1000000;
+    return ((static_cast<Uint64>(position.asMicroseconds()) * getSampleRate() * getChannelCount()) + 500000) / 1000000;
 }
 
 
@@ -263,7 +271,7 @@ Time Music::samplesToTime(Uint64 samples) const
 
     // Make sure we don't divide by 0
     if (getSampleRate() != 0 && getChannelCount() != 0)
-        position = microseconds((samples * 1000000) / (getChannelCount() * getSampleRate()));
+        position = microseconds(static_cast<Int64>((samples * 1000000) / (getChannelCount() * getSampleRate())));
 
     return position;
 }

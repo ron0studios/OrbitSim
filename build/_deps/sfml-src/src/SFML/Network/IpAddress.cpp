@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -69,7 +69,7 @@ m_valid  (false)
 
 ////////////////////////////////////////////////////////////
 IpAddress::IpAddress(Uint8 byte0, Uint8 byte1, Uint8 byte2, Uint8 byte3) :
-m_address(htonl((byte0 << 24) | (byte1 << 16) | (byte2 << 8) | byte3)),
+m_address(htonl(static_cast<Uint32>((byte0 << 24) | (byte1 << 16) | (byte2 << 8) | byte3))),
 m_valid  (true)
 {
 }
@@ -198,7 +198,9 @@ void IpAddress::resolve(const std::string& address)
             {
                 if (result)
                 {
-                    ip = reinterpret_cast<sockaddr_in*>(result->ai_addr)->sin_addr.s_addr;
+                    sockaddr_in sin;
+                    std::memcpy(&sin, result->ai_addr, sizeof(*result->ai_addr));
+                    ip = sin.sin_addr.s_addr;
                     freeaddrinfo(result);
                     m_address = ip;
                     m_valid = true;

@@ -88,12 +88,12 @@ namespace
 int main()
 {
     // Create the window of the application
-    sf::RenderWindow window(sf::VideoMode(400, 680), "Joystick", sf::Style::Close);
+    sf::RenderWindow window(sf::VideoMode(400, 775), "Joystick", sf::Style::Close);
     window.setVerticalSyncEnabled(true);
 
     // Load the text font
     sf::Font font;
-    if (!font.loadFromFile("resources/sansation.ttf"))
+    if (!font.loadFromFile("resources/tuffy.ttf"))
         return EXIT_FAILURE;
 
     // Set up our string conversion parameters
@@ -122,10 +122,10 @@ int main()
     {
         JoystickObject& object = texts[axislabels[i]];
 
-        object.label.setPosition(5.f, 5.f + ((i + 4) * font.getLineSpacing(14)));
+        object.label.setPosition(5.f, 5.f + (static_cast<float>(i + 4) * font.getLineSpacing(14)));
         object.label.setString(std::string(axislabels[i]) + ":");
 
-        object.value.setPosition(80.f, 5.f + ((i + 4) * font.getLineSpacing(14)));
+        object.value.setPosition(80.f, 5.f + (static_cast<float>(i + 4) * font.getLineSpacing(14)));
         object.value.setString("N/A");
     }
 
@@ -135,10 +135,10 @@ int main()
         sstr << "Button " << i;
         JoystickObject& object = texts[sstr.str()];
 
-        object.label.setPosition(5.f, 5.f + ((sf::Joystick::AxisCount + i + 4) * font.getLineSpacing(14)));
+        object.label.setPosition(5.f, 5.f + (static_cast<float>(sf::Joystick::AxisCount + i + 4) * font.getLineSpacing(14)));
         object.label.setString(sstr.str() + ":");
 
-        object.value.setPosition(80.f, 5.f + ((sf::Joystick::AxisCount + i + 4) * font.getLineSpacing(14)));
+        object.value.setPosition(80.f, 5.f + (static_cast<float>(sf::Joystick::AxisCount + i + 4) * font.getLineSpacing(14)));
         object.value.setString("N/A");
     }
 

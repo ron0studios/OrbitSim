@@ -3,10 +3,10 @@
 # No other meaning or use of this file is supported.
 
 method=url
-command=/usr/bin/cmake;-P;/home/ron0/imgui-sfml-fetchcontent/build/_deps/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/download-sfml-populate.cmake;COMMAND;/usr/bin/cmake;-P;/home/ron0/imgui-sfml-fetchcontent/build/_deps/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/verify-sfml-populate.cmake;COMMAND;/usr/bin/cmake;-P;/home/ron0/imgui-sfml-fetchcontent/build/_deps/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/extract-sfml-populate.cmake
-source_dir=/home/ron0/imgui-sfml-fetchcontent/build/_deps/sfml-src
-work_dir=/home/ron0/imgui-sfml-fetchcontent/build/_deps
-url(s)=https://github.com/SFML/SFML/archive/2.5.1.zip
+command=/usr/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/home/ron0/development/cpp-projects/OrbitSim/build/_deps/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/download-sfml-populate.cmake;COMMAND;/usr/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/home/ron0/development/cpp-projects/OrbitSim/build/_deps/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/verify-sfml-populate.cmake;COMMAND;/usr/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/home/ron0/development/cpp-projects/OrbitSim/build/_deps/sfml-subbuild/sfml-populate-prefix/src/sfml-populate-stamp/extract-sfml-populate.cmake
+source_dir=/home/ron0/development/cpp-projects/OrbitSim/build/_deps/sfml-src
+work_dir=/home/ron0/development/cpp-projects/OrbitSim/build/_deps
+url(s)=https://github.com/SFML/SFML/archive/2.6.1.zip
 hash=
-no_extract=
+      no_extract=
 

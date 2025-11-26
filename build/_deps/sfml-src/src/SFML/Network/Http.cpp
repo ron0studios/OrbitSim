@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -79,7 +79,7 @@ void Http::Request::setUri(const std::string& uri)
 
     // Make sure it starts with a '/'
     if (m_uri.empty() || (m_uri[0] != '/'))
-        m_uri.insert(0, "/");
+        m_uri.insert(m_uri.begin(), '/');
 }
 
 
@@ -208,8 +208,8 @@ void Http::Response::parse(const std::string& data)
             (toLower(version.substr(0, 5)) == "http/")   &&
              isdigit(version[5]) && isdigit(version[7]))
         {
-            m_majorVersion = version[5] - '0';
-            m_minorVersion = version[7] - '0';
+            m_majorVersion = static_cast<unsigned int>(version[5] - '0');
+            m_minorVersion = static_cast<unsigned int>(version[7] - '0');
         }
         else
         {
@@ -261,7 +261,10 @@ void Http::Response::parse(const std::string& data)
             std::istreambuf_iterator<char> it(in);
             std::istreambuf_iterator<char> itEnd;
             for (std::size_t i = 0; ((i < length) && (it != itEnd)); i++)
-                m_body.push_back(*it++);
+            {
+                m_body.push_back(*it);
+                ++it; // Iterate in separate expression to work around false positive -Wnull-dereference warning in GCC 12.1.0
+            }
         }
 
         // Drop the rest of the line (chunk-extension)
@@ -327,7 +330,7 @@ void Http::setHost(const std::string& host, unsigned short port)
     {
         // HTTPS protocol -- unsupported (requires encryption and certificates and stuff...)
         err() << "HTTPS protocol is not supported by sf::Http" << std::endl;
-        m_hostName = "";
+        m_hostName.clear();
         m_port     = 0;
     }
     else

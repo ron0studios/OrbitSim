@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -42,10 +42,10 @@ namespace sf
 ////////////////////////////////////////////////////////////
 struct SocketSelector::SocketSelectorImpl
 {
-    fd_set allSockets;   ///< Set containing all the sockets handles
-    fd_set socketsReady; ///< Set containing handles of the sockets that are ready
-    int    maxSocket;    ///< Maximum socket handle
-    int    socketCount;  ///< Number of socket handles
+    fd_set allSockets;   //!< Set containing all the sockets handles
+    fd_set socketsReady; //!< Set containing handles of the sockets that are ready
+    int    maxSocket;    //!< Maximum socket handle
+    int    socketCount;  //!< Number of socket handles
 };
 
 
@@ -158,7 +158,7 @@ bool SocketSelector::wait(Time timeout)
     // Setup the timeout
     timeval time;
     time.tv_sec  = static_cast<long>(timeout.asMicroseconds() / 1000000);
-    time.tv_usec = static_cast<long>(timeout.asMicroseconds() % 1000000);
+    time.tv_usec = static_cast<int>(timeout.asMicroseconds() % 1000000);
 
     // Initialize the set that will contain the sockets that are ready
     m_impl->socketsReady = m_impl->allSockets;

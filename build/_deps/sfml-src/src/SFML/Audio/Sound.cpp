@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Laurent Gomila (laurent@sfml-dev.org)
+// Copyright (C) 2007-2023 Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -29,6 +29,13 @@
 #include <SFML/Audio/SoundBuffer.hpp>
 #include <SFML/Audio/ALCheck.hpp>
 
+#if defined(__APPLE__)
+    #if defined(__clang__)
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    #elif defined(__GNUC__)
+        #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    #endif
+#endif
 
 namespace sf
 {
@@ -101,7 +108,7 @@ void Sound::setBuffer(const SoundBuffer& buffer)
     // Assign and use the new buffer
     m_buffer = &buffer;
     m_buffer->attachSound(this);
-    alCheck(alSourcei(m_source, AL_BUFFER, m_buffer->m_buffer));
+    alCheck(alSourcei(m_source, AL_BUFFER, static_cast<ALint>(m_buffer->m_buffer)));
 }
 
 
@@ -159,6 +166,10 @@ Sound& Sound::operator =(const Sound& right)
     // Here we don't use the copy-and-swap idiom, because it would mess up
     // the list of sound instances contained in the buffers and unnecessarily
     // destroy/create OpenAL sound sources
+
+    // Handle self-assignment here, as no copy-and-swap idiom is being used
+    if (this == &right)
+        return *this;
 
     // Delegate to base class, which copies all the sound attributes
     SoundSource::operator=(right);

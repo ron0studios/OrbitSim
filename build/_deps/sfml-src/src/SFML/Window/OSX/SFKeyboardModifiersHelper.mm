@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // SFML - Simple and Fast Multimedia Library
-// Copyright (C) 2007-2018 Marco Antognini (antognini.marco@gmail.com),
+// Copyright (C) 2007-2023 Marco Antognini (antognini.marco@gmail.com),
 //                         Laurent Gomila (laurent@sfml-dev.org)
 //
 // This software is provided 'as-is', without any express or implied warranty.
@@ -29,6 +29,14 @@
 #include <SFML/Window/OSX/WindowImplCocoa.hpp>
 
 #import <SFML/Window/OSX/SFKeyboardModifiersHelper.h>
+
+#if defined(__APPLE__)
+    #if defined(__clang__)
+        #pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    #elif defined(__GNUC__)
+        #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+    #endif
+#endif
 
 
 ////////////////////////////////////////////////////////////
@@ -61,6 +69,7 @@ struct ModifiersState
     BOOL leftAlternateWasDown;
     BOOL leftControlWasDown;
     BOOL rightControlWasDown;
+    BOOL capsLockWasOn;
 };
 
 
@@ -92,6 +101,7 @@ BOOL isKeyMaskActive(NSUInteger modifiers, NSUInteger mask);
 ////////////////////////////////////////////////////////////
 void processOneModifier(NSUInteger modifiers, NSUInteger mask,
                         BOOL& wasDown, sf::Keyboard::Key key,
+                        sf::Keyboard::Scancode code,
                         sf::priv::WindowImplCocoa& requester);
 
 
@@ -105,6 +115,7 @@ void processLeftRightModifiers(NSUInteger modifiers,
                                NSUInteger leftMask, NSUInteger rightMask,
                                BOOL& leftWasDown, BOOL& rightWasDown,
                                sf::Keyboard::Key leftKey, sf::Keyboard::Key rightKey,
+                               sf::Keyboard::Scancode leftCode, sf::Keyboard::Scancode rightCode,
                                sf::priv::WindowImplCocoa& requester);
 
 
@@ -130,20 +141,22 @@ void initialiseKeyboardHelper(void)
     state.rightAlternateWasDown   = isKeyMaskActive(modifiers, NSRightAlternateKeyMask);
     state.leftControlWasDown      = isKeyMaskActive(modifiers, NSLeftControlKeyMask);
     state.rightControlWasDown     = isKeyMaskActive(modifiers, NSRightControlKeyMask);
+    state.capsLockWasOn           = isKeyMaskActive(modifiers, NSEventModifierFlagCapsLock);
 
     isStateInitialized = YES;
 }
 
 
 ////////////////////////////////////////////////////////
-sf::Event::KeyEvent keyEventWithModifiers(NSUInteger modifiers, sf::Keyboard::Key key)
+sf::Event::KeyEvent keyEventWithModifiers(NSUInteger modifiers, sf::Keyboard::Key key, sf::Keyboard::Scancode code)
 {
     sf::Event::KeyEvent event;
-    event.code    = key;
-    event.alt     = modifiers & NSAlternateKeyMask;
-    event.control = modifiers & NSControlKeyMask;
-    event.shift   = modifiers & NSShiftKeyMask;
-    event.system  = modifiers & NSCommandKeyMask;
+    event.code     = key;
+    event.scancode = code;
+    event.alt      = modifiers & NSAlternateKeyMask;
+    event.control  = modifiers & NSControlKeyMask;
+    event.shift    = modifiers & NSShiftKeyMask;
+    event.system   = modifiers & NSCommandKeyMask;
 
     return event;
 }
@@ -158,6 +171,7 @@ void handleModifiersChanged(NSUInteger modifiers, sf::priv::WindowImplCocoa& req
         NSLeftShiftKeyMask, NSRightShiftKeyMask,
         state.leftShiftWasDown, state.rightShiftWasDown,
         sf::Keyboard::LShift, sf::Keyboard::RShift,
+        sf::Keyboard::Scan::LShift, sf::Keyboard::Scan::RShift,
         requester
     );
 
@@ -167,6 +181,7 @@ void handleModifiersChanged(NSUInteger modifiers, sf::priv::WindowImplCocoa& req
         NSLeftCommandKeyMask, NSRightCommandKeyMask,
         state.leftCommandWasDown, state.rightCommandWasDown,
         sf::Keyboard::LSystem, sf::Keyboard::RSystem,
+        sf::Keyboard::Scan::LSystem, sf::Keyboard::Scan::RSystem,
         requester
     );
 
@@ -176,6 +191,7 @@ void handleModifiersChanged(NSUInteger modifiers, sf::priv::WindowImplCocoa& req
         NSLeftAlternateKeyMask, NSRightAlternateKeyMask,
         state.leftAlternateWasDown, state.rightAlternateWasDown,
         sf::Keyboard::LAlt, sf::Keyboard::RAlt,
+        sf::Keyboard::Scan::LAlt, sf::Keyboard::Scan::RAlt,
         requester
     );
 
@@ -185,6 +201,17 @@ void handleModifiersChanged(NSUInteger modifiers, sf::priv::WindowImplCocoa& req
         NSLeftControlKeyMask, NSRightControlKeyMask,
         state.leftControlWasDown, state.rightControlWasDown,
         sf::Keyboard::LControl, sf::Keyboard::RControl,
+        sf::Keyboard::Scan::LControl, sf::Keyboard::Scan::RControl,
+        requester
+    );
+
+    // Handle caps lock
+    processOneModifier(
+        modifiers,
+        NSEventModifierFlagCapsLock,
+        state.capsLockWasOn,
+        sf::Keyboard::Unknown,
+        sf::Keyboard::Scan::CapsLock,
         requester
     );
 }
@@ -203,10 +230,11 @@ BOOL isKeyMaskActive(NSUInteger modifiers, NSUInteger mask)
 ////////////////////////////////////////////////////////
 void processOneModifier(NSUInteger modifiers, NSUInteger mask,
                         BOOL& wasDown, sf::Keyboard::Key key,
+                        sf::Keyboard::Scancode code,
                         sf::priv::WindowImplCocoa& requester)
 {
     // Setup a potential event key.
-    sf::Event::KeyEvent event = keyEventWithModifiers(modifiers, key);
+    sf::Event::KeyEvent event = keyEventWithModifiers(modifiers, key, code);
 
     // State
     BOOL isDown = isKeyMaskActive(modifiers, mask);
@@ -231,10 +259,11 @@ void processLeftRightModifiers(NSUInteger modifiers,
                                NSUInteger leftMask, NSUInteger rightMask,
                                BOOL& leftWasDown, BOOL& rightWasDown,
                                sf::Keyboard::Key leftKey, sf::Keyboard::Key rightKey,
+                               sf::Keyboard::Scancode leftCode, sf::Keyboard::Scancode rightCode,
                                sf::priv::WindowImplCocoa& requester)
 {
-    processOneModifier(modifiers, leftMask,  leftWasDown,  leftKey,  requester);
-    processOneModifier(modifiers, rightMask, rightWasDown, rightKey, requester);
+    processOneModifier(modifiers, leftMask,  leftWasDown,  leftKey,  leftCode,  requester);
+    processOneModifier(modifiers, rightMask, rightWasDown, rightKey, rightCode, requester);
 }
 
 

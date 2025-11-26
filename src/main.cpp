@@ -20,8 +20,8 @@
 // c_vely: the velocity of the cluster in the y direction relative to other galaxies
 // radial: the outward radial velocity of the stars
 // massvar: the range of values that the starmass could take.
-void addGalaxy(Simulator& sim, double starnum, double starmass, double c_mass, double rad, double rotspeed, double cx, double cy, double c_velx, double c_vely, double radial=0, double massvar = 10.0){
-    int num_threads = 16;
+void addGalaxy(Simulator& sim, double starnum, double starmass, double c_mass, double rad, double rotspeed, double cx, double cy, double c_velx, double c_vely, double radial=0, double massvar = 10.0, double gap = 0.0){
+    int num_threads = 40;
     std::vector<std::thread> threads(num_threads);
     std::vector<Body*> ptrarr((int)starnum,nullptr);
 
@@ -30,11 +30,10 @@ void addGalaxy(Simulator& sim, double starnum, double starmass, double c_mass, d
         threads[i] = std::thread([&](int i, int n){
             for(int j = i*n; j < ((i+1)*n); j++) {
                 if(j >= starnum) break;
-
                 // the following maths uses polar coordinates to position each of the stars randomly in space
                 double radius = rad;
                 double rnd = rand();
-                double r = radius * sqrt( pow((double)rand()/RAND_MAX, 2));
+                double r = radius * sqrt( pow((double)rand()/RAND_MAX, 2)) + gap;
                 double theta = ((double)rnd/RAND_MAX) * 2 * M_PI;
                 double x = r * cos(theta);
                 double y = r * sin(theta);
@@ -48,6 +47,66 @@ void addGalaxy(Simulator& sim, double starnum, double starmass, double c_mass, d
                 double velradx = radial*x;
                 double velrady = radial*y;
                 ptrarr[j] = new Body(starmass * rnd2 * 10,20 * rnd2,sf::Vector2<double>(x+cx, y+cy), sf::Vector2<double>(velx + c_velx + velradx,vely + c_vely + velrady));
+            }
+
+        },i,std::ceil((double)starnum/num_threads));
+    }
+
+    // the 16 threads are before exiting scope to prevent memory issues
+    for(int i = 0; i < num_threads; i++) {
+        threads[i].join();
+    }
+
+    // nullcount is recorded as a precautionary measure of how many threads failed to execute
+    int nullcount = 0;
+    for(int i = 0; i < starnum; i++){
+        if(ptrarr[i] == nullptr){
+            nullcount++;
+        }
+        sim.addBody(*ptrarr[i]);
+    }
+    std::cout << nullcount << std::endl;
+
+    // since all bodies are now added to the simulation, the original pointers can be deleted to avoid memory leaks
+    for(Body* b : ptrarr)
+        delete b;
+    ptrarr.clear();
+
+    if(c_mass) sim.addBody(Body(c_mass,10,sf::Vector2<double>(cx, cy), sf::Vector2<double>(c_velx, c_vely)));
+}
+
+
+
+void addRing(Simulator& sim, double starnum, double starmass, double c_mass, double rad, double rotspeed, double cx, double cy, double c_velx, double c_vely, double radial=0, double massvar = 10.0, double gap = 0.0){
+    int num_threads = 40;
+    std::vector<std::thread> threads(num_threads);
+    std::vector<Body*> ptrarr((int)starnum,nullptr);
+
+    // 16 threads are created to iterate through 1/16th of the starnum
+    for(int i = 0; i < num_threads; i++){
+        threads[i] = std::thread([&](int i, int n){
+            for(int j = i*n; j < ((i+1)*n); j++) {
+                if(j >= starnum) break;
+                // the following maths uses polar coordinates to position each of the stars randomly in space
+                double radius = rad;
+                double rnd = rand();
+                double r = radius * sqrt( pow((double)rand()/RAND_MAX, 2)) + gap;
+                double theta = ((double)rnd/RAND_MAX) * 2 * M_PI;
+                double x = r * cos(theta);
+                double y = r * sin(theta);
+
+                // the following maths calculates the velocity of each star based on its angle to the center
+                double rnd2 = (((double)rand()/ RAND_MAX)*massvar);
+                //double velx = -cos(M_PI*0.5 - (theta)) *  500 * (2- r/radius) * rotspeed;
+                //double vely =  sin(M_PI*0.5 - (theta)) *  500 * (2- r/radius) * rotspeed;
+
+                double velx = -cos(M_PI*0.5 - theta)* sqrt((c_mass+starmass*10)/(0.001*gap));
+                double vely = sin(M_PI*0.5 - theta)*  sqrt((c_mass+starmass*10)/(0.001*gap));
+
+                // the following applies the radial velocity to each star
+                double velradx = radial*x;
+                double velrady = radial*y;
+                ptrarr[j] = new Body(starmass * 10,20 * rnd2,sf::Vector2<double>(x+cx, y+cy), sf::Vector2<double>(velx + c_velx + velradx,vely + c_vely + velrady));
             }
 
         },i,std::ceil((double)starnum/num_threads));
@@ -121,6 +180,8 @@ int main()
     sf::Vector2f contextpos; // the position of the topmost context popup
     Body* contextbody = nullptr; // the selected single body
 
+
+    //addRing(space,10000,0.00001,100000,100,1,0,0,0,0,0,0.5,500);
 
     // a preliminary check to see whether any bodies are directly coinciding with each other. 
     // if this is the case we notify the user, since the simulation cannot proceed with direct collision

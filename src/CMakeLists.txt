@@ -3,6 +3,7 @@ add_executable(OrbitSim
     Body.cpp
     QuadTree.cpp
     Simulator.cpp
+    GUI.cpp
 )
 
 target_include_directories(OrbitSim

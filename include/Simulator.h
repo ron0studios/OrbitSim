@@ -5,7 +5,6 @@
 #include "QuadTree.h"
 #include <vector>
 #include <math.h>
-#include <mutex>
 
 #ifndef ORBITSIM_SIMULATOR_H
 #define ORBITSIM_SIMULATOR_H
@@ -23,7 +22,6 @@ class Simulator {
         void drawTree(sf::RenderWindow& window);
 
     private:
-        std::mutex mut;
         double maxForce = -1;
 
         double bounds;

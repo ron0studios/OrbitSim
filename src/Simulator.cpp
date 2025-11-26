@@ -7,7 +7,6 @@
 #include <stack>
 #include <thread>
 #include <cfloat>
-#include "ctpl.h"
 
 
 // initialises the simulation by creating a bounding box rectangle
@@ -26,20 +25,12 @@ void Simulator::addBody(Body body) {
 }
 
 // destroys the current tree object and creates a new one
-// a mutex object is present to prevent race conditions with any of the
-// quad tree nodes which may end up getting shared
 void Simulator::updateTree(float brightness) {
-    std::lock_guard<std::mutex> guard(mut);
-
     tree = QuadTree(this->bounds, &bodies, brightness);
 }
 
 // updates all the forces for every body in the simulation
-// a mutex lock is present because there is some multithreading
-// operating on the bodies list which may lead to a race condition
-// crashing the program 
 void Simulator::updateForces(bool bruteForce) {
-    std::lock_guard<std::mutex> guard(mut);
     maxForce = -1;
 
     // if the bruteforce parameter is set we still use multithreading.
@@ -113,19 +104,11 @@ void Simulator::draw(sf::RenderWindow& window) {
 
 // updates each body by iterating through the bodies list
 void Simulator::updateBodies(sf::Int64 delta) {
-    std::lock_guard<std::mutex> guard(mut);
     for(auto & body : bodies) body.update(delta, maxForce);
 }
 
 // draws the quadtree by accessing the private tree variable
 void Simulator::drawTree(sf::RenderWindow &window) {
-    std::lock_guard<std::mutex> guard(mut);
     tree.draw(window);
 }
-
-
-
-
-
-
 

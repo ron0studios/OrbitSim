@@ -222,10 +222,8 @@ int main()
                     else if (brush == "cluster10k")
                         addGalaxy(space, 10000, 1000, 1000, 10000, 1, pos.x, pos.y, 0, 000, 0.0, 1.0);
                     else {
-                        // Check if it's a saved selection
                         const GUI::SavedSelection* savedSel = gui.getSavedSelection(brush);
                         if (savedSel != nullptr) {
-                            // Place the saved selection at the clicked position
                             for (const auto& bodyTemplate : savedSel->bodyTemplates) {
                                 Body newBody = bodyTemplate;
                                 newBody.position.x += pos.x;

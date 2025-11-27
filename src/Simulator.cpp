@@ -7,7 +7,6 @@
 #include <stack>
 #include <thread>
 #include <cfloat>
-#include "ctpl.h"
 
 
 // initialises the simulation by creating a bounding box rectangle

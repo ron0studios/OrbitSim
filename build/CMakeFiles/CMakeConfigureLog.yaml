@@ -937,8 +937,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-p8QMhF"
-      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-p8QMhF"
+      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-nFWLD1"
+      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-nFWLD1"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -948,13 +948,13 @@ events:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-p8QMhF'
+        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-nFWLD1'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_24f20/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_24f20.dir/build.make CMakeFiles/cmTC_24f20.dir/build
-        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-p8QMhF'
-        Building CXX object CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o
-        /usr/bin/c++   -v -o CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_9c33f/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_9c33f.dir/build.make CMakeFiles/cmTC_9c33f.dir/build
+        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-nFWLD1'
+        Building CXX object CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o
+        /usr/bin/c++   -v -o CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         Target: x86_64-pc-linux-gnu
@@ -962,8 +962,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 15.2.1 20250813 (GCC) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_24f20.dir/'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_24f20.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/cc9gkw2W.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9c33f.dir/'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_9c33f.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccAravuy.s
         GNU C++17 (GCC) version 15.2.1 20250813 (x86_64-pc-linux-gnu)
         	compiled by GNU C version 15.2.1 20250813, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version isl-0.27-GMP
         
@@ -980,14 +980,14 @@ events:
          /usr/include
         End of search list.
         Compiler executable checksum: 452a313327dacf71986995db29f6855a
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_24f20.dir/'
-         as -v --64 -o CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc9gkw2W.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9c33f.dir/'
+         as -v --64 -o CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccAravuy.s
         GNU assembler version 2.45.0 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.45.0
         COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.'
-        Linking CXX executable cmTC_24f20
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_24f20.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_9c33f
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9c33f.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/c++
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper
@@ -998,14 +998,14 @@ events:
         gcc version 15.2.1 20250813 (GCC) 
         COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_24f20' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_24f20.'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cc1J3kuu.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_24f20 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_9c33f' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_9c33f.'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccPilF0a.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_9c33f /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
         collect2 version 15.2.1 20250813
-        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cc1J3kuu.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_24f20 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
+        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccPilF0a.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_9c33f /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
         GNU ld (GNU Binutils) 2.45.0
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_24f20' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_24f20.'
-        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_24f20
-        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-p8QMhF'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_9c33f' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_9c33f.'
+        /usr/bin/c++  -v -Wl,-v CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_9c33f
+        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-nFWLD1'
         
       exitCode: 0
   -
@@ -1046,13 +1046,13 @@ events:
       Parsed CXX implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-p8QMhF']
+        ignore line: [Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-nFWLD1']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_24f20/fast]
-        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_24f20.dir/build.make CMakeFiles/cmTC_24f20.dir/build]
-        ignore line: [make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-p8QMhF']
-        ignore line: [Building CXX object CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o]
-        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_9c33f/fast]
+        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_9c33f.dir/build.make CMakeFiles/cmTC_9c33f.dir/build]
+        ignore line: [make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-nFWLD1']
+        ignore line: [Building CXX object CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/usr/bin/c++   -v -o CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [Target: x86_64-pc-linux-gnu]
@@ -1060,8 +1060,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 15.2.1 20250813 (GCC) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_24f20.dir/']
-        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_24f20.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/cc9gkw2W.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9c33f.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1plus -quiet -v -D_GNU_SOURCE /usr/share/cmake/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_9c33f.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -o /tmp/ccAravuy.s]
         ignore line: [GNU C++17 (GCC) version 15.2.1 20250813 (x86_64-pc-linux-gnu)]
         ignore line: [	compiled by GNU C version 15.2.1 20250813  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.3.1  isl version isl-0.27-GMP]
         ignore line: []
@@ -1078,14 +1078,14 @@ events:
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
         ignore line: [Compiler executable checksum: 452a313327dacf71986995db29f6855a]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_24f20.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o /tmp/cc9gkw2W.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9c33f.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccAravuy.s]
         ignore line: [GNU assembler version 2.45.0 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.45.0]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.']
-        ignore line: [Linking CXX executable cmTC_24f20]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_24f20.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_9c33f]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9c33f.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/c++]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper]
@@ -1096,13 +1096,13 @@ events:
         ignore line: [gcc version 15.2.1 20250813 (GCC) ]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_24f20' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_24f20.']
-        link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cc1J3kuu.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_24f20 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_9c33f' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_9c33f.']
+        link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccPilF0a.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_9c33f /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/cc1J3kuu.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccPilF0a.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -1117,7 +1117,7 @@ events:
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-pie] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_24f20] ==> ignore
+          arg [cmTC_9c33f] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o]
@@ -1129,7 +1129,7 @@ events:
           arg [-L/lib] ==> dir [/lib]
           arg [-L/usr/lib] ==> dir [/usr/lib]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
           arg [-lstdc++] ==> lib [stdc++]
           arg [-lm] ==> lib [m]
           arg [-lgcc_s] ==> lib [gcc_s]
@@ -1140,7 +1140,7 @@ events:
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
         ignore line: [collect2 version 15.2.1 20250813]
-        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/cc1J3kuu.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_24f20 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_24f20.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
+        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccPilF0a.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_9c33f /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_9c33f.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
         linker tool for 'CXX': /usr/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o] ==> [/usr/lib/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o] ==> [/usr/lib/crti.o]
@@ -1620,8 +1620,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-HzZbGm"
-      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-HzZbGm"
+      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Iy1HJ3"
+      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Iy1HJ3"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -1632,13 +1632,13 @@ events:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-HzZbGm'
+        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Iy1HJ3'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_231e1/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_231e1.dir/build.make CMakeFiles/cmTC_231e1.dir/build
-        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-HzZbGm'
-        Building C object CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o
-        /usr/bin/cc   -v -o CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_fcbb6/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_fcbb6.dir/build.make CMakeFiles/cmTC_fcbb6.dir/build
+        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Iy1HJ3'
+        Building C object CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o
+        /usr/bin/cc   -v -o CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         Target: x86_64-pc-linux-gnu
@@ -1646,8 +1646,8 @@ events:
         Thread model: posix
         Supported LTO compression algorithms: zlib zstd
         gcc version 15.2.1 20250813 (GCC) 
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_231e1.dir/'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_231e1.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/cc9csJwK.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_fcbb6.dir/'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_fcbb6.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/cccWWt03.s
         GNU C23 (GCC) version 15.2.1 20250813 (x86_64-pc-linux-gnu)
         	compiled by GNU C version 15.2.1 20250813, GMP version 6.3.0, MPFR version 4.2.2, MPC version 1.3.1, isl version isl-0.27-GMP
         
@@ -1661,14 +1661,14 @@ events:
          /usr/include
         End of search list.
         Compiler executable checksum: 09af9d42b9185573b6c370dd7aa39e64
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_231e1.dir/'
-         as -v --64 -o CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o /tmp/cc9csJwK.s
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_fcbb6.dir/'
+         as -v --64 -o CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o /tmp/cccWWt03.s
         GNU assembler version 2.45.0 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.45.0
         COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.'
-        Linking C executable cmTC_231e1
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_231e1.dir/link.txt --verbose=1
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_fcbb6
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fcbb6.dir/link.txt --verbose=1
         Using built-in specs.
         COLLECT_GCC=/usr/bin/cc
         COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper
@@ -1679,14 +1679,14 @@ events:
         gcc version 15.2.1 20250813 (GCC) 
         COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/
         LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_231e1' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_231e1.'
-         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccOqeKyg.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_231e1 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_fcbb6' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_fcbb6.'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccuhLCzq.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_fcbb6 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
         collect2 version 15.2.1 20250813
-        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccOqeKyg.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_231e1 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
+        /usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccuhLCzq.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_fcbb6 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
         GNU ld (GNU Binutils) 2.45.0
-        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_231e1' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_231e1.'
-        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o -o cmTC_231e1
-        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-HzZbGm'
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_fcbb6' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_fcbb6.'
+        /usr/bin/cc  -v -Wl,-v CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o -o cmTC_fcbb6
+        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Iy1HJ3'
         
       exitCode: 0
   -
@@ -1721,13 +1721,13 @@ events:
       Parsed C implicit link information:
         link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
         linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)))("|,| |$)]
-        ignore line: [Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-HzZbGm']
+        ignore line: [Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Iy1HJ3']
         ignore line: []
-        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_231e1/fast]
-        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_231e1.dir/build.make CMakeFiles/cmTC_231e1.dir/build]
-        ignore line: [make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-HzZbGm']
-        ignore line: [Building C object CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o]
-        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_fcbb6/fast]
+        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_fcbb6.dir/build.make CMakeFiles/cmTC_fcbb6.dir/build]
+        ignore line: [make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Iy1HJ3']
+        ignore line: [Building C object CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/usr/bin/cc   -v -o CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake/Modules/CMakeCCompilerABI.c]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [Target: x86_64-pc-linux-gnu]
@@ -1735,8 +1735,8 @@ events:
         ignore line: [Thread model: posix]
         ignore line: [Supported LTO compression algorithms: zlib zstd]
         ignore line: [gcc version 15.2.1 20250813 (GCC) ]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_231e1.dir/']
-        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_231e1.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/cc9csJwK.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_fcbb6.dir/']
+        ignore line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/cc1 -quiet -v /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_fcbb6.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -o /tmp/cccWWt03.s]
         ignore line: [GNU C23 (GCC) version 15.2.1 20250813 (x86_64-pc-linux-gnu)]
         ignore line: [	compiled by GNU C version 15.2.1 20250813  GMP version 6.3.0  MPFR version 4.2.2  MPC version 1.3.1  isl version isl-0.27-GMP]
         ignore line: []
@@ -1750,14 +1750,14 @@ events:
         ignore line: [ /usr/include]
         ignore line: [End of search list.]
         ignore line: [Compiler executable checksum: 09af9d42b9185573b6c370dd7aa39e64]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_231e1.dir/']
-        ignore line: [ as -v --64 -o CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o /tmp/cc9csJwK.s]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_fcbb6.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o /tmp/cccWWt03.s]
         ignore line: [GNU assembler version 2.45.0 (x86_64-pc-linux-gnu) using BFD version (GNU Binutils) 2.45.0]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.']
-        ignore line: [Linking C executable cmTC_231e1]
-        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_231e1.dir/link.txt --verbose=1]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_fcbb6]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_fcbb6.dir/link.txt --verbose=1]
         ignore line: [Using built-in specs.]
         ignore line: [COLLECT_GCC=/usr/bin/cc]
         ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper]
@@ -1768,13 +1768,13 @@ events:
         ignore line: [gcc version 15.2.1 20250813 (GCC) ]
         ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
         ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/]
-        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_231e1' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_231e1.']
-        link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccOqeKyg.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_231e1 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_fcbb6' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_fcbb6.']
+        link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccuhLCzq.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_fcbb6 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2] ==> ignore
           arg [-plugin] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so] ==> ignore
           arg [-plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper] ==> ignore
-          arg [-plugin-opt=-fresolution=/tmp/ccOqeKyg.res] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccuhLCzq.res] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
           arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
           arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -1789,7 +1789,7 @@ events:
           arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
           arg [-pie] ==> ignore
           arg [-o] ==> ignore
-          arg [cmTC_231e1] ==> ignore
+          arg [cmTC_fcbb6] ==> ignore
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o]
@@ -1801,7 +1801,7 @@ events:
           arg [-L/lib] ==> dir [/lib]
           arg [-L/usr/lib] ==> dir [/usr/lib]
           arg [-v] ==> ignore
-          arg [CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o] ==> ignore
           arg [-lgcc] ==> lib [gcc]
           arg [--push-state] ==> ignore
           arg [--as-needed] ==> ignore
@@ -1816,7 +1816,7 @@ events:
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o]
           arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o] ==> obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
         ignore line: [collect2 version 15.2.1 20250813]
-        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccOqeKyg.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_231e1 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_231e1.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
+        ignore line: [/usr/bin/ld -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccuhLCzq.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_fcbb6 /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib -v CMakeFiles/cmTC_fcbb6.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
         linker tool for 'C': /usr/bin/ld
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o] ==> [/usr/lib/Scrt1.o]
         collapse obj [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o] ==> [/usr/lib/crti.o]
@@ -15139,8 +15139,8 @@ events:
     checks:
       - "Looking for XOpenDisplay in /usr/lib/libX11.so;/usr/lib/libXext.so"
     directories:
-      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-P7pc72"
-      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-P7pc72"
+      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Bi52Gg"
+      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Bi52Gg"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -15152,17 +15152,17 @@ events:
       variable: "X11_LIB_X11_SOLO"
       cached: true
       stdout: |
-        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-P7pc72'
+        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Bi52Gg'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_5c635/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_5c635.dir/build.make CMakeFiles/cmTC_5c635.dir/build
-        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-P7pc72'
-        Building C object CMakeFiles/cmTC_5c635.dir/CheckFunctionExists.c.o
-        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=XOpenDisplay -o CMakeFiles/cmTC_5c635.dir/CheckFunctionExists.c.o -c /home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-P7pc72/CheckFunctionExists.c
-        Linking C executable cmTC_5c635
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5c635.dir/link.txt --verbose=1
-        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=XOpenDisplay CMakeFiles/cmTC_5c635.dir/CheckFunctionExists.c.o -o cmTC_5c635  /usr/lib/libX11.so /usr/lib/libXext.so
-        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-P7pc72'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_5cf57/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_5cf57.dir/build.make CMakeFiles/cmTC_5cf57.dir/build
+        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Bi52Gg'
+        Building C object CMakeFiles/cmTC_5cf57.dir/CheckFunctionExists.c.o
+        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=XOpenDisplay -o CMakeFiles/cmTC_5cf57.dir/CheckFunctionExists.c.o -c /home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Bi52Gg/CheckFunctionExists.c
+        Linking C executable cmTC_5cf57
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5cf57.dir/link.txt --verbose=1
+        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=XOpenDisplay CMakeFiles/cmTC_5cf57.dir/CheckFunctionExists.c.o -o cmTC_5cf57  /usr/lib/libX11.so /usr/lib/libXext.so
+        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Bi52Gg'
         
       exitCode: 0
   -
@@ -15175,8 +15175,8 @@ events:
     checks:
       - "Looking for gethostbyname"
     directories:
-      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Qladwr"
-      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Qladwr"
+      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-GDJQgu"
+      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-GDJQgu"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -15188,17 +15188,17 @@ events:
       variable: "CMAKE_HAVE_GETHOSTBYNAME"
       cached: true
       stdout: |
-        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Qladwr'
+        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-GDJQgu'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_82b12/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_82b12.dir/build.make CMakeFiles/cmTC_82b12.dir/build
-        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Qladwr'
-        Building C object CMakeFiles/cmTC_82b12.dir/CheckFunctionExists.c.o
-        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=gethostbyname -o CMakeFiles/cmTC_82b12.dir/CheckFunctionExists.c.o -c /home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Qladwr/CheckFunctionExists.c
-        Linking C executable cmTC_82b12
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_82b12.dir/link.txt --verbose=1
-        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=gethostbyname CMakeFiles/cmTC_82b12.dir/CheckFunctionExists.c.o -o cmTC_82b12
-        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Qladwr'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_ed5d6/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_ed5d6.dir/build.make CMakeFiles/cmTC_ed5d6.dir/build
+        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-GDJQgu'
+        Building C object CMakeFiles/cmTC_ed5d6.dir/CheckFunctionExists.c.o
+        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=gethostbyname -o CMakeFiles/cmTC_ed5d6.dir/CheckFunctionExists.c.o -c /home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-GDJQgu/CheckFunctionExists.c
+        Linking C executable cmTC_ed5d6
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ed5d6.dir/link.txt --verbose=1
+        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=gethostbyname CMakeFiles/cmTC_ed5d6.dir/CheckFunctionExists.c.o -o cmTC_ed5d6
+        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-GDJQgu'
         
       exitCode: 0
   -
@@ -15211,8 +15211,8 @@ events:
     checks:
       - "Looking for connect"
     directories:
-      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-JQP7wZ"
-      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-JQP7wZ"
+      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-YRjH9p"
+      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-YRjH9p"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -15224,17 +15224,17 @@ events:
       variable: "CMAKE_HAVE_CONNECT"
       cached: true
       stdout: |
-        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-JQP7wZ'
+        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-YRjH9p'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_d1a62/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_d1a62.dir/build.make CMakeFiles/cmTC_d1a62.dir/build
-        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-JQP7wZ'
-        Building C object CMakeFiles/cmTC_d1a62.dir/CheckFunctionExists.c.o
-        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=connect -o CMakeFiles/cmTC_d1a62.dir/CheckFunctionExists.c.o -c /home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-JQP7wZ/CheckFunctionExists.c
-        Linking C executable cmTC_d1a62
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d1a62.dir/link.txt --verbose=1
-        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=connect CMakeFiles/cmTC_d1a62.dir/CheckFunctionExists.c.o -o cmTC_d1a62
-        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-JQP7wZ'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_617cf/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_617cf.dir/build.make CMakeFiles/cmTC_617cf.dir/build
+        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-YRjH9p'
+        Building C object CMakeFiles/cmTC_617cf.dir/CheckFunctionExists.c.o
+        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=connect -o CMakeFiles/cmTC_617cf.dir/CheckFunctionExists.c.o -c /home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-YRjH9p/CheckFunctionExists.c
+        Linking C executable cmTC_617cf
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_617cf.dir/link.txt --verbose=1
+        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=connect CMakeFiles/cmTC_617cf.dir/CheckFunctionExists.c.o -o cmTC_617cf
+        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-YRjH9p'
         
       exitCode: 0
   -
@@ -15247,8 +15247,8 @@ events:
     checks:
       - "Looking for remove"
     directories:
-      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-UyN9ms"
-      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-UyN9ms"
+      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-MokStL"
+      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-MokStL"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -15260,17 +15260,17 @@ events:
       variable: "CMAKE_HAVE_REMOVE"
       cached: true
       stdout: |
-        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-UyN9ms'
+        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-MokStL'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_16183/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_16183.dir/build.make CMakeFiles/cmTC_16183.dir/build
-        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-UyN9ms'
-        Building C object CMakeFiles/cmTC_16183.dir/CheckFunctionExists.c.o
-        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=remove -o CMakeFiles/cmTC_16183.dir/CheckFunctionExists.c.o -c /home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-UyN9ms/CheckFunctionExists.c
-        Linking C executable cmTC_16183
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_16183.dir/link.txt --verbose=1
-        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=remove CMakeFiles/cmTC_16183.dir/CheckFunctionExists.c.o -o cmTC_16183
-        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-UyN9ms'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_514df/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_514df.dir/build.make CMakeFiles/cmTC_514df.dir/build
+        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-MokStL'
+        Building C object CMakeFiles/cmTC_514df.dir/CheckFunctionExists.c.o
+        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=remove -o CMakeFiles/cmTC_514df.dir/CheckFunctionExists.c.o -c /home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-MokStL/CheckFunctionExists.c
+        Linking C executable cmTC_514df
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_514df.dir/link.txt --verbose=1
+        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=remove CMakeFiles/cmTC_514df.dir/CheckFunctionExists.c.o -o cmTC_514df
+        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-MokStL'
         
       exitCode: 0
   -
@@ -15283,8 +15283,8 @@ events:
     checks:
       - "Looking for shmat"
     directories:
-      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-KtWY6k"
-      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-KtWY6k"
+      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-nQA1ce"
+      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-nQA1ce"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -15296,17 +15296,17 @@ events:
       variable: "CMAKE_HAVE_SHMAT"
       cached: true
       stdout: |
-        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-KtWY6k'
+        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-nQA1ce'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6d3b8/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_6d3b8.dir/build.make CMakeFiles/cmTC_6d3b8.dir/build
-        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-KtWY6k'
-        Building C object CMakeFiles/cmTC_6d3b8.dir/CheckFunctionExists.c.o
-        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=shmat -o CMakeFiles/cmTC_6d3b8.dir/CheckFunctionExists.c.o -c /home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-KtWY6k/CheckFunctionExists.c
-        Linking C executable cmTC_6d3b8
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6d3b8.dir/link.txt --verbose=1
-        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=shmat CMakeFiles/cmTC_6d3b8.dir/CheckFunctionExists.c.o -o cmTC_6d3b8
-        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-KtWY6k'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6ee5b/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_6ee5b.dir/build.make CMakeFiles/cmTC_6ee5b.dir/build
+        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-nQA1ce'
+        Building C object CMakeFiles/cmTC_6ee5b.dir/CheckFunctionExists.c.o
+        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=shmat -o CMakeFiles/cmTC_6ee5b.dir/CheckFunctionExists.c.o -c /home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-nQA1ce/CheckFunctionExists.c
+        Linking C executable cmTC_6ee5b
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6ee5b.dir/link.txt --verbose=1
+        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=shmat CMakeFiles/cmTC_6ee5b.dir/CheckFunctionExists.c.o -o cmTC_6ee5b
+        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-nQA1ce'
         
       exitCode: 0
   -
@@ -15319,8 +15319,8 @@ events:
     checks:
       - "Looking for IceConnectionNumber in ICE"
     directories:
-      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-VM84uH"
-      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-VM84uH"
+      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Yoq4DM"
+      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Yoq4DM"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -15332,17 +15332,17 @@ events:
       variable: "CMAKE_LIB_ICE_HAS_ICECONNECTIONNUMBER"
       cached: true
       stdout: |
-        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-VM84uH'
+        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Yoq4DM'
         
-        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_732c8/fast
-        /usr/bin/make  -f CMakeFiles/cmTC_732c8.dir/build.make CMakeFiles/cmTC_732c8.dir/build
-        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-VM84uH'
-        Building C object CMakeFiles/cmTC_732c8.dir/CheckFunctionExists.c.o
-        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=IceConnectionNumber -o CMakeFiles/cmTC_732c8.dir/CheckFunctionExists.c.o -c /home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-VM84uH/CheckFunctionExists.c
-        Linking C executable cmTC_732c8
-        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_732c8.dir/link.txt --verbose=1
-        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=IceConnectionNumber CMakeFiles/cmTC_732c8.dir/CheckFunctionExists.c.o -o cmTC_732c8  -lICE
-        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-VM84uH'
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_13275/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_13275.dir/build.make CMakeFiles/cmTC_13275.dir/build
+        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Yoq4DM'
+        Building C object CMakeFiles/cmTC_13275.dir/CheckFunctionExists.c.o
+        /usr/bin/cc   -DCHECK_FUNCTION_EXISTS=IceConnectionNumber -o CMakeFiles/cmTC_13275.dir/CheckFunctionExists.c.o -c /home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Yoq4DM/CheckFunctionExists.c
+        Linking C executable cmTC_13275
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_13275.dir/link.txt --verbose=1
+        /usr/bin/cc  -DCHECK_FUNCTION_EXISTS=IceConnectionNumber CMakeFiles/cmTC_13275.dir/CheckFunctionExists.c.o -o cmTC_13275  -lICE
+        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-Yoq4DM'
         
       exitCode: 0
   -
@@ -17100,4 +17100,310 @@ events:
         - "/opt"
       CMAKE_SYSTEM_INCLUDE_PATH:
         - "/usr/include/X11"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:251 (try_compile)"
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:558 (_OPENMP_GET_FLAGS)"
+      - "src/CMakeLists.txt:14 (find_package)"
+    description: "Detecting CXX OpenMP compiler info"
+    directories:
+      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-aYvOET"
+      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-aYvOET"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g -O0 -Wall -Wextra -DDEBUG"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_CXX_fopenmp"
+      cached: true
+      stdout: |
+        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-aYvOET'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_568df/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_568df.dir/build.make CMakeFiles/cmTC_568df.dir/build
+        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-aYvOET'
+        Building CXX object CMakeFiles/cmTC_568df.dir/OpenMPTryFlag.cpp.o
+        /usr/bin/c++   -fopenmp -std=gnu++17 -o CMakeFiles/cmTC_568df.dir/OpenMPTryFlag.cpp.o -c /home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-aYvOET/OpenMPTryFlag.cpp
+        Linking CXX executable cmTC_568df
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_568df.dir/link.txt --verbose=1
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/c++
+        COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper
+        Target: x86_64-pc-linux-gnu
+        Configured with: /build/gcc/src/gcc/configure --enable-languages=ada,c,c++,d,fortran,go,lto,m2,objc,obj-c++,rust,cobol --enable-bootstrap --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://gitlab.archlinux.org/archlinux/packaging/packages/gcc/-/issues --with-build-config=bootstrap-lto --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-libstdcxx-backtrace --enable-link-serialization=1 --enable-linker-build-id --enable-lto --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-werror
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 15.2.1 20250813 (GCC) 
+        COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/
+        Reading specs from /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libgomp.spec
+        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_568df' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_568df.'
+         /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccMuUg0N.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_568df /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib CMakeFiles/cmTC_568df.dir/OpenMPTryFlag.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o
+        COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_568df' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_568df.'
+        /usr/bin/c++  -fopenmp -v CMakeFiles/cmTC_568df.dir/OpenMPTryFlag.cpp.o -o cmTC_568df
+        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-aYvOET'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:295 (message)"
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:558 (_OPENMP_GET_FLAGS)"
+      - "src/CMakeLists.txt:14 (find_package)"
+    message: |
+      Parsed CXX OpenMP implicit link information from above output:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-aYvOET']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_568df/fast]
+        ignore line: [/usr/bin/make  -f CMakeFiles/cmTC_568df.dir/build.make CMakeFiles/cmTC_568df.dir/build]
+        ignore line: [make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-aYvOET']
+        ignore line: [Building CXX object CMakeFiles/cmTC_568df.dir/OpenMPTryFlag.cpp.o]
+        ignore line: [/usr/bin/c++   -fopenmp -std=gnu++17 -o CMakeFiles/cmTC_568df.dir/OpenMPTryFlag.cpp.o -c /home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-aYvOET/OpenMPTryFlag.cpp]
+        ignore line: [Linking CXX executable cmTC_568df]
+        ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_568df.dir/link.txt --verbose=1]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/c++]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper]
+        ignore line: [Target: x86_64-pc-linux-gnu]
+        ignore line: [Configured with: /build/gcc/src/gcc/configure --enable-languages=ada c c++ d fortran go lto m2 objc obj-c++ rust cobol --enable-bootstrap --prefix=/usr --libdir=/usr/lib --libexecdir=/usr/lib --mandir=/usr/share/man --infodir=/usr/share/info --with-bugurl=https://gitlab.archlinux.org/archlinux/packaging/packages/gcc/-/issues --with-build-config=bootstrap-lto --with-linker-hash-style=gnu --with-system-zlib --enable-__cxa_atexit --enable-cet=auto --enable-checking=release --enable-clocale=gnu --enable-default-pie --enable-default-ssp --enable-gnu-indirect-function --enable-gnu-unique-object --enable-libstdcxx-backtrace --enable-link-serialization=1 --enable-linker-build-id --enable-lto --enable-multilib --enable-plugin --enable-shared --enable-threads=posix --disable-libssp --disable-libstdcxx-pch --disable-werror]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 15.2.1 20250813 (GCC) ]
+        ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../:/lib/:/usr/lib/]
+        ignore line: [Reading specs from /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/libgomp.spec]
+        ignore line: [COLLECT_GCC_OPTIONS='-fopenmp' '-v' '-o' 'cmTC_568df' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_568df.']
+        link line: [ /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2 -plugin /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccMuUg0N.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr --hash-style=gnu -m elf_x86_64 -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -o cmTC_568df /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/Scrt1.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crti.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtbeginS.o -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../.. -L/lib -L/usr/lib CMakeFiles/cmTC_568df.dir/OpenMPTryFlag.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/crtendS.o /usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib/crtn.o]
+          arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccMuUg0N.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lpthread] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_568df] ==> ignore
+          arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1]
+          arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib]
+          arg [-L/lib/../lib] ==> dir [/lib/../lib]
+          arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
+          arg [-L/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../..] ==> dir [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../..]
+          arg [-L/lib] ==> dir [/lib]
+          arg [-L/usr/lib] ==> dir [/usr/lib]
+          arg [CMakeFiles/cmTC_568df.dir/OpenMPTryFlag.cpp.o] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lm] ==> lib [m]
+          arg [-lgomp] ==> lib [gomp]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lpthread] ==> lib [pthread]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+        collapse library dir [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1] ==> [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1]
+        collapse library dir [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../../../lib] ==> [/usr/lib]
+        collapse library dir [/lib/../lib] ==> [/lib]
+        collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
+        collapse library dir [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/../../..] ==> [/usr/lib]
+        collapse library dir [/lib] ==> [/lib]
+        collapse library dir [/usr/lib] ==> [/usr/lib]
+        implicit libs: [stdc++;m;gomp;gcc_s;gcc;pthread;c;gcc_s;gcc]
+        implicit objs: []
+        implicit dirs: [/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1;/usr/lib;/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:313 (find_library)"
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:558 (_OPENMP_GET_FLAGS)"
+      - "src/CMakeLists.txt:14 (find_package)"
+    mode: "library"
+    variable: "OpenMP_gomp_LIBRARY"
+    description: "Path to the gomp library for OpenMP"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "gomp"
+    candidate_directories:
+      - "/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/"
+      - "/usr/lib/"
+      - "/lib/"
+      - "/home/ron0/development/cpp-projects/emsdk/"
+      - "/home/ron0/development/cpp-projects/emsdk/upstream/emscripten/"
+      - "/home/ron0/.local/bin/"
+      - "/usr/share/archcraft/scripts/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/lib/jvm/default/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+      - "/usr/local/lib/"
+      - "/usr/local/"
+      - "/usr/lib/"
+      - "/usr/"
+      - "/lib/"
+      - "/usr/X11R6/lib/"
+      - "/usr/X11R6/"
+      - "/usr/pkg/lib/"
+      - "/usr/pkg/"
+      - "/opt/lib/"
+      - "/opt/"
+      - "/usr/lib/X11/"
+    searched_directories:
+      - "/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/"
+    found: "/usr/lib/libgomp.so"
+    search_context:
+      ENV{PATH}:
+        - "/home/ron0/development/cpp-projects/emsdk"
+        - "/home/ron0/development/cpp-projects/emsdk/upstream/emscripten"
+        - "/home/ron0/.local/bin"
+        - "/usr/share/archcraft/scripts"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/lib/jvm/default/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+      CMAKE_SYSTEM_LIBRARY_PATH:
+        - "/usr/lib/X11"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:313 (find_library)"
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:558 (_OPENMP_GET_FLAGS)"
+      - "src/CMakeLists.txt:14 (find_package)"
+    mode: "library"
+    variable: "OpenMP_pthread_LIBRARY"
+    description: "Path to the pthread library for OpenMP"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "pthread"
+    candidate_directories:
+      - "/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/"
+      - "/usr/lib/"
+      - "/lib/"
+      - "/home/ron0/development/cpp-projects/emsdk/"
+      - "/home/ron0/development/cpp-projects/emsdk/upstream/emscripten/"
+      - "/home/ron0/.local/bin/"
+      - "/usr/share/archcraft/scripts/"
+      - "/usr/local/sbin/"
+      - "/usr/local/bin/"
+      - "/usr/bin/"
+      - "/usr/lib/jvm/default/bin/"
+      - "/usr/bin/site_perl/"
+      - "/usr/bin/vendor_perl/"
+      - "/usr/bin/core_perl/"
+      - "/usr/local/lib/"
+      - "/usr/local/"
+      - "/usr/lib/"
+      - "/usr/"
+      - "/lib/"
+      - "/usr/X11R6/lib/"
+      - "/usr/X11R6/"
+      - "/usr/pkg/lib/"
+      - "/usr/pkg/"
+      - "/opt/lib/"
+      - "/opt/"
+      - "/usr/lib/X11/"
+    searched_directories:
+      - "/usr/lib/gcc/x86_64-pc-linux-gnu/15.2.1/"
+    found: "/usr/lib/libpthread.a"
+    search_context:
+      ENV{PATH}:
+        - "/home/ron0/development/cpp-projects/emsdk"
+        - "/home/ron0/development/cpp-projects/emsdk/upstream/emscripten"
+        - "/home/ron0/.local/bin"
+        - "/usr/share/archcraft/scripts"
+        - "/usr/local/sbin"
+        - "/usr/local/bin"
+        - "/usr/bin"
+        - "/usr/lib/jvm/default/bin"
+        - "/usr/bin/site_perl"
+        - "/usr/bin/vendor_perl"
+        - "/usr/bin/core_perl"
+      CMAKE_INSTALL_PREFIX: "/usr/local"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/usr/local"
+        - "/usr"
+        - "/"
+        - "/usr"
+        - "/usr/local"
+        - "/usr/X11R6"
+        - "/usr/pkg"
+        - "/opt"
+      CMAKE_SYSTEM_LIBRARY_PATH:
+        - "/usr/lib/X11"
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:492 (try_compile)"
+      - "/usr/share/cmake/Modules/FindOpenMP.cmake:632 (_OPENMP_GET_SPEC_DATE)"
+      - "src/CMakeLists.txt:14 (find_package)"
+    description: "Detecting CXX OpenMP version"
+    directories:
+      source: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-AGUbn8"
+      binary: "/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-AGUbn8"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g -O0 -Wall -Wextra -DDEBUG"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "OpenMP_SPECTEST_CXX_"
+      cached: true
+      stdout: |
+        Change Dir: '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-AGUbn8'
+        
+        Run Build Command(s): /usr/bin/cmake -E env VERBOSE=1 /usr/bin/make -f Makefile cmTC_6cf1c/fast
+        /usr/bin/make  -f CMakeFiles/cmTC_6cf1c.dir/build.make CMakeFiles/cmTC_6cf1c.dir/build
+        make[1]: Entering directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-AGUbn8'
+        Building CXX object CMakeFiles/cmTC_6cf1c.dir/OpenMPCheckVersion.cpp.o
+        /usr/bin/c++   -fopenmp -std=gnu++17 -o CMakeFiles/cmTC_6cf1c.dir/OpenMPCheckVersion.cpp.o -c /home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-AGUbn8/OpenMPCheckVersion.cpp
+        Linking CXX executable cmTC_6cf1c
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6cf1c.dir/link.txt --verbose=1
+        /usr/bin/c++  -fopenmp CMakeFiles/cmTC_6cf1c.dir/OpenMPCheckVersion.cpp.o -o cmTC_6cf1c
+        make[1]: Leaving directory '/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles/CMakeScratch/TryCompile-AGUbn8'
+        
+      exitCode: 0
 ...

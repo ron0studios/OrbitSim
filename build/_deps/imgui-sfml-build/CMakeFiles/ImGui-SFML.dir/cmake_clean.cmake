@@ -14,8 +14,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/ImGui-SFML.dir/__/imgui-src/misc/cpp/imgui_stdlib.cpp.o.d"
   "CMakeFiles/ImGui-SFML.dir/imgui-SFML.cpp.o"
   "CMakeFiles/ImGui-SFML.dir/imgui-SFML.cpp.o.d"
-  "libImGui-SFML.pdb"
-  "libImGui-SFML.so"
+  "libImGui-SFML_d.pdb"
+  "libImGui-SFML_d.so"
 )
 
 # Per-language clean rules from dependency scanning.

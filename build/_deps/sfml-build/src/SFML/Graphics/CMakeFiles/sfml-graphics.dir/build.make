@@ -528,54 +528,54 @@ sfml__graphics_OBJECTS = \
 # External object files for target sfml-graphics
 sfml__graphics_EXTERNAL_OBJECTS =
 
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/BlendMode.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Color.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Font.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Glsl.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/GLCheck.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/GLExtensions.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Image.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/ImageLoader.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/RenderStates.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/RenderTexture.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/RenderTarget.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/RenderWindow.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Shader.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Texture.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/TextureSaver.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Transform.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Transformable.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/View.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Vertex.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Shape.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/CircleShape.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/RectangleShape.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/ConvexShape.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Sprite.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Text.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/VertexArray.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/VertexBuffer.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/RenderTextureImpl.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/RenderTextureImplFBO.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/RenderTextureImplDefault.cpp.o
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build.make
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/compiler_depend.ts
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/lib/libsfml-window.so.2.6.1
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/lib/libsfml-system.so.2.6.1
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: /usr/lib/libfreetype.so
-_deps/sfml-build/lib/libsfml-graphics.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Linking CXX shared library ../../../lib/libsfml-graphics.so"
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/BlendMode.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Color.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Font.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Glsl.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/GLCheck.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/GLExtensions.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Image.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/ImageLoader.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/RenderStates.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/RenderTexture.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/RenderTarget.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/RenderWindow.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Shader.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Texture.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/TextureSaver.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Transform.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Transformable.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/View.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Vertex.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Shape.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/CircleShape.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/RectangleShape.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/ConvexShape.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Sprite.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Text.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/VertexArray.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/VertexBuffer.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/RenderTextureImpl.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/RenderTextureImplFBO.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/RenderTextureImplDefault.cpp.o
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build.make
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/compiler_depend.ts
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/lib/libsfml-window-d.so.2.6.1
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/lib/libsfml-system-d.so.2.6.1
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: /usr/lib/libfreetype.so
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/ron0/development/cpp-projects/OrbitSim/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Linking CXX shared library ../../../lib/libsfml-graphics-d.so"
 	cd /home/ron0/development/cpp-projects/OrbitSim/build/_deps/sfml-build/src/SFML/Graphics && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/sfml-graphics.dir/link.txt --verbose=$(VERBOSE)
-	cd /home/ron0/development/cpp-projects/OrbitSim/build/_deps/sfml-build/src/SFML/Graphics && $(CMAKE_COMMAND) -E cmake_symlink_library ../../../lib/libsfml-graphics.so.2.6.1 ../../../lib/libsfml-graphics.so.2.6 ../../../lib/libsfml-graphics.so
+	cd /home/ron0/development/cpp-projects/OrbitSim/build/_deps/sfml-build/src/SFML/Graphics && $(CMAKE_COMMAND) -E cmake_symlink_library ../../../lib/libsfml-graphics-d.so.2.6.1 ../../../lib/libsfml-graphics-d.so.2.6 ../../../lib/libsfml-graphics-d.so
 
-_deps/sfml-build/lib/libsfml-graphics.so.2.6: _deps/sfml-build/lib/libsfml-graphics.so.2.6.1
-	@$(CMAKE_COMMAND) -E touch_nocreate _deps/sfml-build/lib/libsfml-graphics.so.2.6
+_deps/sfml-build/lib/libsfml-graphics-d.so.2.6: _deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1
+	@$(CMAKE_COMMAND) -E touch_nocreate _deps/sfml-build/lib/libsfml-graphics-d.so.2.6
 
-_deps/sfml-build/lib/libsfml-graphics.so: _deps/sfml-build/lib/libsfml-graphics.so.2.6.1
-	@$(CMAKE_COMMAND) -E touch_nocreate _deps/sfml-build/lib/libsfml-graphics.so
+_deps/sfml-build/lib/libsfml-graphics-d.so: _deps/sfml-build/lib/libsfml-graphics-d.so.2.6.1
+	@$(CMAKE_COMMAND) -E touch_nocreate _deps/sfml-build/lib/libsfml-graphics-d.so
 
 # Rule to build all files generated by this target.
-_deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build: _deps/sfml-build/lib/libsfml-graphics.so
+_deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build: _deps/sfml-build/lib/libsfml-graphics-d.so
 .PHONY : _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build
 
 _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/clean:

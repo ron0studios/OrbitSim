@@ -6,7 +6,7 @@ CXX_DEFINES = -DSFML_SYSTEM_EXPORTS
 
 CXX_INCLUDES = -I/home/ron0/development/cpp-projects/OrbitSim/build/_deps/sfml-src/include -I/home/ron0/development/cpp-projects/OrbitSim/build/_deps/sfml-src/src
 
-CXX_FLAGS = -fPIC -fvisibility=hidden
+CXX_FLAGS = -g -O0 -Wall -Wextra -DDEBUG -std=gnu++17 -fPIC -fvisibility=hidden
 
 # Custom flags: _deps/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/Clock.cpp.o_FLAGS =  -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wcast-align -Wunused -Woverloaded-virtual -Wconversion -Wsign-conversion -Wdouble-promotion -Wformat=2 -Wnull-dereference -Wold-style-cast -Wpedantic -Wmisleading-indentation -Wduplicated-cond -Wlogical-op -Wduplicated-branches
 

@@ -1,9 +1,9 @@
 file(REMOVE_RECURSE
   "../../../lib/.2.6"
-  "../../../lib/libsfml-graphics.pdb"
-  "../../../lib/libsfml-graphics.so"
-  "../../../lib/libsfml-graphics.so.2.6"
-  "../../../lib/libsfml-graphics.so.2.6.1"
+  "../../../lib/libsfml-graphics-d.pdb"
+  "../../../lib/libsfml-graphics-d.so"
+  "../../../lib/libsfml-graphics-d.so.2.6"
+  "../../../lib/libsfml-graphics-d.so.2.6.1"
   "CMakeFiles/sfml-graphics.dir/link.d"
   "CMakeFiles/sfml-graphics.dir/BlendMode.cpp.o"
   "CMakeFiles/sfml-graphics.dir/BlendMode.cpp.o.d"

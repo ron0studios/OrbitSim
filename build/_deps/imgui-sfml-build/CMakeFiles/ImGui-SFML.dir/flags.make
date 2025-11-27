@@ -6,5 +6,5 @@ CXX_DEFINES = -DIMGUI_SFML_EXPORTS -DIMGUI_SFML_SHARED_LIB -DIMGUI_USER_CONFIG=\
 
 CXX_INCLUDES = -I/home/ron0/development/cpp-projects/OrbitSim/build/_deps/imgui-src -I/home/ron0/development/cpp-projects/OrbitSim/build/_deps/imgui-sfml-src -I/home/ron0/development/cpp-projects/OrbitSim/build/_deps/sfml-src/include
 
-CXX_FLAGS = -fPIC
+CXX_FLAGS = -g -O0 -Wall -Wextra -DDEBUG -std=gnu++17 -fPIC
 

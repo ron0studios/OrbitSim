@@ -9,6 +9,7 @@
 #include "Body.h"
 #include <cmath>
 #include <mutex>
+#include <memory>
 #include "globals.h"
 
 class QuadTree {
@@ -47,8 +48,10 @@ class QuadTree {
             double cy = 0.0; // y position of the center of the node
         };
 
-        // a list of nodes representing the quadtree
-       std::vector<node> tree;
+        // dynamically allocated contiguous array of nodes representing the quadtree
+        std::unique_ptr<node[]> tree;
+        size_t tree_capacity;
+        size_t tree_size;
 };
 
 

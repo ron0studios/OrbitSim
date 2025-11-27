@@ -4,12 +4,15 @@
 
 #include <stack>
 #include "QuadTree.h"
-
+#include <algorithm>
 #include <iostream>
+
 
 QuadTree::QuadTree() {
     r.setFillColor(sf::Color::Transparent);
     r.setOutlineThickness(2.0);
+    tree_capacity = 0;
+    tree_size = 0;
 }
 
 /**
@@ -26,8 +29,17 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies, float brightness)
     r.setOutlineThickness(2.0);
     this->bound = bound;
 
-    // push back the root of the tree
-    tree.push_back({0,0.0,bound*2.0,0, 0.0, 0.0, nullptr}); // root
+    // pre-allocate array based on number of bodies (worst case: ~8x bodies for unbalanced tree)
+    tree_capacity = std::max(static_cast<size_t>(8 * bodies->size()), static_cast<size_t>(100));
+    tree.reset(new node[tree_capacity]);
+    
+    #if DEBUG_QUADTREE 
+    std::cout << "QuadTree: Allocated " << tree_capacity << " nodes for " << bodies->size() << " bodies" << std::endl;
+    #endif
+
+    // initialize the root of the tree
+    tree_size = 1;
+    tree[0] = {0, 0.0, bound*2.0, 0, 0.0, 0.0, nullptr}; // root
 
     // center x, center y
     double cx, cy;
@@ -98,7 +110,7 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies, float brightness)
             else {
 
                 // if the current node has no children we create 4 empty children
-                tree[idx].child = (int)tree.size();
+                tree[idx].child = (int)tree_size;
                 for(int i = 0; i < 4; i++) {
                     double cx2 = cx;
                     double cy2 = cy;
@@ -112,7 +124,10 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies, float brightness)
                     else
                         cy2 += tree[idx].width/4.0;
 
-                    tree.push_back({0, 0.0, tree[idx].width / 2.0, 0, 0.0, 0.0, nullptr, cx2, cy2});
+                    if(tree_size >= tree_capacity) {
+                        throw std::runtime_error("QuadTree exceeded allocated node capacity!");
+                    }
+                    tree[tree_size++] = {0, 0.0, tree[idx].width / 2.0, 0, 0.0, 0.0, nullptr, cx2, cy2};
                 }
 
 
@@ -239,10 +254,14 @@ void QuadTree::updateForce(Body *body, double theta) {
             {
                 for(int i = 0; i < 4; i++){
                     stack.push(n.child + i);
-                }
-            }
-
         }
+    }
+    
+    #if DEBUG_QUADTREE
+    std::cout << "QuadTree: Used " << tree_size << " / " << tree_capacity << " nodes" << std::endl;
+    #endif
+
+}
         else
         {
             // if the node has no children then it must have a singleBody.
@@ -291,7 +310,7 @@ sf::Vector2<double> QuadTree::forcePair(double massA, double massB, sf::Vector2<
 
 // draws the quadtree by iterating through each node and drawing a rectangle shape
 void QuadTree::draw(sf::RenderWindow &window) {
-    for(size_t i = 0; i < tree.size(); i++){
+    for(size_t i = 0; i < tree_size; i++){
         sf::RectangleShape r(sf::Vector2f(tree[i].width, tree[i].width));
         r.setOrigin(tree[i].width/2, tree[i].width/2);
         r.setOutlineThickness(window.getView().getSize().x/1920);

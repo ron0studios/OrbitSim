@@ -213,14 +213,29 @@ int main()
                     std::string brush = gui.getSelectedBrush();
                     if (brush == "single")
                         addGalaxy(space, 0, 0, 1000, 1000, 0, pos.x, pos.y, -0, 000, .0, 1.0);
-                    if (brush == "black_hole")
+                    else if (brush == "black_hole")
                         addGalaxy(space, 0, 10000, 100000000000, 1000, 0, pos.x, pos.y, -0, 000, .0, 1.0);
-                    if (brush == "cluster100")
+                    else if (brush == "cluster100")
                         addGalaxy(space, 100, 1000, 1000, 100, 1, pos.x, pos.y, 0, 000, 0.0, 1.0);
-                    if (brush == "cluster1k")
+                    else if (brush == "cluster1k")
                         addGalaxy(space, 1000, 1000, 1000, 1000, 1, pos.x, pos.y, 0, 000, 0.0, 1.0);
-                    if (brush == "cluster10k")
+                    else if (brush == "cluster10k")
                         addGalaxy(space, 10000, 1000, 1000, 10000, 1, pos.x, pos.y, 0, 000, 0.0, 1.0);
+                    else {
+                        // Check if it's a saved selection
+                        const GUI::SavedSelection* savedSel = gui.getSavedSelection(brush);
+                        if (savedSel != nullptr) {
+                            // Place the saved selection at the clicked position
+                            for (const auto& bodyTemplate : savedSel->bodyTemplates) {
+                                Body newBody = bodyTemplate;
+                                newBody.position.x += pos.x;
+                                newBody.position.y += pos.y;
+                                newBody.selected = false;
+                                newBody.shape.setFillColor(sf::Color::White);
+                                space.addBody(newBody);
+                            }
+                        }
+                    }
                 }
             }
 

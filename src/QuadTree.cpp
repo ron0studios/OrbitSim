@@ -22,7 +22,7 @@ QuadTree::QuadTree() {
  */
 QuadTree::QuadTree(double bound, std::vector<Body> *bodies, float brightness)
 {
-    this->brightness = brightness; 
+    this->brightness = brightness;
 
     // creates the boundary rectangle of the quad tree
     r.setFillColor(sf::Color::Transparent);
@@ -32,8 +32,8 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies, float brightness)
     // pre-allocate array based on number of bodies (worst case: ~8x bodies for unbalanced tree)
     tree_capacity = std::max(static_cast<size_t>(8 * bodies->size()), static_cast<size_t>(100));
     tree.reset(new node[tree_capacity]);
-    
-    #if DEBUG_QUADTREE 
+
+    #if DEBUG_QUADTREE
     std::cout << "QuadTree: Allocated " << tree_capacity << " nodes for " << bodies->size() << " bodies" << std::endl;
     #endif
 
@@ -44,7 +44,8 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies, float brightness)
     // center x, center y
     double cx, cy;
     int i = 0; // iterator counter
-    for(auto & body : *bodies){ 
+    for(int b = 0; b < bodies->size(); b++) {
+        Body& body = (*bodies)[b];
         i++;
 
         // for each body we create a stack with a single element
@@ -57,7 +58,7 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies, float brightness)
         if(abs(body.position.y) > bound) continue;
 
 
-        // while there are still elements in the stack we pop the topmost element and 
+        // while there are still elements in the stack we pop the topmost element and
         // process that stack item
         while(!stack.empty()) {
             int idx = stack.top(); stack.pop();
@@ -77,7 +78,7 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies, float brightness)
             }
 
             // if the current tree node has some mass, we may have to traverse deeper into the
-            // quadtree so we update the values of the current node such as the total mass, or 
+            // quadtree so we update the values of the current node such as the total mass, or
             // total body count
             tree[idx].mass += body.mass;
             double totalx = tree[idx].massx * tree[idx].total;
@@ -152,7 +153,7 @@ QuadTree::QuadTree(double bound, std::vector<Body> *bodies, float brightness)
 
 
                 // we find out the quadrant of the body we're trying to add and traverse to that node.
-                // It may be that this quadrant is the same one as the singleChild, in which we may have to 
+                // It may be that this quadrant is the same one as the singleChild, in which we may have to
                 // repeat this process several times to differentiate the two into their own respective
                 // quadrants
                 int quadB = getQuadrant(sf::Vector2<double>(cx,cy), body.position);
@@ -217,7 +218,7 @@ int QuadTree::getQuadrant(double cx, double cy, double sx, double sy) {
     }
 }
 
-// recursively updates the force of a given body 
+// recursively updates the force of a given body
 // using the quadtree and an approximation factor, theta
 void QuadTree::updateForce(Body *body, double theta) {
 
@@ -256,7 +257,7 @@ void QuadTree::updateForce(Body *body, double theta) {
                     stack.push(n.child + i);
         }
     }
-    
+
     #if DEBUG_QUADTREE
     std::cout << "QuadTree: Used " << tree_size << " / " << tree_capacity << " nodes" << std::endl;
     #endif
@@ -321,7 +322,3 @@ void QuadTree::draw(sf::RenderWindow &window) {
         window.draw(r);
     }
 }
-
-
-
-

@@ -233,6 +233,10 @@ void GUI::render(sf::RenderWindow& window, Simulator& space, sf::RectangleShape&
             ImGui::SetWindowPos(ImVec2(window_width / 2 - ImGui::GetWindowSize().x / 2,
                                        window_height / 2 - ImGui::GetWindowSize().y / 2));
             if (ImGui::Button("save selection")) {
+                if (selectionSaveName[0] != '\0') {
+                    saveSelection(std::string(selectionSaveName), selectedBodies);
+                    selectionSaveName[0] = '\0';
+                }
                 ImGui::CloseCurrentPopup();
                 focus = true;
             }
@@ -351,7 +355,7 @@ void GUI::render(sf::RenderWindow& window, Simulator& space, sf::RectangleShape&
     ImGui::EndGroup();
     ImGui::SameLine();
 
-    ImGui::BeginChild("brushes", ImVec2(window_width/4.0, window_height/10.0 -15.0), true, ImGuiWindowFlags_NoScrollbar);
+    ImGui::BeginChild("brushes", ImVec2(window_width/4.0, window_height/10.0 -15.0), true, ImGuiWindowFlags_HorizontalScrollbar);
     ImGui::BeginDisabled(!selected_brush.empty() and selected_brush != "single");
     if(ImGui::Button("single", ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0)))
         if(selected_brush=="single")
@@ -391,6 +395,26 @@ void GUI::render(sf::RenderWindow& window, Simulator& space, sf::RectangleShape&
         else
             selected_brush = "cluster10k";
     ImGui::EndDisabled();
+    
+    // Add saved selections as brushes
+    for(const auto& saved : savedSelections) {
+        ImGui::SameLine();
+        ImGui::BeginDisabled(!selected_brush.empty() and selected_brush != saved.name);
+        if(ImGui::Button(saved.name.c_str(), ImVec2(window_height/10.0 - 30.0, window_height/10.0 - 30.0))) {
+            if(selected_brush == saved.name)
+                selected_brush = "";
+            else
+                selected_brush = saved.name;
+        }
+        if(ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal)) {
+            ImGui::BeginTooltip();
+            ImGui::Text("Saved selection: %s", saved.name.c_str());
+            ImGui::Text("Bodies: %i", (int)saved.bodyTemplates.size());
+            ImGui::EndTooltip();
+        }
+        ImGui::EndDisabled();
+    }
+    
     ImGui::EndChild();
 
     ImGui::End();
@@ -405,7 +429,61 @@ void GUI::render(sf::RenderWindow& window, Simulator& space, sf::RectangleShape&
     ImGui::Text("Iterations: %i", iterations);
     ImGui::Text("Mouse pos: (%i, %i)", (int)window.mapPixelToCoords(sf::Mouse::getPosition()).x, (int)window.mapPixelToCoords(sf::Mouse::getPosition()).y);
     ImGui::Text("Current brush: (%s)", selected_brush.c_str());
+    ImGui::Text("Saved selections: %i", (int)savedSelections.size());
     ImGui::End();
+}
+
+void GUI::saveSelection(const std::string& name, const std::vector<Body*>& bodies) {
+    if (bodies.empty() || name.empty()) return;
+    
+    SavedSelection selection;
+    selection.name = name;
+    
+    // Calculate center of mass
+    sf::Vector2<double> com(0.0, 0.0);
+    double totalMass = 0.0;
+    
+    for (const auto* body : bodies) {
+        com.x += body->position.x * body->mass;
+        com.y += body->position.y * body->mass;
+        totalMass += body->mass;
+    }
+    
+    if (totalMass > 0) {
+        com.x /= totalMass;
+        com.y /= totalMass;
+    }
+    
+    selection.centerOfMass = com;
+    
+    // Store body templates relative to center of mass
+    for (const auto* body : bodies) {
+        Body templateBody = *body;
+        templateBody.position.x -= com.x;
+        templateBody.position.y -= com.y;
+        templateBody.selected = false;
+        selection.bodyTemplates.push_back(templateBody);
+    }
+    
+    savedSelections.push_back(selection);
+}
+
+bool GUI::isSavedSelection(const std::string& brushName) const {
+    for (const auto& selection : savedSelections) {
+        if (selection.name == brushName) {
+            return true;
+        }
+    }
+    return false;
+}
+
+const GUI::SavedSelection* GUI::getSavedSelection(const std::string& name) const {
+    for (const auto& selection : savedSelections) {
+        if (selection.name == name) {
+            return &selection;
+        }
+    }
+    return nullptr;
 }
 
 void GUI::shutdown() {

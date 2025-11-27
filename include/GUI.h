@@ -10,6 +10,14 @@ class Body;
 class Simulator;
 
 class GUI {
+public:
+    // Saved selection structure for creating custom brushes
+    struct SavedSelection {
+        std::string name;
+        std::vector<Body> bodyTemplates;
+        sf::Vector2<double> centerOfMass;
+    };
+
 private:
     bool render_tree;
     bool use_colors;
@@ -32,6 +40,7 @@ private:
     double window_width;
     double window_height;
     float timescale;
+    std::vector<SavedSelection> savedSelections;
 
 public:
     GUI();
@@ -64,4 +73,10 @@ public:
     void setSelectionEnd(sf::Vector2f pos) { selectionEnd = pos; }
     void setFocus(bool val) { focus = val; }
     void setWindowSize(double width, double height) { window_width = width; window_height = height; }
+    
+    // Saved selection methods
+    void saveSelection(const std::string& name, const std::vector<Body*>& bodies);
+    bool isSavedSelection(const std::string& brushName) const;
+    const std::vector<SavedSelection>& getSavedSelections() const { return savedSelections; }
+    const SavedSelection* getSavedSelection(const std::string& name) const;
 };

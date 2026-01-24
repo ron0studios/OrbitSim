@@ -5,6 +5,7 @@
 #include "GUI.h"
 #include <thread>
 #include <chrono>
+#include <Tracy.hpp>
 
 // a function to create a custom galaxy or cluster shape based on certain arguments
 // sim: the simulator object in which to instantiate the bodies
@@ -144,12 +145,12 @@ int main()
     // the render window is instantiated
     sf::RenderWindow window(sf::VideoMode(window_width, window_height), "OrbitSim");
     window.setPosition(sf::Vector2i(0,0));
-    
+
     // Create and initialize GUI
     GUI gui;
     gui.init(window);
     gui.setWindowSize(window_width, window_height);
-    
+
     window.setFramerateLimit(60);
     int sizex = 1920*1;
     int sizey = 1080*1;
@@ -168,7 +169,7 @@ int main()
 
     //addRing(space,10000,0.00001,100000,100,1,0,0,0,0,0,0.5,500);
 
-    // a preliminary check to see whether any bodies are directly coinciding with each other. 
+    // a preliminary check to see whether any bodies are directly coinciding with each other.
     // if this is the case we notify the user, since the simulation cannot proceed with direct collision
     for(int i = 0; i < space.bodies.size(); i++)
     {
@@ -183,7 +184,7 @@ int main()
 
 
     sf::Clock deltaClock; // a timer to measure the length of each physics frame
-    sf::Time dt; // the variable to store each frame's measured time in 
+    sf::Time dt; // the variable to store each frame's measured time in
     sf::Uint8* pix; // a vector of pixels to render during simple mode
     int iterations = 0; // a count of how many iterations the simulation has gone through
 
@@ -196,7 +197,7 @@ int main()
         {
             gui.handleEvent(event, window);
             // if the X key on the window is pressed we close the window
-            if (event.type == sf::Event::Closed)                       window.close(); 
+            if (event.type == sf::Event::Closed)                       window.close();
             // if the space key is pressed we toggle the pause state of the simulation
             if(event.type == sf::Event::KeyReleased and event.key.code == sf::Keyboard::Space) {
                 paused = !paused;
@@ -318,11 +319,11 @@ int main()
 
 
         gui.update(window, dt);
-        
+
         // Render GUI
         gui.render(window, space, selectionBox, iterations, dt, view);
 
-        
+
         window.clear();
 
 
@@ -419,7 +420,7 @@ int main()
             window.draw(sprite);
         }
         else {
-            // regular rendering mode simply loops through each object and 
+            // regular rendering mode simply loops through each object and
             // renders its respective circleobject
             for(auto& body : space.bodies) {
                 if(body.selected)
@@ -438,13 +439,13 @@ int main()
         // optionally also render the quadTree
         if(gui.getRenderTree()) space.drawTree(window);
 
-        // render the selectionbox 
+        // render the selectionbox
         window.draw(selectionBox);
         ImGui::SFML::Render(window);
         window.display();
 
-        // since the array is static and may contain pointers and therefore need to be 
-        // freed from memory each frame of the program 
+        // since the array is static and may contain pointers and therefore need to be
+        // freed from memory each frame of the program
         if(gui.getSimpleRender()) delete[] pix;
 
         // restart the deltaclock
